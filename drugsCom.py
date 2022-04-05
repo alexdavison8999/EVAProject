@@ -11,7 +11,27 @@ warningString = "Warning"
 seString = 'side effects'
 iTakeString = 'take'
 
-def userSelection(soup, filterString):
+def userSelection(filterString, url):
+    resp = requests.get(url)
+    infoCount = 0
+    print('made it')
+
+    if resp.status_code == 200:
+
+        soup = BeautifulSoup(resp.text, 'lxml')
+
+        for data in soup.find_all('h2'):
+            if whatis in data.text:
+                for dat in data.find_all_next(['p', 'h2']):
+                    if infoCount > 0:
+                        break
+                    if dat.name == 'h2':
+                        break
+                    infoCount = infoCount + 1
+
+    else:
+        print('couldnt open')
+
     if 'i take' in filterString or 'warnings' in filterString or 'side effects' in filterString or 'warning' in filterString:
         for data in soup.find_all('h2'):
             if filterString in data.text:
@@ -49,7 +69,6 @@ def readSite(url, drugname):
                     print(dat.text)
                     Responce.speechandsay(dat.text)
                     infoCount = infoCount + 1
-
         return soup
     else:
         print('couldnt open')

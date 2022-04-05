@@ -4,6 +4,7 @@ from playsound import playsound
 import Responce
 import psycopg2
 import time
+import confirmationGUI
 
 dbError = False
 
@@ -12,29 +13,47 @@ def alert():
     Responce.justDisplay(alertText)
     playsound('alert.wav')
 
-def takenMedsConfirmaiton(medID):
-    yesdbUpdate = "update reportMetrics set takenConfirmation = 1 where id = "  + medID + ";"
-    nodbUpdate = "update reportMetrics set takenConfirmation = 2 where id = " + medID + ";"
-    idkdbUpdate = "update reportMetrics set takenConfirmation = 3 where id = " + medID + ";"
+def takenMedsConfirmaiton(medID, curID, reportID):
+
+    print(medID)
+    print(reportID)
+    yesdbUpdate = "update reportMetrics set takenConfirmation = 1 where id = "  + reportID + ";"
+    nodbUpdate = "update reportMetrics set takenConfirmation = 2 where id = " + reportID + ";"
+    idkdbUpdate = "update reportMetrics set takenConfirmation = 3 where id = " + reportID + ";"
+
+    picturedbGrabPath = "select imagepath from medicine1 where id = " + medID + ";"
 
     print("Have you taken your medicine yet?")
     Responce.speechandsay("Have you taken your medicine yet?")
     #add yesno button via Angular
+    print(medID)
+    cur.execute(picturedbGrabPath)
+    imagePath = cur.fetchone()
+    print(imagePath)
+    confirmationGUI.loadingGui(imagePath)
 
+    yesno = confirmationGUI.confir
 
-    yesno = input()
-    if yesno == "yes":
+    #yesno = input()
+    if yesno == 2:
         print("Nice job!")
         cur.execute(yesdbUpdate)
-    elif yesno == "no":
+    elif yesno == 1:
         print("Thanks for letting me know")
         cur.execute(nodbUpdate)
-    elif yesno == "i dont know":
+    elif yesno == 3:
         print("Thats alright, thanks for letting me know")
-        cur.execute(nodbUpdate)
+        cur.execute(idkdbUpdate)
     else:
         print("default no")
         cur.execute(nodbUpdate)
+
+    now = time.strftime('%H:%M')
+
+
+    takentimeCommand = "update reportMetrics set timetaken = '"+ now +"' where id = " + reportID + ";" # may need to tweak time format
+    cur.execute(takentimeCommand)
+
 def computedRefilDate(dateFilled, quantity, timesPerDay, weeklyCount):
     quantity = int(quantity)
     daysOfMeds = quantity / timesPerDay
@@ -84,7 +103,7 @@ conn = psycopg2.connect(
 
 cur = conn.cursor()
 
-def notification(medID):
+def notification(medID, curID, reportID):
     medID = medID
 
     pgmedNameCom = "SELECT medname FROM medicine1 where id = " + medID + ";"
@@ -111,7 +130,7 @@ def notification(medID):
     print("refilsLeft " + refillsLeft)
 
     PerscriptionRefillReminder(refillDate, refillsLeft)
-    takenMedsConfirmaiton(medID)
+    #takenMedsConfirmaiton(medID, curID, reportID)
 
 
 def convertTuple(tup):
@@ -122,14 +141,14 @@ def convertTuple(tup):
         myStr = ','.join(str(tu) for tu in tup)
         return myStr
 
-def checkTriggerNotification(reminderTime, reminderFinalDate, medID):
+def checkTriggerNotification(reminderTime, reminderFinalDate, medID, curID, reportID):
     today = datetime.today()
     today = today.strftime("%m/%d/%Y")
     now = time.strftime('%H:%M')
     print(now)
     if now > reminderTime and reminderFinalDate > today:
         alert()
-        notification(medID)
+        notification(medID, curID, reportID)
     else:
         print("not time yet")
 
@@ -146,41 +165,63 @@ def getfromTable(command):
 
         myValtoString = convertTuple(myVal)
         return myValtoString
+    # dont alwasy need to handle it this above way...
 
     except TypeError:
         print("db error")
         dbError = True
 
+def getfromTableNotTime(com):
+    cur.execute(com)
+    myVal = cur.fetchone()
+    return myVal
 
 
-def runDemo():
-    #popdb4demo
+
+
+def checkRunThrough():
     check = True
     curID = 0
+
+    today = datetime.today()
+    today = today.strftime("%m/%d/%Y")
     while check:
         curID +=1
+        if curID > 20:
+            break
         curID = str(curID)
         postgresTimeCommand = "SELECT remindertime FROM reminders where id = " + curID + ";"
         postgresDateCommand = "SELECT finalreminderdate FROM reminders where id = " + curID + ";"
 
         postgresmedIDCommand = "SELECT medid FROM reminders where id = " + curID + ";"
 
+        alreadyTriggredCommand = "select id from reportMetrics where medid = " + curID + " and date = '" + today + "' and timetaken is NULL;"
+
+        #Davison need to resolve this but for sake of demo, will add stuff needed
+
+
         reminderTime = getfromTable(postgresTimeCommand)
         reminderFinalDate = getfromTable(postgresDateCommand)
         medID = getfromTable(postgresmedIDCommand)
+        reportID = getfromTable(alreadyTriggredCommand)
+        print(reportID)
 
         isNoneTime = isinstance(reminderTime, str)
         isNoneDate = isinstance(reminderFinalDate, str)
+        isAlreadyTriggered = isinstance(reportID, int) #DAVISON Need to add check to see if already triggered, i guess we do up top
+        print(isAlreadyTriggered)
         isNoneMedID = isinstance(medID,str)
 
+        print(isAlreadyTriggered)
+        print()
+
         if isNoneTime and isNoneDate:
-            checkTriggerNotification(reminderTime, reminderFinalDate, medID)
+            checkTriggerNotification(reminderTime, reminderFinalDate, medID, curID, reportID)
         else:
             print("you got an error or are at end of db")
-            break
         curID = int(curID)
 
-runDemo()
+checkRunThrough()
 
 
 

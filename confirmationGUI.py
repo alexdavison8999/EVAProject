@@ -4,22 +4,34 @@ from tkinter import *
 from PIL import ImageTk, Image
 
 # this is the function called when the button is clicked
+
+
+confir = 4
+
+root = tk.Toplevel()
 def btnClickFunction():
-	print('clicked')
+	root.destroy()
 
 def noFunct():
-	print('no')
+	global confir
+	confir = 1
+	print(confir)
+
 
 def yesFunct():
-	print('yes')
+	global confir
+	confir = 2
+	print(confir)
 
 def idkFunct():
-	print('idk')
+	# global confir
+	# confir = 3
+	print("idk")
 
 # creating tkinter window
 
-def loadingGui():
-	root = Tk()
+def loadingGui(imPath):
+	#root = Tk()
 
 	root.geometry('1280x800')
 	root.configure(background='#F0F8FF')
@@ -31,7 +43,8 @@ def loadingGui():
 	Label(root, text='Have you taken your medicine yet?', bg='#F0F8FF', font=('arial', 40, 'normal')).place(x=38, y=37)
 
 	# Creating a photoimage object to use image
-	photo = PhotoImage(file=r"C:\EVA\pillbottles\pillbottle1\Image1.png")
+	print(imPath)
+	photo = PhotoImage(file=r'%s' % imPath)
 
 	# photo1 = Image.open("C:\EVA\pillbottles\pillbottle1\Image1.png")
 	#
@@ -50,4 +63,15 @@ def loadingGui():
 
 	Button(root, text='IDK', bg='#FFB90F', font=('arial', 70, 'normal'), command=idkFunct).place(x=24, y=600)
 
-	mainloop()
+	Button(root, text='Exit', bg='#9A32CD', font=('arial', 12, 'normal'), command=btnClickFunction).place(x=1100, y=740)
+
+	if confir != 4:
+		return confir
+	print(confir)
+	print("imhere")
+
+	root.mainloop()
+
+
+# path = "C:\EVA\pillbottles\pillbottle1\image1.png"
+# loadingGui(path)

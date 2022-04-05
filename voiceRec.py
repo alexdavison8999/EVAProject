@@ -42,9 +42,9 @@ def command():
                     #     result = result.replace('eva ', '')
                     #     print(result)
 
-                    if "about my" in result or "information" in result or "info" in result:
-                        drugsCom.getMedName()
-                    break
+                    # if "about my" in result or "information" in result or "info" in result:
+                    #     drugsCom.getMedName()
+                    # break
                 except sr.UnknownValueError:
                     print()
                 except sr.speech_recognition.RequestError:

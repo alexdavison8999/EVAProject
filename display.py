@@ -29,69 +29,49 @@ def putText(result: object):
 
     my_image.show()
 
-text = "Sample text for an on screen display"
+    my_image.close()
 
 
-
-# text = "my beautiful Cat, hello"
-# para = textwrap.wrap(text, width=15)
 #
-# my_image = Image.open("background_blue.jpg")
-#
-# title_font = ImageFont.truetype('Yagora.ttf', 30)
-#
-# draw = ImageDraw.Draw(my_image)
-#
-# draw.text(xy=(200,200), text="my beautiful Cat", fill=(237, 230, 211), font=title_font)
-#
-# my_image.format = "PNG"
-#
-# my_image.show()
-
-
 # from tkinter import *
+# from tkinter import messagebox
+# from time import strftime
+# import time
+# import speech
 #
-# class login(Tk):
-#     def __init__(self):
-#         super().__init__()
-#         self.geometry("750x500")
-#         #self.resizeable(False,False)
-#     def Label(self):
-#         self.backGroundImage=PhotoImage(file="blueblue.png")
-#         self.backGroundImageLabel = Label(self, image=self.backGroundImage)
-#         self.backGroundImageLabel.place(x=0,y=0)
+# text = "Sample text for an on screen display"
 #
-#         self.cc=Label(self,text="My Message", font=('times', 24, 'italic'), highlightthickness=0)
+# def speechy(text):
+#     speech.speak(str)
 #
 #
-#         self.cc.place(x=200,y=200)
-#
-#
-#
-#
-# if __name__=="__main__":
-#     Login=login()
-#     Login.Label()
-#     Login.mainloop()
-
-
-#
-# import tkinter as tk
-# master = tk.Tk()
-# whatever_you_do = "Whatever you do will be insignificant, but it is very important that you do it.\n(Mahatma Gandhi)"
-# msg = tk.Message(master, text = whatever_you_do)
-# msg.config(bg='lightblue', font=('times', 24, 'italic'))
-#
-# msg.pack()
-# tk.mainloop()
 # root = Tk()
-# root.geometry("300x200")
+# root.geometry("1280x800")
 #
-# w = Label(root, text='GeeksForGeeks', font="50")
-# w.pack()
+# def putText(textInput):
+#     bg = PhotoImage(file="view.png")
+#     my_canvas = Canvas(root, width=1280, height=800)
+#     my_canvas.pack(fill="both", expand=True)
 #
-# msg = Message(root, text="A computer science portal for geeks")
+#     # my_text = Label(root, text = "hi", font=("Helvetica", 50), fg = "black")
+#     # my_text.place(x=100, y=500)
+#     # my_text.pack()
 #
-# msg.pack()
+#     my_canvas.create_image(0, 0, image=bg, anchor="nw")
 #
-# root.mainloop()
+#     # my_text = Label(root, text=textInput, font=("Helvetica", 50), fg="black")
+#
+#     # myText_window = my_canvas.create_window(70, 530, anchor='nw', window=my_text)
+#
+#     my_canvas.create_text(600,400,text=textInput, font=("Roboto", 50), fill="white")
+#
+#
+#
+#
+#
+#
+#     root.after(3000, lambda:root.destroy())
+#
+#
+#
+#     root.mainloop()
