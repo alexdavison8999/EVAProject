@@ -2,7 +2,7 @@
 
 echo 'Hello!'
 
-gcc version
+gcc --version
 
 curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
