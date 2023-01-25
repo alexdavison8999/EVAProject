@@ -5,11 +5,11 @@
 poetry --version
 # The above line should produce something like 'Poetry (X.X.X), currently 1.3.2 (Jan 24th, 2023)'
 
-mkdir projects
-cd projects
+# mkdir projects
+# cd projects
 
-git clone https://github.com/KroegerP/EVAProject.git
-cd EVAProject
+# git clone https://github.com/KroegerP/EVAProject.git
+# cd EVAProject
 
 poetry shell
 
