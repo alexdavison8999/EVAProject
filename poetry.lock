@@ -4720,6 +4720,17 @@ files = [
 ]
 
 [[package]]
+name = "pysmbc"
+version = "1.0.25.1"
+description = "Python bindings for libsmbclient"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pysmbc-1.0.25.1.tar.gz", hash = "sha256:22f1715df82589fd9cc4253feab390b4ef0babf14f64513cd8d07b3789963226"},
+]
+
+[[package]]
 name = "pytesseract"
 version = "0.3.10"
 description = "Python-tesseract is a python wrapper for Google's Tesseract-OCR"
@@ -5381,4 +5392,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "efffd2b943fd7a68c7eacca85c6f25b73571ad79aeebea8e8ffd337d7592a4b0"
+content-hash = "0edc5e0ea86b6e696a284faeefc9c1c76c72bc803e6d2416a44a10bb167c636f"

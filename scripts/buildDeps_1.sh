@@ -12,9 +12,15 @@ sudo apt install libcups2-dev python3-pyaudio libcairo2-dev \
 libcurl4-openssl-dev libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev \
 gir1.2-gtk-3.0 libdbus-1-dev libdbus-glib-1-dev
 
-sudo apt install libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0
+sudo apt install libgirepository1.0-dev gcc libcairo2-dev gir1.2-gtk-3.0
 
-sudo apt update && sudo apt install espeak ffmpeg libespeak1
+sudo apt install espeak ffmpeg libespeak1
+
+sudo apt install python3-pyaudio
+
+sudo apt install smbclient libsmbclient libsmbclient-dev
+
+sudo apt install python3-cupshelpers
 
 exec $SHELL
 
