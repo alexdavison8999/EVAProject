@@ -110,6 +110,8 @@ touchphat = "^0.0.2"
 typed-ast = "^1.5.4"
 unicornhathd = "^0.0.4"
 pycups = "^2.0.1"
+speechrecognition = "^3.9.0"
+opencv-python = "4.4.0.46"
 
 
 [build-system]
