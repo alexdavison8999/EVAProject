@@ -10,10 +10,10 @@ from fuzzywuzzy import process, fuzz
 
 # Establishes connection to database.
 conn = psycopg2.connect(
-    host="localhost",
-    database="EVA",
-    user="postgres",
-    password="alex"
+    host='localhost',
+    database='evaDB',
+    user='evaDB',
+    password='evaDB100'
 )
 
 cur = conn.cursor()
