@@ -11,9 +11,9 @@ from fuzzywuzzy import process, fuzz
 # Establishes connection to database.
 conn = psycopg2.connect(
     host='localhost',
-    database='evaDB',
-    user='evaDB',
-    password='evaDB100'
+    database='evadb',
+    user='evadb',
+    password='evadb100'
 )
 
 cur = conn.cursor()
