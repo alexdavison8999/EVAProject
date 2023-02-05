@@ -22,6 +22,10 @@ sudo apt install smbclient libsmbclient libsmbclient-dev
 
 sudo apt install python3-cupshelpers
 
+sudo apt-get install x11-xserver-utils
+
+sudo apt install postgres
+
 exec $SHELL
 
 

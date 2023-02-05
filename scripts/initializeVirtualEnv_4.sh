@@ -13,12 +13,12 @@ poetry --version
 
 poetry shell
 
-alias startEnv="source $(poetry env info --path)/bin/activate"
+# alias startEnv="source $(poetry env info --path)/bin/activate"
 
-echo "To start your poetry env, type 'startEnv'"
+# echo "To start your poetry env, type 'startEnv'"
 
-echo "Type 'deactivate' into the console to exit"
+# echo "Type 'deactivate' into the console to exit"
 
-echo "You must be in the project directory for this to work"
+# echo "You must be in the project directory for this to work"
 
 # source $(poetry env info --path)/bin/activate
