@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: medicine1; Type: TABLE; Schema: public; Owner: pi
+-- Name: medicine1; Type: TABLE; Schema: public; Owner: evadb
 --
 
 CREATE TABLE public.medicine1 (
@@ -38,10 +38,10 @@ CREATE TABLE public.medicine1 (
 );
 
 
-ALTER TABLE public.medicine1 OWNER TO pi;
+ALTER TABLE public.medicine1 OWNER TO evadb;
 
 --
--- Name: medicines; Type: TABLE; Schema: public; Owner: pi
+-- Name: medicines; Type: TABLE; Schema: public; Owner: evadb
 --
 
 CREATE TABLE public.medicines (
@@ -50,10 +50,10 @@ CREATE TABLE public.medicines (
 );
 
 
-ALTER TABLE public.medicines OWNER TO pi;
+ALTER TABLE public.medicines OWNER TO evadb;
 
 --
--- Name: reminders; Type: TABLE; Schema: public; Owner: pi
+-- Name: reminders; Type: TABLE; Schema: public; Owner: evadb
 --
 
 CREATE TABLE public.reminders (
@@ -64,10 +64,10 @@ CREATE TABLE public.reminders (
 );
 
 
-ALTER TABLE public.reminders OWNER TO pi;
+ALTER TABLE public.reminders OWNER TO evadb;
 
 --
--- Name: reportmetrics; Type: TABLE; Schema: public; Owner: pi
+-- Name: reportmetrics; Type: TABLE; Schema: public; Owner: evadb
 --
 
 CREATE TABLE public.reportmetrics (
@@ -81,10 +81,10 @@ CREATE TABLE public.reportmetrics (
 );
 
 
-ALTER TABLE public.reportmetrics OWNER TO pi;
+ALTER TABLE public.reportmetrics OWNER TO evadb;
 
 --
--- Data for Name: medicine1; Type: TABLE DATA; Schema: public; Owner: pi
+-- Data for Name: medicine1; Type: TABLE DATA; Schema: public; Owner: evadb
 --
 
 COPY public.medicine1 (id, medname, datefilled, quantity, refillsleft, imagepath, folderpath, timesperday, timesperweek, refilldate) FROM stdin;
@@ -171,7 +171,7 @@ COPY public.medicine1 (id, medname, datefilled, quantity, refillsleft, imagepath
 
 
 --
--- Data for Name: medicines; Type: TABLE DATA; Schema: public; Owner: pi
+-- Data for Name: medicines; Type: TABLE DATA; Schema: public; Owner: evadb
 --
 
 COPY public.medicines (id, name) FROM stdin;
@@ -187,7 +187,7 @@ COPY public.medicines (id, name) FROM stdin;
 
 
 --
--- Data for Name: reminders; Type: TABLE DATA; Schema: public; Owner: pi
+-- Data for Name: reminders; Type: TABLE DATA; Schema: public; Owner: evadb
 --
 
 COPY public.reminders (id, medid, remindertime, finalreminderdate) FROM stdin;
@@ -195,7 +195,7 @@ COPY public.reminders (id, medid, remindertime, finalreminderdate) FROM stdin;
 
 
 --
--- Data for Name: reportmetrics; Type: TABLE DATA; Schema: public; Owner: pi
+-- Data for Name: reportmetrics; Type: TABLE DATA; Schema: public; Owner: evadb
 --
 
 COPY public.reportmetrics (id, medid, reminderid, timetaken, askedaftertakencount, askedbeforetakencount, date) FROM stdin;
@@ -203,7 +203,7 @@ COPY public.reportmetrics (id, medid, reminderid, timetaken, askedaftertakencoun
 
 
 --
--- Name: medicine1 medicine1_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+-- Name: medicine1 medicine1_pkey; Type: CONSTRAINT; Schema: public; Owner: evadb
 --
 
 ALTER TABLE ONLY public.medicine1
@@ -211,7 +211,7 @@ ALTER TABLE ONLY public.medicine1
 
 
 --
--- Name: reminders reminders_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+-- Name: reminders reminders_pkey; Type: CONSTRAINT; Schema: public; Owner: evadb
 --
 
 ALTER TABLE ONLY public.reminders
@@ -219,7 +219,7 @@ ALTER TABLE ONLY public.reminders
 
 
 --
--- Name: reportmetrics reportmetrics_pkey; Type: CONSTRAINT; Schema: public; Owner: pi
+-- Name: reportmetrics reportmetrics_pkey; Type: CONSTRAINT; Schema: public; Owner: evadb
 --
 
 ALTER TABLE ONLY public.reportmetrics
@@ -227,7 +227,7 @@ ALTER TABLE ONLY public.reportmetrics
 
 
 --
--- Name: reminders reminders_medid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: pi
+-- Name: reminders reminders_medid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: evadb
 --
 
 ALTER TABLE ONLY public.reminders
@@ -235,7 +235,7 @@ ALTER TABLE ONLY public.reminders
 
 
 --
--- Name: reportmetrics reportmetrics_medid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: pi
+-- Name: reportmetrics reportmetrics_medid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: evadb
 --
 
 ALTER TABLE ONLY public.reportmetrics
@@ -243,7 +243,7 @@ ALTER TABLE ONLY public.reportmetrics
 
 
 --
--- Name: reportmetrics reportmetrics_reminderid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: pi
+-- Name: reportmetrics reportmetrics_reminderid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: evadb
 --
 
 ALTER TABLE ONLY public.reportmetrics
