@@ -113,6 +113,7 @@ pycups = "^2.0.1"
 speechrecognition = "^3.9.0"
 opencv-python = "4.4.0.46"
 pysmbc = "^1.0.25.1"
+python-levenshtein = "^0.20.9"
 
 
 [build-system]
