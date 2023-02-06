@@ -52,8 +52,8 @@ def openNewWindow():
 
 def showHomeScreen():
 
-    bg = PhotoImage(file="view.png")
-    evaFace = PhotoImage(file="evaFace4Home.png")
+    bg = PhotoImage(file='EXPOFILES/assets/view.png')
+    evaFace = PhotoImage(file="EXPOFILES/assets/evaFace4Home.png")
 
     my_canvas = Canvas(root, width=1280, height=800)
     my_canvas.pack(fill="both", expand=True)
@@ -69,15 +69,30 @@ def showHomeScreen():
     evaText = "Hi I'm Eva.\nHow can I help you?"
     my_canvas.create_text(410, 80, text=evaText, font=("Roboto", 40), fill="white")
 
-    Button(root, text='Scan Bottle', bg='#E1912A', font=('arial', 50, 'normal'), command=scanSelect).place(x=604, y=175)
-    Button(root, text='Drug Info', bg='#A1E12A', font=('arial', 50, 'normal'), command=drugInfoSelect).place(x=604,
-                                                                                                              y=320)
-
-    Button(root, text='Confirmation Demo', bg='#1AA8AC', font=('arial', 50, 'normal'), command=confirmSelect).place(x=604,
-                                                                                                              y=470)
-
-    Button(root, text='Reports', bg='#6F31CF', font=('arial', 55, 'normal'), command=reportSelect).place(x=604,
-                                                                                                              y=620)
+    Button(
+        root, 
+        text='Scan Bottle', 
+        bg='#E1912A', 
+        font=('arial', 50, 'normal'), 
+        command=scanSelect).place(x=604, y=175)
+    Button(
+        root, 
+        text='Drug Info', 
+        bg='#A1E12A', 
+        font=('arial', 50, 'normal'), 
+        command=drugInfoSelect).place(x=604,y=320)
+    Button(
+        root, 
+        text='Confirmation Demo', 
+        bg='#1AA8AC', 
+        font=('arial', 50, 'normal'), 
+        command=confirmSelect).place(x=604,y=470)
+    Button(
+        root, 
+        text='Reports', 
+        bg='#6F31CF', 
+        font=('arial', 55, 'normal'), 
+        command=reportSelect).place(x=604,y=620)
 
     print("expoFunct")
     while True:
