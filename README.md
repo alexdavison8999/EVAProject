@@ -129,7 +129,7 @@ You must be in a linux environment for the install scripts to work.
    ```
 5. Download python dependencies
    ```sh
-   ./scripts/collectPythonDeps_4.sh
+   ./scripts/initializeVirtualEnv_4.sh
    ```
 7. Initialize the database
    ```sh

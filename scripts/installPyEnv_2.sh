@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo 'Hello!'
-
 gcc --version
 
 curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
