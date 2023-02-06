@@ -131,7 +131,15 @@ You must be in a linux environment for the install scripts to work.
    ```sh
    ./scripts/collectPythonDeps_4.sh
    ```
-6. More steps to come...
+7. Initialize the database
+   ```sh
+   ./scripts/initdb_5.sh
+   ```
+8. Activate your virtual environment (If not started)
+   ```sh
+   source scripts/activate.sh
+   ```
+9. More steps to come...
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
