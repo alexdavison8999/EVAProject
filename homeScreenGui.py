@@ -17,7 +17,7 @@ def my_time():
     my_text.after(1000, my_time)  # time delay of 1000 milliseconds
 
 def displayHomeScreen():
-    bg = PhotoImage(file="view.png")
+    bg = PhotoImage(file="EXPOFILES/assets/view.png")
 
     my_canvas = Canvas(root, width=1280, height=800)
     my_canvas.pack(fill="both", expand=True)

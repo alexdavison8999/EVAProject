@@ -7,9 +7,9 @@ from franklinKeyboard import *
 c = 1
 my_connect = psycopg2.connect(
     host='localhost',
-    database='evaDB',
-    user='evaDB',
-    password='evaDB100'
+    database='evadb',
+    user='evadb',
+    password='evadb100'
 )
 my_conn = my_connect.cursor()
 

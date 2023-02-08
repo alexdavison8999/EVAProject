@@ -49,7 +49,7 @@ def putText(result: object):
 # root.geometry("1280x800")
 #
 # def putText(textInput):
-#     bg = PhotoImage(file="view.png")
+#     bg = PhotoImage(file="EXPOFILES/assets/view.png")
 #     my_canvas = Canvas(root, width=1280, height=800)
 #     my_canvas.pack(fill="both", expand=True)
 #

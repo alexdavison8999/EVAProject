@@ -26,7 +26,7 @@ def scanSelect():
     displayFunct()
 
 def confirmSelect():
-    loadingGui("C:\EVA\pillbottles\pillbottle1\image1.png")
+    loadingGui("EXPOFILES/assets/image1.png")
 
 def reportSelect():
     loadingReportGui()
@@ -52,8 +52,8 @@ def openNewWindow():
 
 def showHomeScreen():
 
-    bg = PhotoImage(file="view.png")
-    evaFace = PhotoImage(file="evaFace4Home.png")
+    bg = PhotoImage(file="EXPOFILES/assets/view.png")
+    evaFace = PhotoImage(file="EXPOFILES/assets/evaFace4Home.png")
 
     my_canvas = Canvas(root, width=1280, height=800)
     my_canvas.pack(fill="both", expand=True)

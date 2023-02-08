@@ -24,7 +24,7 @@ def loadingDrugGui():
 	global root
 	root = Toplevel()
 
-	bg = PhotoImage(file="view.png")
+	bg = PhotoImage(file="EXPOFILES/assets/view.png")
 
 	root.geometry('1280x800')
 
@@ -35,7 +35,7 @@ def loadingDrugGui():
 
 
 	# Creating a photoimage object to use image
-	imPath = "timesAsked.png"
+	imPath = "EXPOFILES/assets/timesAsked.png"
 	photo = PhotoImage(file=imPath)
 
 	print("oeo")

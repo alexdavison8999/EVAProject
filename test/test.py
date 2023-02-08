@@ -24,7 +24,7 @@ root.geometry("500x500")
 bg = tkinter.PhotoImage(name="View",file=f'{file_name}/view.png')
 bg = tkinter.PhotoImage(name="View2",file='test/assets/view.png')
 # bg = tkinter.PhotoImage(name="View3",file='assets/view.png')
-evaFace = tkinter.PhotoImage(file="evaFace4Home.png")
+evaFace = tkinter.PhotoImage(file="test/assets/evaFace4Home.png")
 # bg = tkinter.PhotoImage(file="~/projects/EVAProject/EXPOFILES/assets/view.png")
 # evaFace = tkinter.PhotoImage(file="~/projects/EVAProject/EXPOFILES/assets/evaFace4Home.png")
 
