@@ -26,7 +26,7 @@ def scanSelect():
     displayFunct()
 
 def confirmSelect():
-    loadingGui("C:\EVA\pillbottles\pillbottle1\image1.png")
+    loadingGui("EXPOFILES/assets/image1.png")
 
 def reportSelect():
     loadingReportGui()

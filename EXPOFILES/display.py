@@ -55,7 +55,7 @@ def putText(textInput):
     root = Tk()
     root.geometry("1280x800")
 
-    bg = PhotoImage(master = root, file="view.png")
+    bg = PhotoImage(master = root, file="EXPOFILES/assets/view.png")
     my_canvas = Canvas(root, width=1280, height=800)
     my_canvas.pack(fill="both", expand=True)
 
@@ -84,7 +84,7 @@ def putText2(textInput):
     root = Tk()
     root.geometry("1280x800")
 
-    bg = PhotoImage(master = root, file="view.png")
+    bg = PhotoImage(master = root, file="EXPOFILES/assets/view.png")
     my_canvas = Canvas(root, width=1280, height=800)
     my_canvas.pack(fill="both", expand=True)
 

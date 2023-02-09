@@ -28,7 +28,7 @@ def loadingReportGui():
 	root.configure(background='#F0F8FF')
 	root.title('hi')
 
-	mat = PhotoImage(file="matplotlib.png")
+	mat = PhotoImage(file="EXPOFILES/assets/report1.png")
 
 
 	# Adding widgets to the root window
@@ -37,7 +37,7 @@ def loadingReportGui():
 	Label(root, text='', bg='#F0F8FF', font=('arial', 40, 'normal')).place(x=38, y=37)
 
 	# Creating a photoimage object to use image
-	imPath = "report1.png"
+	imPath = "EXPOFILES/assets/report1.png"
 	photo = PhotoImage(file=imPath)
 
 	print("oeo")

@@ -28,7 +28,7 @@ def loadingReportGui2():
 	Label(root, text='', bg='#F0F8FF', font=('arial', 40, 'normal')).place(x=38, y=37)
 
 	# Creating a photoimage object to use image
-	imPath = "timesAsked.png"
+	imPath = "EXPOFILES/assets/timesAsked.png"
 	photo = PhotoImage(file=imPath)
 
 	print("oeo")
