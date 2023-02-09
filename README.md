@@ -117,21 +117,29 @@ You must be in a linux environment for the install scripts to work.
    ```
 2. Run the install scripts for the dependencies
    ```sh
-   ./scripts/buildDeps_1.sh
+   ./scripts/1_buildDeps.sh
    ```
 3. Install pyenv to install python
    ```sh
-   ./scripts/installPyEnv_2.sh
+   ./scripts/2_installPyEnv.sh
    ```
 4. Download poetry and create virtual environment
    ```sh
-   ./scripts/createPoetryEnv_3.sh
+   ./scripts/3_createPoetryEnv.sh
    ```
 5. Download python dependencies
    ```sh
-   ./scripts/collectPythonDeps_4.sh
+   ./scripts/4_initializeVirtualEnv.sh
    ```
-6. More steps to come...
+7. Initialize the database
+   ```sh
+   ./scripts/5_initdb.sh
+   ```
+8. Activate your virtual environment (If not started)
+   ```sh
+   source scripts/activate.sh
+   ```
+9. More steps to come...
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
