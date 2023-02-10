@@ -5,3 +5,4 @@ EXPOFILES/__pycache__
 EXPOFILES/database/__pycache__/dbUtils.cpython-39.pyc
 EXPOFILES/utils/__pycache__/interfaceHelpers.cpython-39.pyc
 EXPOFILES/utils/__pycache__/itemHelpers.cpython-39.pyc
+EXPOFILES/constants/__pycache__/window.cpython-39.pyc
