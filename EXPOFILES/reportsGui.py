@@ -1,60 +1,58 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter import *
-from PIL import ImageTk, Image
 
 from report2 import *
+import utils.interfaceHelpers as UI
+from utils.itemHelpers import resetWindow
+from constants.window import *
 
-confir = 4
+# Formulating Ideas from this thread: https://stackoverflow.com/questions/14817210/using-buttons-in-tkinter-to-navigate-to-different-pages-of-the-application
+# Ideas from this could be useful later: https://stackoverflow.com/questions/20399243/display-message-when-hovering-over-something-with-mouse-cursor-in-python
+# https://www.tutorialspoint.com/how-to-clear-tkinter-canvas#:~:text=While%20creating%20a%20canvas%20in,present%20in%20a%20tkinter%20frame.
+
+# Issues related to old tkinter bug that functions will not load image paths due to garbage collection
+# https://stackoverflow.com/questions/16424091/why-does-tkinter-image-not-show-up-if-created-in-a-function
 
 def report2command():
-	root.destroy()
-	loadingReportGui2()
+	# loadingReportGui2()
+	pass
 
-def btnClickFunction():
-	root.destroy()
+def clickFunc():
+	print("Clicked!")
 
+# hides the home GUI and updates the canvas with the reports GUI
+def reportGui(GuiClass, classCanvas: tk.Canvas) -> None:
 
-# creating tkinter window
-# hides the home GUI and creates a canvas for the reports GUI
-def reportGui(classRoot, classCanvas):
+	# TODO: Figure out how to abstract this out of the upper function definition.
+	# This is currently needed because I cannot figure out how to pass parameters
+	# into the commands envoked by the buttons
+	def cleanupReports() -> None:
+		[classCanvas.delete(itemId) for itemId in GuiClass.canvasIds["Report"]]
+		[classCanvas.itemconfig(itemId,state='normal') for itemId in GuiClass.canvasIds["Home"]]
+		return
 
-	global root
-	root = Toplevel()
+	# Hides all the current items in the canvas
+	result = resetWindow(classCanvas, GuiClass.canvasIds,'Home')
 
-	root.geometry('1280x800')
-	root.configure(background='#F0F8FF')
-	root.title('hi')
+	# If there are no issues hiding the previous page, then load reports page
+	if result:
 
-	mat = PhotoImage(file="EXPOFILES/assets/report1.png")
+		# This is the section of code which creates the a label
+		reports_label = tk.Label(classCanvas, text='Reports', bg='#F0F8FF', font=('arial', 40, 'normal'))
 
+		# Creating a photoimage object to use image
+		report_image = tk.PhotoImage(file="EXPOFILES/assets/report1.png")
 
-	# Adding widgets to the root window
+		cog_report_btn = UI.NewHomeBtn(master=classCanvas, text='Cognitive Report', command=report2command)
+		go_back_btn = UI.NewHomeBtn(master=classCanvas, text='Go Back', command=cleanupReports)
+		# click_me_btn = tk.Button(classCanvas, image=report_image, command=clickFunc)
 
-	# This is the section of code which creates the a label
-	Label(root, text='', bg='#F0F8FF', font=('arial', 40, 'normal')).place(x=38, y=37)
+		GuiClass.canvasIds["Report"] = []
+		GuiClass.canvasIds["Report"].append(classCanvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 20, window=reports_label, anchor=tk.N))
+		GuiClass.canvasIds["Report"].append(classCanvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT_PADDING, window=cog_report_btn, anchor=tk.SE))
+		GuiClass.canvasIds["Report"].append(classCanvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
+		# GuiClass.canvasIds["Report"].append(classCanvas.create_window(WINDOW_PADDING / 2, WINDOW_HEIGHT_PADDING / 2, window=click_me_btn))
+		GuiClass.canvasIds["Report"].append(classCanvas.create_image(0, 0 / 2, image=report_image, anchor="nw"))
 
-	# Creating a photoimage object to use image
-	imPath = "EXPOFILES/assets/report1.png"
-	photo = PhotoImage(file=imPath)
-
-	print("oeo")
-
-	Button(root, text='Click Me !', image=photo).place(x=100, y=125)
-
-	#Label(root, text='Click Me !', image=mat, height=100, width=100).place(x=0, y=0)
-
-
-
-	# This is the section of code which creates a button
-	Button(root, text='Cognitive report', bg='#76EE00', font=('arial', 40, 'normal'), command=report2command).place(x=24, y=675)
-
-
-	Button(root, text='Exit', bg='#9A32CD', font=('arial', 40, 'normal'), command=btnClickFunction).place(x=1100, y=640)
-
-	if confir != 4:
-		return confir
-	print(confir)
-	print("imhere")
-
-	root.mainloop()
+	else:
+		print("Error creating Report screen")
+		return
