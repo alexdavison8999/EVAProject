@@ -2,6 +2,7 @@ import tkinter as tk
 
 from report2 import *
 import utils.interfaceHelpers as UI
+from utils.itemHelpers import resetWindow
 
 # Formulating Ideas from this thread: https://stackoverflow.com/questions/14817210/using-buttons-in-tkinter-to-navigate-to-different-pages-of-the-application
 # Ideas from this could be useful later: https://stackoverflow.com/questions/20399243/display-message-when-hovering-over-something-with-mouse-cursor-in-python
@@ -21,35 +22,32 @@ def reportGui(GuiClass, classCanvas: tk.Canvas) -> None:
 	# into the commands envoked by the buttons
 	def cleanupReports() -> None:
 		[classCanvas.delete(itemId) for itemId in GuiClass.canvasIds["report"]]
-		[classCanvas.itemconfig(itemId,state='normal') for itemId in GuiClass.canvasIds["home"]]
+		[classCanvas.itemconfig(itemId,state='normal') for itemId in GuiClass.canvasIds["Home"]]
 		return
 
 	# Hides all the current items in the canvas
-	[classCanvas.itemconfig(itemId,state='hidden') for itemId in GuiClass.canvasIds["home"]]
+	result = resetWindow(classCanvas, GuiClass.canvasIds,'Home')
 
-	mat = tk.PhotoImage(file="EXPOFILES/assets/report1.png")
-	# Adding widgets to the root window
+	# If there are no issues hiding the previous page, then load reports page
+	if result:
 
-	# This is the section of code which creates the a label
-	label_1 = tk.Label(classCanvas, text='', bg='#F0F8FF', font=('arial', 40, 'normal'))
+		# This is the section of code which creates the a label
+		reports_label = tk.Label(classCanvas, text='Reports', bg='#F0F8FF', font=('arial', 40, 'normal'))
 
-	# Creating a photoimage object to use image
-	imPath = "EXPOFILES/assets/report1.png"
-	photo = tk.PhotoImage(file=imPath)
+		# Creating a photoimage object to use image
+		imPath = "EXPOFILES/assets/report1.png"
+		photo = tk.PhotoImage(file=imPath)
 
-	# .place(x=100, y=125)
+		cog_report_btn = UI.NewHomeBtn(master=classCanvas, text='Cognitive report', command=report2command)
+		go_back_btn = UI.NewHomeBtn(master=classCanvas, text='Go Back', command=cleanupReports)
+		click_me_btn = tk.Button(classCanvas, text='Click Me!', image=photo)
 
-	# This is the section of code which creates a button
-	# .place(x=24, y=675)
+		GuiClass.canvasIds["report"] = []
+		GuiClass.canvasIds["report"].append(GuiClass.canvas.create_window(70, 530, window=reports_label, anchor=tk.NW))
+		GuiClass.canvasIds["report"].append(GuiClass.canvas.create_window(300, 125, window=cog_report_btn, anchor=tk.SW))
+		GuiClass.canvasIds["report"].append(GuiClass.canvas.create_window(500, 675, window=go_back_btn, anchor=tk.SE))
+		GuiClass.canvasIds["report"].append(GuiClass.canvas.create_window(1100, 640, window=click_me_btn, anchor=tk.S))
 
-	cog_report_btn = UI.NewHomeBtn(master=classCanvas, text='Cognitive report', command=report2command)
-	go_back_btn = UI.NewHomeBtn(master=classCanvas, text='Go Back', command=cleanupReports)
-	click_me_btn = tk.Button(classCanvas, text='Click Me!', image=photo)
-
-	GuiClass.canvasIds["report"] = []
-	GuiClass.canvasIds["report"].append(GuiClass.canvas.create_window(70, 530, window=label_1, anchor=tk.NW))
-	GuiClass.canvasIds["report"].append(GuiClass.canvas.create_window(300, 125, window=cog_report_btn, anchor=tk.SW))
-	GuiClass.canvasIds["report"].append(GuiClass.canvas.create_window(500, 675, window=go_back_btn, anchor=tk.SE))
-	GuiClass.canvasIds["report"].append(GuiClass.canvas.create_window(1100, 640, window=click_me_btn, anchor=tk.S))
-
-	# .place(x=1100, y=640)
+	else:
+		print("Error creating reports screen")
+		return
