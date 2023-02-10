@@ -3,7 +3,6 @@ import tkinter as tk
 from tkinter import messagebox
 from time import strftime
 
-
 # MODULES
 from voiceRec import *
 import confirmationGUI as confirmUI
@@ -12,6 +11,8 @@ from evaGUI import *
 from postScanDisplay import *
 from reportsGui import *
 from drugInfoGui import *
+from database.dbUtils import getPercentConfirmsPastWeek, connect
+
 
 WINDOW_HEIGHT=800
 WINDOW_WIDTH=1280
@@ -23,7 +24,7 @@ class EVAGUI:
     def __init__(self):
 
         self.root = tk.Tk()
-
+        self.conn = connect()
         self.root.geometry("1280x800")
         self.root.title("Elderly Virtual Assistant")
 
