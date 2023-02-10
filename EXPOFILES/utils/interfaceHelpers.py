@@ -1,10 +1,9 @@
 
 import tkinter
 
-class HomeButton:
-    def __init__(self, master, command, text="Default") -> None:
-        tkinter.Button(
-            master, 
+def NewHomeBtn(master, command, text="Default") -> tkinter.Button:
+        return tkinter.Button(
+            master=master, 
             text=text, 
             bg='#F44336', 
             font=('arial', 55, 'normal'), 

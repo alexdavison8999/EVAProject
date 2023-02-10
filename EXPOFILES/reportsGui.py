@@ -5,9 +5,6 @@ from PIL import ImageTk, Image
 
 from report2 import *
 
-# this is the function called when the button is clicked
-
-
 confir = 4
 
 def report2command():
@@ -19,8 +16,9 @@ def btnClickFunction():
 
 
 # creating tkinter window
+# hides the home GUI and creates a canvas for the reports GUI
+def reportGui(classRoot, classCanvas):
 
-def loadingReportGui():
 	global root
 	root = Toplevel()
 
@@ -60,7 +58,3 @@ def loadingReportGui():
 	print("imhere")
 
 	root.mainloop()
-
-
-# path = "C:\EVA\pillbottles\pillbottle1\image1.png"
-# loadingGui(path)

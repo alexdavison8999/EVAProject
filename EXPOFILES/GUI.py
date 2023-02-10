@@ -7,6 +7,7 @@ from time import strftime
 # MODULES
 from voiceRec import *
 import confirmationGUI as confirmUI
+import utils.interfaceHelpers as UI
 from evaGUI import *
 from postScanDisplay import *
 from reportsGui import *
@@ -51,51 +52,12 @@ class EVAGUI:
             300, 250, text=self.evaText, font=("Roboto", 40), fill="black"
         )
 
-        scan_btn = tk.Button(
-            self.root, 
-            text='Scan Bottle', 
-            bg='#F44336', 
-            font=('arial', 50, 'normal'), 
-            fg='#ffffff',
-            command=self.scanSelect
-        )
+        scan_btn = UI.NewHomeBtn(master=self.root, text='Scan Bottle', command=self.scanSelect)
+        drug_info_btn = UI.NewHomeBtn(master=self.root, text='Drug Info', command=self.drugInfoSelect)
+        confirm_btn = UI.NewHomeBtn(master=self.root, text='Daily Confirmation', command=self.confirmSelect)
+        report_btn = UI.NewHomeBtn(master=self.root, text='Reports', command=self.reportSelect)
+        exit_btn = UI.NewHomeBtn(master=self.root, text='Exit', command=self.closeEVA)
 
-        drug_info_btn = tk.Button(
-            self.root, 
-            text='Drug Info', 
-            bg='#F44336', 
-            font=('arial', 50, 'normal'),
-            fg='#ffffff',
-            command=self.drugInfoSelect
-        )
-        
-        confirm_btn = tk.Button(
-            self.root, 
-            text='Daily Confirmation', 
-            bg='#F44336', 
-            font=('arial', 50, 'normal'),
-            fg='#ffffff', 
-            command=self.confirmSelect
-        )
-        
-        report_btn = tk.Button(
-            self.root, 
-            text='Reports', 
-            bg='#F44336', 
-            font=('arial', 55, 'normal'), 
-            fg='#ffffff',
-            command=self.reportSelect
-        )
-
-        exit_btn = tk.Button(
-            self.root, 
-            text='Exit', 
-            bg='#F44336', 
-            font=('arial', 32, 'normal'), 
-            fg='#ffffff',
-            command=self.closeEVA,
-        )
-        # exit_btn = HomeButton(master=self.root, text='Exit', command=self.closeEVA)
         self.my_canvas.create_window(WINDOW_WIDTH,200,window=scan_btn, anchor=tk.E)
         self.my_canvas.create_window(WINDOW_WIDTH,300,window=drug_info_btn, anchor=tk.E)
         self.my_canvas.create_window(WINDOW_WIDTH,400,window=confirm_btn, anchor=tk.E)
@@ -116,7 +78,7 @@ class EVAGUI:
 
     def reportSelect(self):
         print("Going to Reports")
-        loadingReportGui()
+        reportGui(self.root, self.my_canvas)
 
     def drugInfoSelect(self):
         print("Going to Drug Info")
