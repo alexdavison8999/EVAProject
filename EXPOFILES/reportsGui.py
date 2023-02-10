@@ -5,26 +5,26 @@ from PIL import ImageTk, Image
 
 from report2 import *
 
+# Formulating Ideas from this thread: https://stackoverflow.com/questions/14817210/using-buttons-in-tkinter-to-navigate-to-different-pages-of-the-application
+
 confir = 4
 
 def report2command():
-	root.destroy()
-	loadingReportGui2()
+	# loadingReportGui2()
+	pass
 
-def btnClickFunction():
-	root.destroy()
+def cleanupReports():
+	pass
 
 
 # creating tkinter window
 # hides the home GUI and creates a canvas for the reports GUI
 def reportGui(classRoot, classCanvas):
 
-	global root
-	root = Toplevel()
+	classCanvas.itemconfig(1,state='hidden')
 
-	root.geometry('1280x800')
-	root.configure(background='#F0F8FF')
-	root.title('hi')
+	# global root
+	root = classRoot
 
 	mat = PhotoImage(file="EXPOFILES/assets/report1.png")
 
@@ -38,23 +38,10 @@ def reportGui(classRoot, classCanvas):
 	imPath = "EXPOFILES/assets/report1.png"
 	photo = PhotoImage(file=imPath)
 
-	print("oeo")
-
 	Button(root, text='Click Me !', image=photo).place(x=100, y=125)
 
-	#Label(root, text='Click Me !', image=mat, height=100, width=100).place(x=0, y=0)
-
-
-
 	# This is the section of code which creates a button
-	Button(root, text='Cognitive report', bg='#76EE00', font=('arial', 40, 'normal'), command=report2command).place(x=24, y=675)
+	Button(root, text='Cognitive report', bg='#76EE00', font=('arial', 40, 'normal'), command=report2command(classRoot)).place(x=24, y=675)
 
 
-	Button(root, text='Exit', bg='#9A32CD', font=('arial', 40, 'normal'), command=btnClickFunction).place(x=1100, y=640)
-
-	if confir != 4:
-		return confir
-	print(confir)
-	print("imhere")
-
-	root.mainloop()
+	Button(root, text='Go Back', bg='#9A32CD', font=('arial', 40, 'normal'), command=cleanupReports).place(x=1100, y=640)
