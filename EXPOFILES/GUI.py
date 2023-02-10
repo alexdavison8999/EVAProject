@@ -26,8 +26,6 @@ class EVAGUI:
         # Geometry for the application window size
         geometry = f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}'
 
-        # print(geometry)
-
         # Root properties - these will remain consistent
         self.root.geometry(geometry)
         self.root.title("Elderly Virtual Assistant")

@@ -12,9 +12,6 @@ from constants.window import *
 # Issues related to old tkinter bug that functions will not load image paths due to garbage collection
 # https://stackoverflow.com/questions/16424091/why-does-tkinter-image-not-show-up-if-created-in-a-function
 
-
-confir = 4
-
 def report2command():
 	# loadingReportGui2()
 	pass
