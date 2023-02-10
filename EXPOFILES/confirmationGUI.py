@@ -31,7 +31,7 @@ def idkFunct():
 
 # creating tkinter window
 
-def loadingGui(imPath):
+def confirmGui():
 	global root
 	root = Toplevel()
 
@@ -45,8 +45,7 @@ def loadingGui(imPath):
 	Label(root, text='Have you taken your medicine yet?', bg='#F0F8FF', font=('arial', 40, 'normal')).place(x=38, y=37)
 
 	# Creating a photoimage object to use image
-	print(imPath)
-	photo = PhotoImage(file=r'%s' % imPath)
+	photo = PhotoImage(file=r'%s' % "EXPOFILES/assets/image1.png")
 
 	# photo1 = Image.open("C:\EVA\pillbottles\pillbottle1\Image1.png")
 	#
