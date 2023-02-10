@@ -3,7 +3,6 @@ import tkinter as tk
 from tkinter import messagebox
 from time import strftime
 
-
 # MODULES
 from voiceRec import *
 import confirmationGUI as confirmUI
@@ -13,13 +12,13 @@ from postScanDisplay import *
 from reportsGui import *
 from drugInfoGui import *
 from constants.window import *
+from database.dbUtils import getPercentConfirmsPastWeek, connect
 
 class EVAGUI:
 
     def __init__(self):
 
         self.root = tk.Tk()
-
         # Data Setup
         # This will be used to manage the UI elements on the canvas
         self.canvasIds = {}
@@ -28,6 +27,7 @@ class EVAGUI:
 
         # Root properties - these will remain consistent
         self.root.geometry(geometry)
+        self.conn = connect()
         self.root.title("Elderly Virtual Assistant")
         # self.root.attributes('-fullscreen', True)
         
