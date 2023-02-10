@@ -6,7 +6,7 @@ from time import strftime
 
 # MODULES
 from voiceRec import *
-from confirmationGUI import *
+import confirmationGUI as confirmUI
 from evaGUI import *
 from postScanDisplay import *
 from reportsGui import *
@@ -112,7 +112,7 @@ class EVAGUI:
 
     def confirmSelect(self):
         print("Going to Medicine Confirmation")
-        loadingGui("EXPOFILES/assets/image1.png")
+        confirmUI.confirmGui()
 
     def reportSelect(self):
         print("Going to Reports")
@@ -135,6 +135,4 @@ class EVAGUI:
         time_string = strftime('%I:%M %p \n %A \n %B %d, %Y')
         self.clock_text.config(text= time_string)
         self.clock_text.after(1000,self.clock)
-
-EVAGUI()
     
