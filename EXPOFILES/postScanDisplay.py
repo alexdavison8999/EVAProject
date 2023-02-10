@@ -1,16 +1,11 @@
-import psycopg2
 import tkinter as tk
 from tkinter import *
+from database.dbUtils import connect
 from bottleFixerKeyboard import *
 from franklinKeyboard import *
 
 c = 1
-my_connect = psycopg2.connect(
-    host='localhost',
-    database='evadb',
-    user='evadb',
-    password='evadb100'
-)
+my_connect = connect()
 my_conn = my_connect.cursor()
 
 

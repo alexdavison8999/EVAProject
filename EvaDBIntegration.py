@@ -5,16 +5,12 @@ import os
 import numpy as np
 import pytesseract
 from pytesseract import Output
-import psycopg2
 from fuzzywuzzy import process, fuzz
 
+from EXPOFILES.database.dbUtils import connect
+
 # Establishes connection to database.
-conn = psycopg2.connect(
-    host='localhost',
-    database='evadb',
-    user='evadb',
-    password='evadb100'
-)
+conn = connect()
 
 cur = conn.cursor()
 # cur.execute("select count from pillbottlecount")
