@@ -3,6 +3,7 @@ import tkinter as tk
 from report2 import *
 import utils.interfaceHelpers as UI
 from utils.itemHelpers import resetWindow
+from constants.window import *
 
 # Formulating Ideas from this thread: https://stackoverflow.com/questions/14817210/using-buttons-in-tkinter-to-navigate-to-different-pages-of-the-application
 # Ideas from this could be useful later: https://stackoverflow.com/questions/20399243/display-message-when-hovering-over-something-with-mouse-cursor-in-python
@@ -21,7 +22,7 @@ def reportGui(GuiClass, classCanvas: tk.Canvas) -> None:
 	# This is currently needed because I cannot figure out how to pass parameters
 	# into the commands envoked by the buttons
 	def cleanupReports() -> None:
-		[classCanvas.delete(itemId) for itemId in GuiClass.canvasIds["report"]]
+		[classCanvas.delete(itemId) for itemId in GuiClass.canvasIds["Report"]]
 		[classCanvas.itemconfig(itemId,state='normal') for itemId in GuiClass.canvasIds["Home"]]
 		return
 
@@ -38,16 +39,16 @@ def reportGui(GuiClass, classCanvas: tk.Canvas) -> None:
 		imPath = "EXPOFILES/assets/report1.png"
 		photo = tk.PhotoImage(file=imPath)
 
-		cog_report_btn = UI.NewHomeBtn(master=classCanvas, text='Cognitive report', command=report2command)
+		cog_report_btn = UI.NewHomeBtn(master=classCanvas, text='Cognitive Report', command=report2command)
 		go_back_btn = UI.NewHomeBtn(master=classCanvas, text='Go Back', command=cleanupReports)
 		click_me_btn = tk.Button(classCanvas, text='Click Me!', image=photo)
 
-		GuiClass.canvasIds["report"] = []
-		GuiClass.canvasIds["report"].append(GuiClass.canvas.create_window(70, 530, window=reports_label, anchor=tk.NW))
-		GuiClass.canvasIds["report"].append(GuiClass.canvas.create_window(300, 125, window=cog_report_btn, anchor=tk.SW))
-		GuiClass.canvasIds["report"].append(GuiClass.canvas.create_window(500, 675, window=go_back_btn, anchor=tk.SE))
-		GuiClass.canvasIds["report"].append(GuiClass.canvas.create_window(1100, 640, window=click_me_btn, anchor=tk.S))
+		GuiClass.canvasIds["Report"] = []
+		GuiClass.canvasIds["Report"].append(GuiClass.canvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 20, window=reports_label, anchor=tk.N))
+		GuiClass.canvasIds["Report"].append(GuiClass.canvas.create_window(WINDOW_WIDTH, WINDOW_HEIGHT, window=cog_report_btn, anchor=tk.SE))
+		GuiClass.canvasIds["Report"].append(GuiClass.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
+		# GuiClass.canvasIds["Report"].append(GuiClass.canvas.create_window(WINDOW_WIDTH / 4, 700, window=click_me_btn, anchor=tk.S))
 
 	else:
-		print("Error creating reports screen")
+		print("Error creating Report screen")
 		return

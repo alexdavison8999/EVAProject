@@ -12,12 +12,7 @@ from evaGUI import *
 from postScanDisplay import *
 from reportsGui import *
 from drugInfoGui import *
-
-
-WINDOW_HEIGHT=800
-WINDOW_WIDTH=1280
-BUTTON_PADDING=20
-
+from constants.window import *
 
 class EVAGUI:
 
@@ -72,10 +67,10 @@ class EVAGUI:
         self.canvasIds["Home"].append(self.canvas.create_text(
             300, 250, text=self.eva_text, font=("Roboto", 40), fill="black"
         ))
-        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH,200,window=scan_btn, anchor=tk.E))
-        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH,300,window=drug_info_btn, anchor=tk.E))
-        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH,400,window=confirm_btn, anchor=tk.E))
-        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH,500,window=report_btn, anchor=tk.E))
+        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH_PADDING,200,window=scan_btn, anchor=tk.E))
+        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH_PADDING,300,window=drug_info_btn, anchor=tk.E))
+        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH_PADDING,400,window=confirm_btn, anchor=tk.E))
+        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH_PADDING,500,window=report_btn, anchor=tk.E))
         self.canvasIds["Home"].append(self.canvas.create_window(0 ,800,window=exit_btn, anchor=tk.SW))
 
         print(self.canvasIds["Home"])
