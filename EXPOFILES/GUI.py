@@ -59,26 +59,26 @@ class EVAGUI:
 
         # Adding assets to the canvas and the canvasIds list
         # These can be used to control the visibility of items
-        self.canvasIds["home"] = []
-        self.canvasIds["home"].append(self.canvas.create_image(
+        self.canvasIds["Home"] = []
+        self.canvasIds["Home"].append(self.canvas.create_image(
             0, 0, image=self.background_image, anchor="nw"
         ))
-        self.canvasIds["home"].append(self.canvas.create_image(
+        self.canvasIds["Home"].append(self.canvas.create_image(
             0, 0, image=self.eva_face, anchor="nw"
             ))
-        self.canvasIds["home"].append(self.canvas.create_window(
+        self.canvasIds["Home"].append(self.canvas.create_window(
             70, 530, anchor='nw', window=self.clock_text
         ))
-        self.canvasIds["home"].append(self.canvas.create_text(
+        self.canvasIds["Home"].append(self.canvas.create_text(
             300, 250, text=self.eva_text, font=("Roboto", 40), fill="black"
         ))
-        self.canvasIds["home"].append(self.canvas.create_window(WINDOW_WIDTH,200,window=scan_btn, anchor=tk.E))
-        self.canvasIds["home"].append(self.canvas.create_window(WINDOW_WIDTH,300,window=drug_info_btn, anchor=tk.E))
-        self.canvasIds["home"].append(self.canvas.create_window(WINDOW_WIDTH,400,window=confirm_btn, anchor=tk.E))
-        self.canvasIds["home"].append(self.canvas.create_window(WINDOW_WIDTH,500,window=report_btn, anchor=tk.E))
-        self.canvasIds["home"].append(self.canvas.create_window(0 ,800,window=exit_btn, anchor=tk.SW))
+        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH,200,window=scan_btn, anchor=tk.E))
+        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH,300,window=drug_info_btn, anchor=tk.E))
+        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH,400,window=confirm_btn, anchor=tk.E))
+        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH,500,window=report_btn, anchor=tk.E))
+        self.canvasIds["Home"].append(self.canvas.create_window(0 ,800,window=exit_btn, anchor=tk.SW))
 
-        print(self.canvasIds["home"])
+        print(self.canvasIds["Home"])
 
         self.clock()
         self.root.mainloop()
