@@ -1,8 +1,6 @@
 #specificDruginfo
 
 import tkinter as tk
-from tkinter import ttk
-from tkinter import *
 from utils.itemHelpers import resetWindow
 from constants.window import *
 import utils.interfaceHelpers as UI
@@ -34,7 +32,7 @@ def loadingDrugGui(GuiClass, classCanvas: tk.Canvas):
 
 		# Creating a photoimage object to use image
 		times_asked = tk.PhotoImage(file="EXPOFILES/assets/timesAsked.png")
-		label = Label(image=times_asked)
+		label = tk.Label(image=times_asked)
 		label.image = times_asked
 
 		rosuvastatin_btn = UI.NewHomeBtn(master=classCanvas, text='Rosuvastatin', command=drugsCom.rosuvastatin)
