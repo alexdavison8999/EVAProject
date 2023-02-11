@@ -28,6 +28,16 @@ BEGIN TRAN T2;
 
 ALTER TABLE public.confirmations ADD CONSTRAINT confirmations_fk FOREIGN KEY (medicationid,medname) REFERENCES public.medications(id,medname);
 
+ALTER TABLE medications ALTER COLUMN datefilled SET DEFAULT CURRENT_DATE;
+
+ALTER TABLE medications ADD COLUMN created_at DATE DEFAULT CURRENT_DATE;
+
+CREATE SEQUENCE medications_id_seq;
+
+ALTER TABLE medications ALTER COLUMN ID SET DEFAULT nextval('medications_id_seq');
+
+ALTER SEQUENCE medications_id_seq OWNED BY medications.id;
+
 -- Auto-generated SQL script #202302101613
 INSERT INTO public.medications (id,medname,refillsleft,timesperday,timesperweek,folderpath)
 	VALUES (1,'med',2,2,7,'meds/med/1/');
