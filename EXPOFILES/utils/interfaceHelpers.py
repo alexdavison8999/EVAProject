@@ -1,11 +1,11 @@
 
 import tkinter
 
-def NewHomeBtn(master, command, text="Default") -> tkinter.Button:
+def NewHomeBtn(master, command, text="Default", color='#F44336') -> tkinter.Button:
         return tkinter.Button(
             master=master, 
             text=text, 
-            bg='#F44336', 
+            bg=color, 
             font=('arial', 55, 'normal'), 
             fg='#ffffff',
             command=command,
