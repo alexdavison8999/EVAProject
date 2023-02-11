@@ -37,7 +37,7 @@ class EVAGUI:
         self.canvasIds: TypedDict = {}
         # List of confirms to ask for the current day
         # TODO: Set up query that can populate this on startup
-        self.confirmList = timesList(self.conn)
+        self.confirmList: TypedDict = timesList(self.conn)
         # Geometry for the application window size
         geometry = f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}'
         # self.root.attributes('-fullscreen', True) # -- Look into using this instead
@@ -88,8 +88,6 @@ class EVAGUI:
         self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH_PADDING,500,window=report_btn, anchor=tk.E))
         self.canvasIds["Home"].append(self.canvas.create_window(0 ,800,window=exit_btn, anchor=tk.SW))
 
-        print(self.canvasIds["Home"])
-
         self.clock()
         self.root.mainloop()
 
@@ -127,7 +125,8 @@ class EVAGUI:
         date = datetime.now()
 
         # TODO: Create field for checking if the confirm has already been performed
-        for confirm in self.confirmList:
+        for key in self.confirmList:
+            confirm = key
             hour_minute = confirm.split(':')
             print(f'HOUR: {date.strftime("%H")} MINUTE: {date.strftime("%M")} DATE: {hour_minute}')
 

@@ -1,7 +1,7 @@
-import os
-import sys
+from datetime import datetime
 import psycopg2
 import psycopg2.extensions
+from constants.confirmations import *
 
 from database.classes.medications import Medication
 
@@ -21,23 +21,31 @@ def tuplesToMedicationList(data: list[tuple]) -> list[Medication]:
 
     return return_list
 
-def executeQuery(conn: psycopg2.extensions.connection, sql_string: str):
+def executeQuery(conn: psycopg2.extensions.connection, sql_string: str, oneOrAll: str = 'all'):
     """
     Executes the sql query pased in the `sql_string` argument
 
     Inputs:
         `conn`:         Postgres connection object
         `sql_string`:   SQL string statement
+        `oneOrAll`:     Determines whether to fetchone (`one`) or fetchall (`all`), default `all`
     """
-    # Initialize cursor object
-    cursor = conn.cursor()
-    cursor.execute(sql_string)
+    data = None
+    if oneOrAll in ['one','all']:
 
-    # Data is returned as a tuple
-    data = cursor.fetchall()
+        cursor = conn.cursor()
+        cursor.execute(sql_string)
 
-    # Commit transaction (I think we need to do this after every statement)
-    conn.commit()
+        # Commit transaction (I think we need to do this after every statement)
+        conn.commit()
+
+        if oneOrAll == 'one':
+            data = cursor.fetchone()
+        else:
+            data = cursor.fetchall()
+
+    else:
+        print(f"Invalid argument for oneOrAll, got {oneOrAll} but expected to be in ['one','all']")
 
     return data
 
@@ -63,7 +71,7 @@ def medicationsQuery(conn: psycopg2.extensions.connection) -> list[Medication]:
 
     return medications_list
 
-def timesList(conn: psycopg2.extensions.connection) -> list[str]:
+def timesList(conn: psycopg2.extensions.connection) -> dict[list[str]]:
     """
     Queries the `medications` table for active (?) medications and, 
     based on their `timesPerDay` and `timesPerWeek` fields, create a list
@@ -75,7 +83,7 @@ def timesList(conn: psycopg2.extensions.connection) -> list[str]:
     Outputs:
         `times_list`: A list of times in which to open the confirmation UI 
     """
-    times_list = []
+    date = datetime.now()
 
     sql_string = "SELECT \
                     * \
@@ -87,16 +95,41 @@ def timesList(conn: psycopg2.extensions.connection) -> list[str]:
     data = executeQuery(conn, sql_string)
 
     meds: list[Medication] = tuplesToMedicationList(data)
+    
+    meds_to_add: list[Medication] = []
 
-    # TODO: Write logic for creating alert times. Should this be
-    # something where the user inputs when they want to be notified
-    # for each medication, or should they set a morning, middle, and evening
-    # time that we can use for all medications if it is the correct time/day
-    # to take the medication
+    day_of_week = date.strftime("%A")
 
-    return ['12:54', '12:59', '13:00', '18:30', '19:00']
+    for med in meds:
+        for day in med.timesPerWeek:
+            if day_of_week == day:
+                meds_to_add.append(med)
 
-    return times_list
+    morning_conf = f'{MORNING_CONFIRM_H}:{MORNING_CONFIRM_M}'
+    midday_conf = f'{MIDDAY_CONFIRM_H}:{MIDDAY_CONFIRM_M}'
+    afternoon_conf = f'{AFTERNOON_CONFIRM_H}:{AFTERNOON_CONFIRM_M}'
+
+    confirm_tuples = {
+        morning_conf: [],
+        midday_conf: [],
+        afternoon_conf: []
+    }
+    
+    if len(meds_to_add) > 0:
+        for med in meds_to_add:
+            if med.timesPerDay == 3:
+                confirm_tuples[morning_conf].append(med.medName)
+                confirm_tuples[midday_conf].append(med.medName)
+                confirm_tuples[afternoon_conf].append(med.medName)
+            elif med.timesPerDay == 2:
+                confirm_tuples[morning_conf].append(med.medName)
+                confirm_tuples[afternoon_conf].append(med.medName)
+            elif med.timesPerDay == 1:
+                confirm_tuples[afternoon_conf].append(med.medName)
+            else:
+                print(f"Invalid number of times to check medication {med.medName}")
+
+    return confirm_tuples
 
 def confirmationsQuery(conn: psycopg2.extensions.connection):
     """
@@ -169,15 +202,7 @@ def getPercentConfirmsPerTimePeriod(conn: psycopg2.extensions.connection, medNam
     # here and execute them elsewhere. Something like the function returns 
     # our value, we store it in percent_val, and then return percent_val
 
-    # Initialize cursor object
-    cursor = conn.cursor()
-    cursor.execute(sql_string)
-
-    # Data is returned as a tuple
-    data = cursor.fetchone()
-
-    # Commit transaction (I think we need to do this after every statement)
-    conn.commit()
+    data = executeQuery(conn, sql_string, 'one')
 
     percent_val = data[0]
 
