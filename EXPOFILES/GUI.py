@@ -100,7 +100,7 @@ class EVAGUI:
 
     def drugInfoSelect(self):
         print("Going to Drug Info")
-        loadingDrugGui()
+        loadingDrugGui(self, self.canvas)
 
     def closeEVA(self):
         # self.root.withdraw()
