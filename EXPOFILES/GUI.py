@@ -1,5 +1,6 @@
 # PACKAGES
 import tkinter as tk
+import psycopg2.extensions
 from tkinter import messagebox
 from time import strftime
 from typing import TypedDict
@@ -15,6 +16,7 @@ from reportsGui import *
 from drugInfoGui import *
 from constants.window import *
 from database.dbUtils import connectToEvaDB
+from database.queries.query import timesList
 
 class EVAGUI:
     """
@@ -26,15 +28,16 @@ class EVAGUI:
         `root`:       Tkinter root object for creating UI
         `conn`:       Postgres connection object
     """
-    def __init__(self, root: tk.Tk):
+    def __init__(self, root: tk.Tk, conn: psycopg2.extensions.connection):
 
         self.root = root
+        self.conn = conn
         # Data Setup
         # This will be used to manage the UI elements on the canvas
         self.canvasIds: TypedDict = {}
         # List of confirms to ask for the current day
         # TODO: Set up query that can populate this on startup
-        self.confirmList = ['12:54', '12:59', '13:00', '18:30', '19:00']
+        self.confirmList = timesList(self.conn)
         # Geometry for the application window size
         geometry = f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}'
         # self.root.attributes('-fullscreen', True) # -- Look into using this instead
@@ -132,7 +135,7 @@ class EVAGUI:
                 hour = hour_minute[0]
                 minute = hour_minute[1]                
             except IndexError:
-                print(f'Error getting hour minue split from entry {hour_minute} in list {self.confirmList}, time must be in a HH:MM format!')
+                print(f'Error getting hour minute split from entry {hour_minute} in list {self.confirmList}, time must be in a HH:MM format!')
                 hour = -1
                 minute = -1   
 

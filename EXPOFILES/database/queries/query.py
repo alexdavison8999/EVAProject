@@ -1,14 +1,102 @@
+import os
+import sys
 import psycopg2
 import psycopg2.extensions
 
-def medicationsQuery(conn: psycopg2.extensions.connection):
+from database.classes.medications import Medication
+
+# TODO: Move to another file 
+def tuplesToMedicationList(data: list[tuple]) -> list[Medication]:
+    """
+    Converts tuple list to a list of `Medications`.
+
+    Inputs:
+        `data`:       The list of tuples from a query
+    """
+    return_list = []
+
+    if len(data) > 0:
+        for tuple in data:
+            return_list.append(Medication(tuple))
+
+    return return_list
+
+def executeQuery(conn: psycopg2.extensions.connection, sql_string: str):
+    """
+    Executes the sql query pased in the `sql_string` argument
+
+    Inputs:
+        `conn`:         Postgres connection object
+        `sql_string`:   SQL string statement
+    """
+    # Initialize cursor object
+    cursor = conn.cursor()
+    cursor.execute(sql_string)
+
+    # Data is returned as a tuple
+    data = cursor.fetchall()
+
+    # Commit transaction (I think we need to do this after every statement)
+    conn.commit()
+
+    return data
+
+def medicationsQuery(conn: psycopg2.extensions.connection) -> list[Medication]:
     """
     Queries the `medications` table for all medications.
 
     Inputs:
         `conn`:       Postgres connection object
     """
-    pass
+    medications_list = []
+
+    sql_string = "SELECT \
+                    * \
+                    FROM \
+                        medications \
+                    WHERE \
+                        created_at >= (NOW() - INTERVAL '7 days');"
+
+    data = executeQuery(conn, sql_string)
+
+    medications_list = tuplesToMedicationList(data)
+
+    return medications_list
+
+def timesList(conn: psycopg2.extensions.connection) -> list[str]:
+    """
+    Queries the `medications` table for active (?) medications and, 
+    based on their `timesPerDay` and `timesPerWeek` fields, create a list
+    of HH:MM times that the EVA must perform a confirmation check
+
+    Inputs:
+        `conn`:       Postgres connection object
+
+    Outputs:
+        `times_list`: A list of times in which to open the confirmation UI 
+    """
+    times_list = []
+
+    sql_string = "SELECT \
+                    * \
+                    FROM \
+                        medications \
+                    WHERE \
+                        created_at >= (NOW() - INTERVAL '7 days');"
+
+    data = executeQuery(conn, sql_string)
+
+    meds: list[Medication] = tuplesToMedicationList(data)
+
+    # TODO: Write logic for creating alert times. Should this be
+    # something where the user inputs when they want to be notified
+    # for each medication, or should they set a morning, middle, and evening
+    # time that we can use for all medications if it is the correct time/day
+    # to take the medication
+
+    return ['12:54', '12:59', '13:00', '18:30', '19:00']
+
+    return times_list
 
 def confirmationsQuery(conn: psycopg2.extensions.connection):
     """
