@@ -41,6 +41,8 @@ def reportGui(GuiClass, classCanvas: tk.Canvas) -> None:
 
 		# Creating a photoimage object to use image
 		report_image = tk.PhotoImage(file="EXPOFILES/assets/report1.png")
+		report_label = tk.Label(image=report_image)
+		report_label.image = report_image
 
 		cog_report_btn = UI.NewHomeBtn(master=classCanvas, text='Cognitive Report', command=report2command)
 		go_back_btn = UI.NewHomeBtn(master=classCanvas, text='Go Back', command=cleanupReports)
@@ -51,7 +53,7 @@ def reportGui(GuiClass, classCanvas: tk.Canvas) -> None:
 		GuiClass.canvasIds["Report"].append(classCanvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT_PADDING, window=cog_report_btn, anchor=tk.SE))
 		GuiClass.canvasIds["Report"].append(classCanvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
 		# GuiClass.canvasIds["Report"].append(classCanvas.create_window(WINDOW_PADDING / 2, WINDOW_HEIGHT_PADDING / 2, window=click_me_btn))
-		GuiClass.canvasIds["Report"].append(classCanvas.create_image(0, 0 / 2, image=report_image, anchor="nw"))
+		GuiClass.canvasIds["Report"].append(classCanvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, window=report_label, anchor=tk.CENTER))
 
 	else:
 		print("Error creating Report screen")
