@@ -7,10 +7,10 @@ import pytesseract
 from pytesseract import Output
 from fuzzywuzzy import process, fuzz
 
-from EXPOFILES.database.dbUtils import connect
+from EXPOFILES.database.dbUtils import connectToEvaDB
 
 # Establishes connection to database.
-conn = connect()
+conn = connectToEvaDB()
 
 cur = conn.cursor()
 # cur.execute("select count from pillbottlecount")

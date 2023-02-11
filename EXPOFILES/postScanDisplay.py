@@ -1,11 +1,11 @@
 import tkinter as tk
 from tkinter import *
-from database.dbUtils import connect
+from database.dbUtils import connectToEvaDB
 from bottleFixerKeyboard import *
 from franklinKeyboard import *
 
 c = 1
-my_connect = connect()
+my_connect = connectToEvaDB()
 my_conn = my_connect.cursor()
 
 

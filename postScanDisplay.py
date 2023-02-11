@@ -1,11 +1,11 @@
 import tkinter as tk
 from tkinter import *
-from EXPOFILES.database.dbUtils import connect
+from EXPOFILES.database.dbUtils import connectToEvaDB
 from bottleFixerKeyboard import *
 
 c = 1
 root = Tk()
-my_connect = connect()
+my_connect = connectToEvaDB()
 my_conn = my_connect.cursor()
 
 button1 = None\

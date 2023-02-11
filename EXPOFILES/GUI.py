@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from time import strftime
+from typing import TypedDict
 
 # MODULES
 from voiceRec import *
@@ -12,22 +13,30 @@ from postScanDisplay import *
 from reportsGui import *
 from drugInfoGui import *
 from constants.window import *
-from database.dbUtils import getPercentConfirmsPastWeek, connect
+from database.dbUtils import connectToEvaDB
 
 class EVAGUI:
+    """
+    Class to handle UI for each screen and will contain core properties used
+    throughout the code. This will perform asset cleanup and content management,
+    as well as provide a DB connection at any point of the App
+    
+    Inputs:
+        `root`:       Tkinter root object for creating UI
+        `conn`:       Postgres connection object
+    """
+    def __init__(self, root: tk.Tk):
 
-    def __init__(self):
-
-        self.root = tk.Tk()
+        self.root = root
         # Data Setup
         # This will be used to manage the UI elements on the canvas
-        self.canvasIds = {}
+        self.canvasIds: TypedDict = {}
         # Geometry for the application window size
         geometry = f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}'
 
         # Root properties - these will remain consistent
         self.root.geometry(geometry)
-        self.conn = connect()
+        self.conn = connectToEvaDB()
         self.root.title("Elderly Virtual Assistant")
         # self.root.attributes('-fullscreen', True)
         
