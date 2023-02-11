@@ -127,14 +127,18 @@ def getConfirmationsByMedName(conn: psycopg2.extensions.connection, medName: str
     """
     pass
 
-def getPercentConfirmsPerTimePeriod(conn: psycopg2.extensions.connection, medName: str) -> float:
+def getPercentConfirmsPerTimePeriod(conn: psycopg2.extensions.connection, medName: str, interval: str = '7 days') -> float:
     """
     Returns the percentage of confirmations in the past week that
     are marked as taken for medication `medName`
 
     Inputs:
-        `conn`:       Postgres connection object
-        `medName`:    Name of medication to check
+        `conn`:         Postgres connection object
+        `medName`:      Name of medication to check
+        `interval`:     Optional parameter to set the time interval for the query, default is 7 days
+
+    Outputs:
+        `percent_val`:  Percentage over the `interval` that the user confirmed the medication as `taken`
     """
     percent_val = 0
     sql_string = f"SELECT\
@@ -148,7 +152,7 @@ def getPercentConfirmsPerTimePeriod(conn: psycopg2.extensions.connection, medNam
                                 AND \
                                     medicationid = 1 \
                                 AND \
-                                    created_at >= (NOW() - INTERVAL '7 days'))\
+                                    created_at >= (NOW() - INTERVAL '{interval}'))\
                         ) AS percentage \
                     FROM \
                         confirmations \
@@ -159,7 +163,7 @@ def getPercentConfirmsPerTimePeriod(conn: psycopg2.extensions.connection, medNam
                         AND \
                             taken = true \
                         AND \
-                            created_at >= (NOW() - INTERVAL '7 days');"
+                            created_at >= (NOW() - INTERVAL '{interval}');"
 
     # TODO: Move code below to its own function so we can set up the queries 
     # here and execute them elsewhere. Something like the function returns 
@@ -177,7 +181,6 @@ def getPercentConfirmsPerTimePeriod(conn: psycopg2.extensions.connection, medNam
 
     percent_val = data[0]
 
-    print(f'{percent_val:g}')
-    print(f'{percent_val:.4g}')
+    print(f'% from past {interval}: {percent_val:.4g}%')
 
     return percent_val
