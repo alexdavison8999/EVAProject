@@ -1,7 +1,9 @@
+import tkinter as tk
 import GUI 
 
 def main():
-    myApp = GUI.EVAGUI()
+    app_root = tk.Tk()
+    myApp = GUI.EVAGUI(app_root)
     return
 
 
