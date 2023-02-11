@@ -1,78 +1,51 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter import *
-from PIL import ImageTk, Image
+from constants.window import *
+
+from utils.itemHelpers import resetWindow
+import utils.interfaceHelpers as UI
 
 # this is the function called when the button is clicked
 
-
-confir = 4
-
-def btnClickFunction():
-	root.destroy()
-
-def noFunct():
-	global confirA
-	confir = 1
-	print(confir)
-
-
-def yesFunct():
-	global confir
-	confir = 2
-	print(confir)
-
-def idkFunct():
-	# global confir
-	# confir = 3
-	print("idk")
-
-
-
 # creating tkinter window
 
-def confirmGui():
-	global root
-	root = Toplevel()
+def confirmGui(GuiClass, classCanvas: tk.Canvas):
 
-	root.geometry('1280x800')
-	root.configure(background='#F0F8FF')
-	root.title('hi')
+	def cleanupReports() -> None:
+		[classCanvas.delete(itemId) for itemId in GuiClass.canvasIds["Confirm"]]
+		[classCanvas.itemconfig(itemId,state='normal') for itemId in GuiClass.canvasIds["Home"]]
+		return
 
-	# Adding widgets to the root window
+	# Hides all the current items in the canvas
+	result = resetWindow(classCanvas, GuiClass.canvasIds,'Home')
 
-	# This is the section of code which creates the a label
-	Label(root, text='Have you taken your medicine yet?', bg='#F0F8FF', font=('arial', 40, 'normal')).place(x=38, y=37)
+	if result:
+		# Creating a photoimage object to use image
+		photo = tk.PhotoImage(file=r'%s' % "EXPOFILES/assets/image1.png")
+		photo_label = tk.Label(image=photo, width=WINDOW_WIDTH / 2,height=WINDOW_HEIGHT / 2)
+		photo_label.image = photo
+		photo_label.pack()
 
-	# Creating a photoimage object to use image
-	photo = PhotoImage(file=r'%s' % "EXPOFILES/assets/image1.png")
+		medicine = "Example Med"
+		confirm_label = tk.Label(text=f'Have you taken your {medicine}?', font=('arial', 55, 'normal'))
 
-	# photo1 = Image.open("C:\EVA\pillbottles\pillbottle1\Image1.png")
-	#
-	# photo1 = photo1._PhotoImage__photo.zoom(2)
-	#
-	#
-	# photo = PhotoImage(photo1)
-	# here, image option is used to
-	# set image on button
-	Button(root, text='Click Me !', image=photo).place(x=500, y=125)
+		# photo1 = Image.open("C:\EVA\pillbottles\pillbottle1\Image1.png")
+		#
+		# photo1 = photo1._PhotoImage__photo.zoom(2)
+		#
+		#
+		# photo = PhotoImage(photo1)
 
-	Button(root, text='No', bg='#FF4040', font=('arial', 70, 'normal'), command=btnClickFunction).place(x=24, y=150) # all set to same destroy function for demo
+		no_btn = UI.NewHomeBtn(master=classCanvas, text='No', color='#FF4040', command=cleanupReports)
+		yes_btn = UI.NewHomeBtn(master=classCanvas, text='Yes', color='#76EE00', command=cleanupReports)
+		idk_btn = UI.NewHomeBtn(master=classCanvas, text='IDK', color='#FFB90F',command=cleanupReports)
 
-	# This is the section of code which creates a button
-	Button(root, text='Yes', bg='#76EE00', font=('arial', 70, 'normal'), command=btnClickFunction).place(x=24, y=375)
+		GuiClass.canvasIds["Confirm"] = []
+		GuiClass.canvasIds["Confirm"].append(classCanvas.create_window(WINDOW_WIDTH / 4, WINDOW_HEIGHT / 2, window=photo_label, anchor=tk.W))
+		GuiClass.canvasIds["Confirm"].append(classCanvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 20, window=confirm_label, anchor=tk.N))
+		GuiClass.canvasIds["Confirm"].append(classCanvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 1.5, window=idk_btn, anchor=tk.E))
+		GuiClass.canvasIds["Confirm"].append(classCanvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 2, window=no_btn, anchor=tk.E))
+		GuiClass.canvasIds["Confirm"].append(classCanvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 3, window=yes_btn, anchor=tk.E))
+		
 
-	Button(root, text='IDK', bg='#FFB90F', font=('arial', 70, 'normal'), command=btnClickFunction).place(x=24, y=600)
-
-	#Button(root, text='Exit', bg='#9A32CD', font=('arial', 12, 'normal'), command=btnClickFunction).place(x=1100, y=740)
-
-	if confir != 4:
-		return confir
-	print(confir)
-	print("imhere")
-
-	root.mainloop()
-
-
-# path = "C:\EVA\pillbottles\pillbottle1\image1.png"
-# loadingGui(path)
+	else:
+		print("Error loading confirmation GUI")
