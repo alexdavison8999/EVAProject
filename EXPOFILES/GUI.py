@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 from time import strftime
 from typing import TypedDict
+from datetime import datetime
 
 # MODULES
 from voiceRec import *
@@ -31,14 +32,18 @@ class EVAGUI:
         # Data Setup
         # This will be used to manage the UI elements on the canvas
         self.canvasIds: TypedDict = {}
+        # List of confirms to ask for the current day
+        # TODO: Set up query that can populate this on startup
+        self.confirmList = ['12:54', '12:59', '13:00', '18:30', '19:00']
         # Geometry for the application window size
         geometry = f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}'
+        # self.root.attributes('-fullscreen', True) # -- Look into using this instead
 
         # Root properties - these will remain consistent
         self.root.geometry(geometry)
         self.conn = connectToEvaDB()
         self.root.title("Elderly Virtual Assistant")
-        # self.root.attributes('-fullscreen', True)
+
         
         # Main control for UI Elements
         self.canvas = tk.Canvas(self.root, width=1280, height=800)
@@ -50,7 +55,7 @@ class EVAGUI:
 
         # TODO: Maybe just rewrite this string depending on where we are rather than making new text to manage?
         self.eva_text = "Hi I'm Eva.\nHow can I help you?"
-        self.clock_text = tk.Label(self.root, text="", font=("Roboto", 50), fg="black")
+        self.clock_text = tk.Label(self.root, text="", font=("Roboto", 32), fg="black")
 
         # Program Navigation Buttons
         scan_btn = UI.NewHomeBtn(master=self.canvas, text='Scan Bottle', command=self.scanSelect)
@@ -92,7 +97,7 @@ class EVAGUI:
 
     def confirmSelect(self):
         print("Going to Medicine Confirmation")
-        confirmUI.confirmGui()
+        confirmUI.confirmGui(self, self.canvas)
 
     def reportSelect(self):
         print("Going to Reports")
@@ -113,8 +118,28 @@ class EVAGUI:
             print("Canceled exit request")
             # self.root.deiconify()
 
+    # Maybe split up code, need to see if it will affect the event loop
     def clock(self):
         time_string = strftime('%I:%M %p \n %A \n %B %d, %Y')
+        date = datetime.now()
+
+        # TODO: Create field for checking if the confirm has already been performed
+        for confirm in self.confirmList:
+            hour_minute = confirm.split(':')
+            print(f'HOUR: {date.strftime("%H")} MINUTE: {date.strftime("%M")} DATE: {hour_minute}')
+
+            try:
+                hour = hour_minute[0]
+                minute = hour_minute[1]                
+            except IndexError:
+                print(f'Error getting hour minue split from entry {hour_minute} in list {self.confirmList}, time must be in a HH:MM format!')
+                hour = -1
+                minute = -1   
+
+            if date.strftime("%H") == hour and date.strftime("%M") == minute:
+                confirmUI.confirmGui(self, self.canvas)
+
+
         self.clock_text.config(text= time_string)
-        self.clock_text.after(1000,self.clock)
+        self.clock_text.after(10000,self.clock)
     
