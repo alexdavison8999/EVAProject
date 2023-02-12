@@ -21,7 +21,7 @@ class UIController:
     throughout the code. This will perform asset cleanup and content management,
     as well as provide a DB connection at any point of the App
     Inputs:
-        conn:       Postgres connection object
+        conn:       Postgresql connection object
 
     Arributes:
 
@@ -104,7 +104,7 @@ class UIController:
         self.closeAndNavigateTo(self.currentLocation, "Confirm")
 
     def closeAndNavigateTo(self, curLocation: str, nextDesination: str) -> None:
-        print(f"Going to: {nextDesination} from {curLocation}")
+        print(f"Going to {nextDesination} from {curLocation}")
         self.clearUI(curLocation)
         self.loadUI(nextDesination)
 
