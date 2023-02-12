@@ -9,3 +9,4 @@ EXPOFILES/constants/__pycache__/window.cpython-39.pyc
 EXPOFILES/constants/__pycache__/database.cpython-39.pyc
 EXPOFILES/database/queries/__pycache__/query.cpython-39.pyc
 EXPOFILES/database/classes/__pycache__/medications.cpython-39.pyc
+EXPOFILES/constants/__pycache__/confirmations.cpython-39.pyc
