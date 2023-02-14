@@ -4,7 +4,6 @@ import tkinter as tk
 from tkinter import messagebox
 import psycopg2.extensions
 
-
 from homeGui import homeGui
 from confirmationGUI import confirmGui
 from drugInfoGui import loadingDrugGui
@@ -12,8 +11,11 @@ from reportsGui import reportGui
 from evaGUI import loadingRamGui
 
 from database.queries.query import timesList
-from constants.window import *
 from postScanDisplay import displayFunct
+
+from constants.colors import PRIMARY_COLOR
+from constants.window import *
+
 
 class UIController:
     """
@@ -53,7 +55,7 @@ class UIController:
         # self.root.attributes('-fullscreen', True) # -- Look into using this instead
 
         # Canvas where all UI elements will be added to / removed from
-        self.canvas = tk.Canvas(self.root, width=WINDOW_WIDTH, height=WINDOW_HEIGHT, background="#F0EAD6")
+        self.canvas = tk.Canvas(self.root, width=WINDOW_WIDTH, height=WINDOW_HEIGHT, background=PRIMARY_COLOR)
         self.canvas.pack(fill="both", expand=True)
 
         self.clock_text = tk.Label(self.root, text="", font=("Roboto", 24), fg="black")
@@ -152,7 +154,7 @@ class UIController:
 
     # Maybe split up code, need to see if it will affect the event loop
     def clock(self):
-        time_string = strftime('%I:%M %p \n %A \n %B %d, %Y')
+        time_string = strftime('%I:%M %p \n %A, %B %d, %Y')
         date = datetime.now()
 
         # TODO: Create field for checking if the confirm has already been performed
