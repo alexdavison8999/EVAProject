@@ -23,3 +23,8 @@ def resetWindow(canvas: tk.Canvas, canvasIds: TypedDict,appLocation: str) -> boo
     else:
         [canvas.itemconfig(itemId,state='hidden') for itemId in canvasIds[appLocation]]
         return True
+
+def clearLocalUI(canvas: tk.Canvas, ids: list[int]) -> None:
+    for id in ids:
+        print(id)
+        canvas.delete(id)

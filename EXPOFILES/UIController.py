@@ -30,14 +30,14 @@ class UIController:
     root: tk.Tk
     canvas: tk.Canvas
     conn: psycopg2.extensions.connection
-    confirmList: dict
+    confirmDict: dict
     canvasIds: dict
     geometry: str
 
     def __init__(self, conn: psycopg2.extensions.connection) -> None:
         self.root = tk.Tk()
         self.conn = conn
-        self.confirmList = timesList(self.conn)
+        self.confirmDict = timesList(self.conn)
         # If these Id keys are changed, they must be updated on respective files
         self.canvasIds = {
             "Home": [],
@@ -53,10 +53,10 @@ class UIController:
         # self.root.attributes('-fullscreen', True) # -- Look into using this instead
 
         # Canvas where all UI elements will be added to / removed from
-        self.canvas = tk.Canvas(self.root, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
+        self.canvas = tk.Canvas(self.root, width=WINDOW_WIDTH, height=WINDOW_HEIGHT, background="#F0EAD6")
         self.canvas.pack(fill="both", expand=True)
 
-        self.clock_text = tk.Label(self.root, text="", font=("Roboto", 32), fg="black")
+        self.clock_text = tk.Label(self.root, text="", font=("Roboto", 24), fg="black")
 
         # Load Home UI
         self.currentLocation = "Home"
@@ -100,10 +100,15 @@ class UIController:
     def goToReport(self):
         self.closeAndNavigateTo(self.currentLocation, "Report")
 
-    def goToConfirm(self):
-        self.closeAndNavigateTo(self.currentLocation, "Confirm")
+    def goToConfirm(self, hour: str, minute: str):
+        self.clearUI(self.currentLocation)
+        self.currentLocation = "Confirm"
+        confirmGui(self, hour, minute)
 
     def closeAndNavigateTo(self, curLocation: str, nextDesination: str) -> None:
+        """
+        Important for setting keys correctly
+        """
         print(f"Going to {nextDesination} from {curLocation}")
         self.clearUI(curLocation)
         self.loadUI(nextDesination)
@@ -151,7 +156,7 @@ class UIController:
         date = datetime.now()
 
         # TODO: Create field for checking if the confirm has already been performed
-        for key in self.confirmList:
+        for key in self.confirmDict:
             confirm = key
             hour_minute = confirm.split(':')
             print(f'HOUR: {date.strftime("%H")} MINUTE: {date.strftime("%M")} DATE: {hour_minute}')
@@ -160,12 +165,12 @@ class UIController:
                 hour = hour_minute[0]
                 minute = hour_minute[1]                
             except IndexError:
-                print(f'Error getting hour minute split from entry {hour_minute} in list {UIController.confirmList}, time must be in a HH:MM format!')
+                print(f'Error getting hour minute split from entry {hour_minute} in list {UIController.confirmDict}, time must be in a HH:MM format!')
                 hour = -1
                 minute = -1   
 
             if date.strftime("%H") == hour and date.strftime("%M") == minute:
-                self.goToConfirm("Confirm")
+                self.goToConfirm(hour, minute)
 
 
         self.clock_text.config(text= time_string)
