@@ -1,13 +1,6 @@
 venv/
 
-EXPOFILES/__pycache__
-
-EXPOFILES/database/__pycache__/dbUtils.cpython-39.pyc
-EXPOFILES/utils/__pycache__/interfaceHelpers.cpython-39.pyc
-EXPOFILES/utils/__pycache__/itemHelpers.cpython-39.pyc
-EXPOFILES/constants/__pycache__/window.cpython-39.pyc
-EXPOFILES/constants/__pycache__/database.cpython-39.pyc
-EXPOFILES/database/queries/__pycache__/query.cpython-39.pyc
-EXPOFILES/database/classes/__pycache__/medications.cpython-39.pyc
-EXPOFILES/constants/__pycache__/confirmations.cpython-39.pyc
-EXPOFILES/reports/__pycache__/individualReport.cpython-39.pyc
+# Removes all __pycache__ directories from repo
+**/__pycache__/
+EXPOFILES/assets/evaFaceRedLarge.png:Zone.Identifier
+EXPOFILES/assets/output-onlinepngtools.png:Zone.Identifier
