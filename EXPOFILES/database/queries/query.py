@@ -1,6 +1,8 @@
 from datetime import datetime
+from typing import Union
 import psycopg2
 import psycopg2.extensions
+import psycopg2.errors
 from constants.confirmations import *
 
 from database.classes.medications import Medication
@@ -34,22 +36,26 @@ def executeQuery(conn: psycopg2.extensions.connection, sql_string: str, oneOrAll
     if oneOrAll in ['one','all']:
 
         cursor = conn.cursor()
-        cursor.execute(sql_string)
+        try:
+            cursor.execute(sql_string)
 
-        # Commit transaction (I think we need to do this after every statement)
-        conn.commit()
+            # Commit transaction (I think we need to do this after every statement)
+            conn.commit()
 
-        if oneOrAll == 'one':
-            data = cursor.fetchone()
-        else:
-            data = cursor.fetchall()
+            if oneOrAll == 'one':
+                data = cursor.fetchone()
+            else:
+                data = cursor.fetchall()
+        except psycopg2.errors.InFailedSqlTransaction:
+            print("ERROR IN EXECUTION, ROLLING BACK")
+            conn.rollback()
 
     else:
         print(f"Invalid argument for oneOrAll, got {oneOrAll} but expected to be in ['one','all']")
 
     return data
 
-def medicationsQuery(conn: psycopg2.extensions.connection) -> list[Medication]:
+def medicationsQuery(conn: psycopg2.extensions.connection) -> Union[list[Medication], None]:
     """
     Queries the `medications` table for all medications.
 
@@ -183,16 +189,12 @@ def getPercentConfirmsPerTimePeriod(conn: psycopg2.extensions.connection, medNam
                             WHERE \
                                 medname = '{medName}'\
                                 AND \
-                                    medicationid = 1 \
-                                AND \
                                     created_at >= (NOW() - INTERVAL '{interval}'))\
                         ) AS percentage \
                     FROM \
                         confirmations \
                     WHERE \
                         medname = '{medName}' \
-                        AND \
-                            medicationid = 1 \
                         AND \
                             taken = true \
                         AND \

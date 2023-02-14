@@ -28,29 +28,31 @@ class EVAGUI:
         `root`:       Tkinter root object for creating UI
         `conn`:       Postgres connection object
     """
-    def __init__(self, root: tk.Tk, conn: psycopg2.extensions.connection):
+    def __init__(self, UIController):
 
-        self.root = root
-        self.conn = conn
+        self.UIController = UIController
+        self.root = UIController.root
+        # self.conn = UIController.conn
         # Data Setup
         # This will be used to manage the UI elements on the canvas
-        self.canvasIds: TypedDict = {}
+        # self.canvasIds: TypedDict = {}
         # List of confirms to ask for the current day
         # TODO: Set up query that can populate this on startup
-        self.confirmList: TypedDict = timesList(self.conn)
+        # self.confirmList: TypedDict = timesList(self.conn)
         # Geometry for the application window size
-        geometry = f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}'
+        # geometry = f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}'
         # self.root.attributes('-fullscreen', True) # -- Look into using this instead
 
         # Root properties - these will remain consistent
-        self.root.geometry(geometry)
-        self.conn = connectToEvaDB()
-        self.root.title("Elderly Virtual Assistant")
+        # self.root.geometry(geometry)
+        # self.conn = connectToEvaDB()
+        # self.root.title("Elderly Virtual Assistant")
 
         
         # Main control for UI Elements
-        self.canvas = tk.Canvas(self.root, width=1280, height=800)
-        self.canvas.pack(fill="both", expand=True)
+        # If using fullscreen, you may need to edit this line
+        # UIController.canvas = tk.Canvas(self.root, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
+        # UIController.canvas.pack(fill="both", expand=True)
 
         # Initializing assets
         self.background_image = tk.PhotoImage(file='EXPOFILES/assets/view.png')
@@ -61,52 +63,34 @@ class EVAGUI:
         self.clock_text = tk.Label(self.root, text="", font=("Roboto", 32), fg="black")
 
         # Program Navigation Buttons
-        scan_btn = UI.NewHomeBtn(master=self.canvas, text='Scan Bottle', command=self.scanSelect)
-        drug_info_btn = UI.NewHomeBtn(master=self.canvas, text='Drug Info', command=self.drugInfoSelect)
-        confirm_btn = UI.NewHomeBtn(master=self.canvas, text='Daily Confirmation', command=self.confirmSelect)
-        report_btn = UI.NewHomeBtn(master=self.canvas, text='Reports', command=self.reportSelect)
-        exit_btn = UI.NewHomeBtn(master=self.canvas, text='Exit', command=self.closeEVA)
+        scan_btn = UI.NewHomeBtn(master=self.UIController.canvas, text='Scan Bottle', command=self.UIController.scanSelect)
+        drug_info_btn = UI.NewHomeBtn(master=self.UIController.canvas, text='Drug Info', command=self.UIController.drugInfoSelect)
+        confirm_btn = UI.NewHomeBtn(master=self.UIController.canvas, text='Daily Confirmation', command=self.UIController.confirmSelect)
+        report_btn = UI.NewHomeBtn(master=self.UIController.canvas, text='Reports', command=self.UIController.reportSelect)
+        exit_btn = UI.NewHomeBtn(master=self.UIController.canvas, text='Exit', command=self.closeEVA)
 
         # Adding assets to the canvas and the canvasIds list
         # These can be used to control the visibility of items
-        self.canvasIds["Home"] = []
-        self.canvasIds["Home"].append(self.canvas.create_image(
+        self.UIController.canvasIds["Home"].append(self.UIController.canvas.create_image(
             0, 0, image=self.background_image, anchor="nw"
         ))
-        self.canvasIds["Home"].append(self.canvas.create_image(
+        self.UIController.canvasIds["Home"].append(self.UIController.canvas.create_image(
             0, 0, image=self.eva_face, anchor="nw"
             ))
-        self.canvasIds["Home"].append(self.canvas.create_window(
+        self.UIController.canvasIds["Home"].append(self.UIController.canvas.create_window(
             70, 530, anchor='nw', window=self.clock_text
         ))
-        self.canvasIds["Home"].append(self.canvas.create_text(
+        self.canvasIds["Home"].append(UIController.canvas.create_text(
             300, 250, text=self.eva_text, font=("Roboto", 40), fill="black"
         ))
-        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH_PADDING,200,window=scan_btn, anchor=tk.E))
-        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH_PADDING,300,window=drug_info_btn, anchor=tk.E))
-        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH_PADDING,400,window=confirm_btn, anchor=tk.E))
-        self.canvasIds["Home"].append(self.canvas.create_window(WINDOW_WIDTH_PADDING,500,window=report_btn, anchor=tk.E))
-        self.canvasIds["Home"].append(self.canvas.create_window(0 ,800,window=exit_btn, anchor=tk.SW))
+        self.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,200,window=scan_btn, anchor=tk.E))
+        self.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,300,window=drug_info_btn, anchor=tk.E))
+        self.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,400,window=confirm_btn, anchor=tk.E))
+        self.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,500,window=report_btn, anchor=tk.E))
+        self.canvasIds["Home"].append(UIController.canvas.create_window(0 ,800,window=exit_btn, anchor=tk.SW))
 
         self.clock()
-        self.root.mainloop()
-
-    def scanSelect(self):
-        print("Going to Bottle Scanning")
-        loadingRamGui()
-        displayFunct()
-
-    def confirmSelect(self):
-        print("Going to Medicine Confirmation")
-        confirmUI.confirmGui(self, self.canvas)
-
-    def reportSelect(self):
-        print("Going to Reports")
-        reportGui(self, self.canvas)
-
-    def drugInfoSelect(self):
-        print("Going to Drug Info")
-        loadingDrugGui(self, self.canvas)
+        # self.root.mainloop()
 
     def closeEVA(self):
         # self.root.withdraw()
@@ -139,7 +123,7 @@ class EVAGUI:
                 minute = -1   
 
             if date.strftime("%H") == hour and date.strftime("%M") == minute:
-                confirmUI.confirmGui(self, self.canvas)
+                confirmUI.confirmGui(self, self.UIController.canvas)
 
 
         self.clock_text.config(text= time_string)
