@@ -1,0 +1,15 @@
+# Main Theme colors
+# PRIMARY_COLOR="#F0EAD6"
+PRIMARY_COLOR="#FAF9F6"
+SECONDARY_COLOR=""
+
+
+MAIN_BUTTON = ""
+
+
+
+# Text constants
+TEXT_COLOR="#000000"
+
+TEXT_FONT="Inter"
+HOME_BUTTON_FONT="Inter"

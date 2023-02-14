@@ -1,5 +1,7 @@
 from __future__ import annotations
 # PACKAGES
+from datetime import datetime
+import functools
 import tkinter as tk
 from time import strftime
 from typing import TYPE_CHECKING
@@ -7,7 +9,10 @@ from typing import TYPE_CHECKING
 # MODULES
 import utils.interfaceHelpers as UI
 from evaGUI import *
+
 from constants.window import *
+from constants.colors import *
+
 
 if TYPE_CHECKING:
     from UIController import UIController
@@ -29,36 +34,49 @@ def homeGui(UIController: UIController):
     global background
     global eva_face
     # Initializing assets
-    background = tk.PhotoImage(file='EXPOFILES/assets/view.png')
-    eva_face = tk.PhotoImage(file="EXPOFILES/assets/evaFace4Home.png")
+    # background = tk.PhotoImage(file='EXPOFILES/assets/view.png')
+    eva_face = tk.PhotoImage(file="EXPOFILES/assets/evaFaceRedLarge.png")
 
     # TODO: Maybe just rewrite this string depending on where we are rather than making new text to manage?
-    eva_text = "Hi I'm Eva.\nHow can I help you?"
+    eva_text = UI.evaText(
+        canvas=UIController.canvas, 
+        text="Hi, I'm EVA!\nHow can I help you?"
+    )
+    # eva_text.pack()
+
+    date = datetime.now().strftime("%H %M")
+    date = date.split(" ")
+    print(date[0], date[1])
 
     # Program Navigation Buttons
     scan_btn = UI.NewHomeBtn(master=UIController.canvas, text='Scan Bottle', command=UIController.scanSelect)
     drug_info_btn = UI.NewHomeBtn(master=UIController.canvas, text='Drug Info', command=UIController.goToDrugInfo)
-    confirm_btn = UI.NewHomeBtn(master=UIController.canvas, text='Daily Confirmation', command=UIController.goToConfirm)
+    confirm_btn = UI.NewHomeBtn(master=UIController.canvas, text='Daily Confirmation', command=functools.partial(UIController.goToConfirm, hour=date[0], minute=date[1]))
     report_btn = UI.NewHomeBtn(master=UIController.canvas, text='Reports', command=UIController.goToReport)
-    exit_btn = UI.NewHomeBtn(master=UIController.canvas, text='Exit', command=UIController.closeEVA)
+    exit_btn = UI.NewExitBtn(master=UIController.canvas, text='Exit', command=UIController.closeEVA)
 
     # Adding assets to the canvas and the canvasIds list
     # These can be used to control the visibility of items
+    # UIController.canvasIds["Home"].append(UIController.canvas.create_image(
+    #     0, 0, image=background, anchor="nw"
+    # ))
     UIController.canvasIds["Home"].append(UIController.canvas.create_image(
-        0, 0, image=background, anchor="nw"
-    ))
-    UIController.canvasIds["Home"].append(UIController.canvas.create_image(
-        0, 0, image=eva_face, anchor="nw"
+        250, WINDOW_HEIGHT / 2, image=eva_face
         ))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(
-        70, 530, anchor='nw', window=UIController.clock_text
+        250, WINDOW_HEIGHT_PADDING * .9, window=UIController.clock_text, anchor=tk.S
     ))
-    UIController.canvasIds["Home"].append(UIController.canvas.create_text(
-        300, 250, text=eva_text, font=("Roboto", 40), fill="black"
+    UIController.canvasIds["Home"].append(UIController.canvas.create_window(
+        250, WINDOW_HEIGHT / 5, window=eva_text
     ))
-    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,200,window=scan_btn, anchor=tk.E))
+    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,125,window=scan_btn, anchor=tk.E))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,300,window=drug_info_btn, anchor=tk.E))
-    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,400,window=confirm_btn, anchor=tk.E))
-    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,500,window=report_btn, anchor=tk.E))
-    UIController.canvasIds["Home"].append(UIController.canvas.create_window(0 ,800,window=exit_btn, anchor=tk.SW))
+    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,475,window=confirm_btn, anchor=tk.E))
+    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,650,window=report_btn, anchor=tk.E))
+    UIController.canvasIds["Home"].append(UIController.canvas.create_window(0 ,WINDOW_HEIGHT,window=exit_btn, anchor=tk.SW))
+
+    fonts=list(tk.font.families())
+    fonts.sort()
+
+    [print(font) for font in fonts]
     

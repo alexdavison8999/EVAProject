@@ -7,6 +7,8 @@ MY_FILES="database/migrations/*.sql"
 
 export PGPASSWORD=$POSTGRES_PASSWORD
 
+psql -U postgres < database/deleteDB.sql
+
 echo "MAKE SURE YOU HAVE POSTGRES INSTALLED AND CAN LOGIN AS "postgres""
 
 psql -U postgres < database/createUser.sql
