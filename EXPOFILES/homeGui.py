@@ -38,12 +38,9 @@ def homeGui(UIController: UIController):
     eva_face = tk.PhotoImage(file="EXPOFILES/assets/evaFaceRedLarge.png")
 
     # TODO: Maybe just rewrite this string depending on where we are rather than making new text to manage?
-    eva_text = tk.Label(
-        master=UIController.canvas, 
-        text="Hi I'm Eva.\nHow can I help you?", 
-        background=PRIMARY_COLOR, 
-        fg=TEXT_COLOR,
-        font=(TEXT_FONT, 32)
+    eva_text = UI.evaText(
+        canvas=UIController.canvas, 
+        text="Hi, I'm EVA!\nHow can I help you?"
     )
     # eva_text.pack()
 
@@ -56,7 +53,7 @@ def homeGui(UIController: UIController):
     drug_info_btn = UI.NewHomeBtn(master=UIController.canvas, text='Drug Info', command=UIController.goToDrugInfo)
     confirm_btn = UI.NewHomeBtn(master=UIController.canvas, text='Daily Confirmation', command=functools.partial(UIController.goToConfirm, hour=date[0], minute=date[1]))
     report_btn = UI.NewHomeBtn(master=UIController.canvas, text='Reports', command=UIController.goToReport)
-    exit_btn = UI.NewHomeBtn(master=UIController.canvas, text='Exit', command=UIController.closeEVA)
+    exit_btn = UI.NewExitBtn(master=UIController.canvas, text='Exit', command=UIController.closeEVA)
 
     # Adding assets to the canvas and the canvasIds list
     # These can be used to control the visibility of items
@@ -64,17 +61,22 @@ def homeGui(UIController: UIController):
     #     0, 0, image=background, anchor="nw"
     # ))
     UIController.canvasIds["Home"].append(UIController.canvas.create_image(
-        300, WINDOW_HEIGHT / 2, image=eva_face
+        250, WINDOW_HEIGHT / 2, image=eva_face
         ))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(
-        WINDOW_WIDTH_PADDING, WINDOW_HEIGHT_PADDING, anchor='se', window=UIController.clock_text
+        250, WINDOW_HEIGHT_PADDING * .9, window=UIController.clock_text, anchor=tk.S
     ))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(
-        300, WINDOW_HEIGHT / 5, window=eva_text
+        250, WINDOW_HEIGHT / 5, window=eva_text
     ))
-    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,150,window=scan_btn, anchor=tk.E))
+    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,125,window=scan_btn, anchor=tk.E))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,300,window=drug_info_btn, anchor=tk.E))
-    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,450,window=confirm_btn, anchor=tk.E))
-    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,600,window=report_btn, anchor=tk.E))
-    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_PADDING ,WINDOW_HEIGHT_PADDING,window=exit_btn, anchor=tk.SW))
+    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,475,window=confirm_btn, anchor=tk.E))
+    UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,650,window=report_btn, anchor=tk.E))
+    UIController.canvasIds["Home"].append(UIController.canvas.create_window(0 ,WINDOW_HEIGHT,window=exit_btn, anchor=tk.SW))
+
+    fonts=list(tk.font.families())
+    fonts.sort()
+
+    [print(font) for font in fonts]
     
