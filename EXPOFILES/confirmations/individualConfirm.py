@@ -4,6 +4,7 @@ import tkinter as tk
 from typing import TYPE_CHECKING
 
 
+from constants.colors import *
 from constants.window import *
 import utils.interfaceHelpers as UI
 from utils.itemHelpers import clearLocalUI
@@ -21,13 +22,13 @@ def individualConfirm(UIController: UIController, medName: str, folderPath: str)
 	photo_label.image = photo
 	photo_label.pack()
 
-	confirm_label = tk.Label(text=f'Have you taken your {medName}?', font=('arial', 55, 'normal'))
+	confirm_label = tk.Label(text=f'Have you taken your {medName}?', font=(TEXT_FONT, 55, 'normal'), background=PRIMARY_COLOR)
 
-	no_btn = UI.NewHomeBtn(master=UIController.canvas, text='No', color='#FF4040', command=UIController.goToHome)
-	yes_btn = UI.NewHomeBtn(master=UIController.canvas, text='Yes', color='#76EE00', command=UIController.goToHome)
-	idk_btn = UI.NewHomeBtn(master=UIController.canvas, text='IDK', color='#FFB90F',command=UIController.goToHome)
+	no_btn = UI.NewExitBtn(master=UIController.canvas, text='No', color='#FF4040', command=UIController.goToHome)
+	yes_btn = UI.NewExitBtn(master=UIController.canvas, text='Yes', color='#76EE00', command=UIController.goToHome)
+	idk_btn = UI.NewExitBtn(master=UIController.canvas, text='IDK', color='#FFB90F',command=UIController.goToHome)
 
-	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_WIDTH / 4, WINDOW_HEIGHT / 2, window=photo_label, anchor=tk.W))
+	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT / 2, window=photo_label, anchor=tk.W))
 	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 20, window=confirm_label, anchor=tk.N))
 	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 1.5, window=idk_btn, anchor=tk.E))
 	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 2, window=no_btn, anchor=tk.E))

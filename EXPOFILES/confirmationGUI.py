@@ -9,6 +9,7 @@ from constants.window import *
 import utils.interfaceHelpers as UI
 from utils.itemHelpers import clearLocalUI
 from database.queries.query import medicationsQuery
+from constants.colors import *
 
 # this is the function called when the button is clicked
 
@@ -38,7 +39,7 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
 		confirm_label = tk.Label(text=f'You have {num_meds} medications', font=('arial', 55, 'normal'))
 
 		for index, med in enumerate(UIController.confirmDict[confirm_key]):
-			med_button = UI.NewHomeBtn(
+			med_button = UI.NewMedBtn(
 				master=UIController.canvas, 
 				text=f'{med.medName}', 
 				command= functools.partial(goToCommand, UIController, med.medName)
@@ -59,7 +60,7 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
 		medications = medicationsQuery(UIController.conn)
 		
 		for index, med in enumerate(medications):
-			med_button = UI.NewHomeBtn(
+			med_button = UI.NewMedBtn(
 				master=UIController.canvas, 
 				text=f'{med.medName}', 
 				command= functools.partial(goToCommand, UIController, med.medName)
@@ -75,8 +76,24 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
 				)
 			)
 	
+	eva_face = tk.PhotoImage(file="EXPOFILES/assets/evaFaceRedLarge.png")
+	eva_label = tk.Label(image=eva_face, width=350,height=350, background=PRIMARY_COLOR)
+	eva_label.image = eva_face
+	eva_label.pack()
 
-	go_back_btn = UI.NewHomeBtn(master=UIController.canvas, text='Go Back', command=functools.partial(goBack, UIController))
+	eva_text = UI.evaText(
+        canvas=UIController.canvas, 
+        text=f"Select the medicine \nto confirm for {hour}:{minute}"
+    )
+	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(
+        300, WINDOW_HEIGHT / 5, window=eva_text
+    ))
+	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(
+        300, WINDOW_HEIGHT / 2, window=eva_label
+    ))
+
+
+	go_back_btn = UI.NewExitBtn(master=UIController.canvas, text='Go Back', command=functools.partial(goBack, UIController))
 	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
 
 	# no_btn = UI.NewHomeBtn(master=UIController.canvas, text='No', color='#FF4040', command=UIController.goToHome)

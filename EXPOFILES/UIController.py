@@ -12,8 +12,9 @@ from evaGUI import loadingRamGui
 
 from database.queries.query import timesList
 from postScanDisplay import displayFunct
+import utils.interfaceHelpers as UI
 
-from constants.colors import PRIMARY_COLOR
+from constants.colors import *
 from constants.window import *
 
 
@@ -58,7 +59,7 @@ class UIController:
         self.canvas = tk.Canvas(self.root, width=WINDOW_WIDTH, height=WINDOW_HEIGHT, background=PRIMARY_COLOR)
         self.canvas.pack(fill="both", expand=True)
 
-        self.clock_text = tk.Label(self.root, text="", font=("Roboto", 24), fg="black")
+        self.clock_text = UI.clockText(root=self.root)
 
         # Load Home UI
         self.currentLocation = "Home"

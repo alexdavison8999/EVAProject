@@ -11,4 +11,5 @@ MAIN_BUTTON = ""
 # Text constants
 TEXT_COLOR="#000000"
 
-TEXT_FONT="Roboto"
+TEXT_FONT="Inter"
+HOME_BUTTON_FONT="Inter"
