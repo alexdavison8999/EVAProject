@@ -12,3 +12,5 @@ if [ ! -d "$DIRECTORY" ]; then
 else
     echo "$DIRECTORY already exists, skipping directory creation"
 fi
+
+export GOOGLE_APPLICATION_CREDENTIALS="certs/elderly-virtual-assistant-2-firebase-adminsdk-39bde-9d9c90eebe.json"
