@@ -61,13 +61,13 @@ def homeGui(UIController: UIController):
     #     0, 0, image=background, anchor="nw"
     # ))
     UIController.canvasIds["Home"].append(UIController.canvas.create_image(
-        250, WINDOW_HEIGHT / 2, image=eva_face
+        275, WINDOW_HEIGHT / 2, image=eva_face
         ))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(
-        250, WINDOW_HEIGHT_PADDING * .9, window=UIController.clock_text, anchor=tk.S
+        275, WINDOW_HEIGHT_PADDING * .9, window=UIController.clock_text, anchor=tk.S
     ))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(
-        250, WINDOW_HEIGHT / 5, window=eva_text
+        275, WINDOW_HEIGHT / 5, window=eva_text
     ))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,125,window=scan_btn, anchor=tk.E))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,300,window=drug_info_btn, anchor=tk.E))

@@ -46,7 +46,13 @@ def evaText(canvas: tk.Canvas, text="Default", background=PRIMARY_COLOR, fg=TEXT
         font=(font, 32, 'normal')
     )
 
-# def evaText(canvas: tk.Canvas, file: str, )
+def evaFace(file: str="EXPOFILES/assets/evaFaceRedLarge.png", background: str=PRIMARY_COLOR):
+    eva_face = tk.PhotoImage(file=file)
+    eva_label = tk.Label(image=eva_face, width=eva_face.width(),height=eva_face.height(), background=background)
+    eva_label.image = eva_face
+    eva_label.pack()
+
+    return eva_label
 
 def clockText(root: tk.Tk, text="", font=("Roboto", 24), fg="black", bg=PRIMARY_COLOR):
     return tk.Label(root, text=text, font=font, fg=fg, bg=bg)

@@ -75,21 +75,18 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
 					window=med_button
 				)
 			)
-	
-	eva_face = tk.PhotoImage(file="EXPOFILES/assets/evaFaceRedLarge.png")
-	eva_label = tk.Label(image=eva_face, width=350,height=350, background=PRIMARY_COLOR)
-	eva_label.image = eva_face
-	eva_label.pack()
+
+	eva_face = UI.evaFace(file="EXPOFILES/assets/evaFaceRedLarge.png")
 
 	eva_text = UI.evaText(
         canvas=UIController.canvas, 
-        text=f"Select the medicine \nto confirm for {hour}:{minute}"
+        text=f"Select the \nmedicine to confirm \nfor {hour}:{minute}"
     )
 	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(
-        300, WINDOW_HEIGHT / 5, window=eva_text
+        275, WINDOW_HEIGHT / 5, window=eva_text
     ))
 	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(
-        300, WINDOW_HEIGHT / 2, window=eva_label
+        275, WINDOW_HEIGHT / 2, window=eva_face
     ))
 
 

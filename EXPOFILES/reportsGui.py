@@ -48,20 +48,17 @@ def reportGui(UIController: UIController) -> None:
 			)
 		)
 
-	eva_face = tk.PhotoImage(file="EXPOFILES/assets/evaFaceRedLarge.png")
-	eva_label = tk.Label(image=eva_face, width=350,height=350, background=PRIMARY_COLOR)
-	eva_label.image = eva_face
-	eva_label.pack()
+	eva_face = UI.evaFace(file="EXPOFILES/assets/evaFaceRedLarge.png")
 
 	eva_text = UI.evaText(
         canvas=UIController.canvas, 
-        text="Select the medicine report \nyou'd like to see: "
+        text="Select a \nmedication report"
     )
 	UIController.canvasIds["Report"].append(UIController.canvas.create_window(
-        300, WINDOW_HEIGHT / 5, window=eva_text
+        275, WINDOW_HEIGHT / 5, window=eva_text
     ))
 	UIController.canvasIds["Report"].append(UIController.canvas.create_window(
-        300, WINDOW_HEIGHT / 2, window=eva_label
+        275, WINDOW_HEIGHT / 2, window=eva_face
     ))
 
 	go_back_btn = UI.NewExitBtn(master=UIController.canvas, text='Go Back', command=UIController.goToHome)

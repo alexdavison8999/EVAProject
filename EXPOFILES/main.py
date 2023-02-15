@@ -1,11 +1,14 @@
 import tkinter as tk
+import firebase_admin
+
 from UIController import UIController
 from constants.window import *
 from database.dbUtils import connectToEvaDB
-import GUI 
+
 
 def main():
     app_conn = connectToEvaDB()
+    default_app = firebase_admin.initialize_app()
     myUIController = UIController(app_conn)
 
     # myApp = GUI.EVAGUI(app_root, app_conn)
