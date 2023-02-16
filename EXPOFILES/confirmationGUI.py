@@ -41,8 +41,8 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
 		for index, med in enumerate(UIController.confirmDict[confirm_key]):
 			med_button = UI.NewMedBtn(
 				master=UIController.canvas, 
-				text=f'{med.medName}', 
-				command= functools.partial(goToCommand, UIController, med.medName)
+				text=f'{med}', 
+				command= functools.partial(goToCommand, UIController, med)
 			)
 			yPos = ((WINDOW_HEIGHT) - (((index + 1) * 150) + (WINDOW_HEIGHT / 2)))
 			xPos = WINDOW_WIDTH / 1.35

@@ -9,6 +9,9 @@ from confirmationGUI import confirmGui
 from drugInfoGui import loadingDrugGui
 from reportsGui import reportGui
 from evaGUI import loadingRamGui
+from scanBottle.scanBottleGui import scanBottleGui
+from scanBottle.scannerInstructions import bottleScannerGui
+from scanBottle.editBottleGui import editBottleGui
 
 from database.queries.query import timesList
 from postScanDisplay import displayFunct
@@ -76,8 +79,19 @@ class UIController:
 
     def scanSelect(self):
         print("Going to Bottle Scanning")
-        loadingRamGui()
-        displayFunct()
+        # loadingRamGui()
+        # displayFunct()
+        scanBottleGui(self)
+
+    def openBottleScanner(self):
+        print("Loading Bottle Scanner")
+        self.clearUI("ScanBottle")
+        bottleScannerGui(self)
+
+    def editBottleInfo(self):
+        print("Going to bottle info editor...")
+        self.clearUI("ScanBottle")
+        editBottleGui(self)
 
     def confirmSelect(self):
         print("Going to Medicine Confirmation")
@@ -97,8 +111,8 @@ class UIController:
     def goToDrugInfo(self):
         self.closeAndNavigateTo(self.currentLocation, "DrugInfo")
 
-    def goToScan(self):
-        self.closeAndNavigateTo(self.currentLocation, "Scan")
+    def goToScanBottle(self):
+        self.closeAndNavigateTo(self.currentLocation, "ScanBottle")
 
     def goToReport(self):
         self.closeAndNavigateTo(self.currentLocation, "Report")
@@ -138,8 +152,8 @@ class UIController:
         elif nextDestination == "Confirm":
             self.currentLocation = "Confirm"
             self.confirmSelect()
-        else:
-            self.currentLocation = "Home"
+        elif nextDestination == "ScanBottle":
+            self.currentLocation = "ScanBottle"
             self.scanSelect()
 
     def closeEVA(self):

@@ -146,7 +146,7 @@ def confirmationsQuery(conn: psycopg2.extensions.connection):
     """
     pass
 
-def getMedByNameAndId(conn: psycopg2.extensions.connection, medName: str, medicationId: str):
+def getMedByName(conn: psycopg2.extensions.connection, medName: str):
     """
     Queries the `medications` a medication given an medicationId and a medName.
 

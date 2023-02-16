@@ -49,7 +49,7 @@ def homeGui(UIController: UIController):
     print(date[0], date[1])
 
     # Program Navigation Buttons
-    scan_btn = UI.NewHomeBtn(master=UIController.canvas, text='Scan Bottle', command=UIController.scanSelect)
+    scan_btn = UI.NewHomeBtn(master=UIController.canvas, text='Scan Bottle', command=UIController.goToScanBottle)
     drug_info_btn = UI.NewHomeBtn(master=UIController.canvas, text='Drug Info', command=UIController.goToDrugInfo)
     confirm_btn = UI.NewHomeBtn(master=UIController.canvas, text='Daily Confirmation', command=functools.partial(UIController.goToConfirm, hour=date[0], minute=date[1]))
     report_btn = UI.NewHomeBtn(master=UIController.canvas, text='Reports', command=UIController.goToReport)
