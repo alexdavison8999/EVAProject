@@ -46,7 +46,7 @@ def executeQuery(conn: psycopg2.extensions.connection, sql_string: str, oneOrAll
                 data = cursor.fetchone()
             else:
                 data = cursor.fetchall()
-        except psycopg2.errors.InFailedSqlTransaction:
+        except:
             print("ERROR IN EXECUTION, ROLLING BACK")
             conn.rollback()
 
@@ -69,7 +69,7 @@ def medicationsQuery(conn: psycopg2.extensions.connection) -> Union[list[Medicat
                     FROM \
                         medications \
                     WHERE \
-                        created_at >= (NOW() - INTERVAL '7 days');"
+                        created_at >= (NOW() - INTERVAL '100 days');"
 
     data = executeQuery(conn, sql_string)
 
@@ -96,7 +96,7 @@ def timesList(conn: psycopg2.extensions.connection) -> dict[list[str]]:
                     FROM \
                         medications \
                     WHERE \
-                        created_at >= (NOW() - INTERVAL '7 days');"
+                        created_at >= (NOW() - INTERVAL '100 days');"
 
     data = executeQuery(conn, sql_string)
 
@@ -204,9 +204,11 @@ def getPercentConfirmsPerTimePeriod(conn: psycopg2.extensions.connection, medNam
     # here and execute them elsewhere. Something like the function returns 
     # our value, we store it in percent_val, and then return percent_val
 
-    data = executeQuery(conn, sql_string, 'one')
-
-    percent_val = data[0]
+    try: 
+        data = executeQuery(conn, sql_string, 'one')
+        percent_val = data[0]
+    except:
+        percent_val = -1
 
     print(f'% from past {interval}: {percent_val:.4g}%')
 
