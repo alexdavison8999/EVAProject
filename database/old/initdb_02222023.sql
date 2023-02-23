@@ -69,8 +69,7 @@ CREATE TABLE public.medications (
     timesperday integer DEFAULT '-1'::integer,
     timesperweek integer DEFAULT '-1'::integer,
     folderpath character varying,
-    created_at date DEFAULT CURRENT_DATE,
-    archived boolean DEFAULT false NOT NULL
+    created_at date DEFAULT CURRENT_DATE
 );
 
 
@@ -208,9 +207,9 @@ COPY public.confirmations (id, medname, taken, medicationid, created_at) FROM st
 -- Data for Name: medications; Type: TABLE DATA; Schema: public; Owner: evadb
 --
 
-COPY public.medications (id, medname, datefilled, refillsleft, refilldate, timesperday, timesperweek, folderpath, created_at, archived) FROM stdin;
-1	med	2023-02-11	2	2023-02-11	2	7	meds/med/1/	2023-02-11	f
-3	Ibuprofen	2023-02-11	-1	2023-02-11	1	6	meds/med/3/	2023-02-11	f
+COPY public.medications (id, medname, datefilled, refillsleft, refilldate, timesperday, timesperweek, folderpath, created_at) FROM stdin;
+1	med	2023-02-11	2	2023-02-11	2	7	meds/med/1/	2023-02-11
+3	Ibuprofen	2023-02-11	-1	2023-02-11	1	6	meds/med/3/	2023-02-11
 \.
 
 

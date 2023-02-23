@@ -69,7 +69,7 @@ def medicationsQuery(conn: psycopg2.extensions.connection) -> Union[list[Medicat
                     FROM \
                         medications \
                     WHERE \
-                        created_at >= (NOW() - INTERVAL '100 days');"
+                        archived is FALSE;"
 
     data = executeQuery(conn, sql_string)
 
@@ -96,7 +96,7 @@ def timesList(conn: psycopg2.extensions.connection) -> dict[list[str]]:
                     FROM \
                         medications \
                     WHERE \
-                        created_at >= (NOW() - INTERVAL '100 days');"
+                        archived is FALSE;"
 
     data = executeQuery(conn, sql_string)
 
@@ -166,7 +166,7 @@ def getConfirmationsByMedName(conn: psycopg2.extensions.connection, medName: str
     """
     pass
 
-def getPercentConfirmsPerTimePeriod(conn: psycopg2.extensions.connection, medName: str, interval: str = '7 days') -> float:
+def getPercentConfirmsPerTimePeriod(conn: psycopg2.extensions.connection, medName: str, interval: str = '100 days') -> float:
     """
     Returns the percentage of confirmations in the past week that
     are marked as taken for medication `medName`
