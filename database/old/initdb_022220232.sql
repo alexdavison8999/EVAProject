@@ -201,12 +201,6 @@ COPY public.confirmations (id, medname, taken, medicationid, created_at) FROM st
 20	Ibuprofen	f	3	2023-02-13
 21	Ibuprofen	t	3	2023-02-13
 22	Ibuprofen	f	3	2023-02-13
-23	Ibuprofen	t	3	2023-02-21
-24	Ibuprofen	t	3	2023-02-22
-25	Ibuprofen	f	3	2023-02-22
-26	Ibuprofen	f	3	2023-02-22
-27	Ibuprofen	f	3	2023-02-22
-28	Ibuprofen	f	3	2023-02-22
 \.
 
 
@@ -336,7 +330,7 @@ COPY public.reportmetrics (id, medid, reminderid, timetaken, askedaftertakencoun
 -- Name: confirmations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: evadb
 --
 
-SELECT pg_catalog.setval('public.confirmations_id_seq', 28, true);
+SELECT pg_catalog.setval('public.confirmations_id_seq', 1, false);
 
 
 --

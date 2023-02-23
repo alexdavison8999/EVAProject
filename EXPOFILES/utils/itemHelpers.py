@@ -1,6 +1,8 @@
 import tkinter as tk
 from typing import TypedDict
 
+from UIController import UIController
+
 # from utils.appLocation import AppLocation
 
 APP_LOCATIONS = ['Home', 'Drug Info', 'Report', 'Confirm']
@@ -28,3 +30,24 @@ def clearLocalUI(canvas: tk.Canvas, ids: list[int]) -> None:
     for id in ids:
         print(id)
         canvas.delete(id)
+
+# def findNearestConfirmTime(UIController: UIController, hour: str) -> bool:
+
+#     for time in UIController.confirmDict.keys():
+#         print(f'HOUR MIN: {hour_min}, to {UIController.confirmDict[time]}')
+
+#         hour_min
+
+
+
+#         hour = time.split(':')[0]
+#         minute = time.split(':')[1]
+
+#         closest_hour = min(UIController.confirmDict[time], key=lambda x:abs(x-int(hour)))
+#         closest_minute = min(UIController.confirmDict[time], key=lambda x:abs(x-int(minute)))
+
+#         if hour_min in UIController.confirmDict[time]:
+#             UIController.confirmDict.pop(hour_min)
+#             return True
+
+#     return False

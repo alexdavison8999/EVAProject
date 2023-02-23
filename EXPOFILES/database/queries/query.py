@@ -3,6 +3,7 @@ from typing import Union
 import psycopg2
 import psycopg2.extensions
 import psycopg2.errors
+from database.dbUtils import executeQuery
 from constants.confirmations import *
 
 from database.classes.medications import Medication
@@ -23,37 +24,6 @@ def tuplesToMedicationList(data: list[tuple]) -> list[Medication]:
 
     return return_list
 
-def executeQuery(conn: psycopg2.extensions.connection, sql_string: str, oneOrAll: str = 'all'):
-    """
-    Executes the sql query pased in the `sql_string` argument
-
-    Inputs:
-        `conn`:         Postgres connection object
-        `sql_string`:   SQL string statement
-        `oneOrAll`:     Determines whether to fetchone (`one`) or fetchall (`all`), default `all`
-    """
-    data = None
-    if oneOrAll in ['one','all']:
-
-        cursor = conn.cursor()
-        try:
-            cursor.execute(sql_string)
-
-            # Commit transaction (I think we need to do this after every statement)
-            conn.commit()
-
-            if oneOrAll == 'one':
-                data = cursor.fetchone()
-            else:
-                data = cursor.fetchall()
-        except:
-            print("ERROR IN EXECUTION, ROLLING BACK")
-            conn.rollback()
-
-    else:
-        print(f"Invalid argument for oneOrAll, got {oneOrAll} but expected to be in ['one','all']")
-
-    return data
 
 def medicationsQuery(conn: psycopg2.extensions.connection) -> Union[list[Medication], None]:
     """
@@ -146,7 +116,7 @@ def confirmationsQuery(conn: psycopg2.extensions.connection):
     """
     pass
 
-def getMedByName(conn: psycopg2.extensions.connection, medName: str):
+def getMedByName(conn: psycopg2.extensions.connection, medName: str) -> Union[Medication, None]:
     """
     Queries the `medications` a medication given an medicationId and a medName.
 
@@ -154,7 +124,24 @@ def getMedByName(conn: psycopg2.extensions.connection, medName: str):
         `conn`:       Postgres connection object
         `medName`:    Name of medication to check
     """
-    pass
+
+    sql_string = f"SELECT \
+                    * \
+                    FROM \
+                        medications \
+                    WHERE \
+                        archived is FALSE\
+                    AND \
+                        medname = '{medName}'\
+                    ORDER BY \
+                        created_at DESC \
+                    LIMIT 1;"
+
+    med = executeQuery(conn, sql_string, 'one')
+
+    med = Medication(med)
+
+    return med
 
 def getConfirmationsByMedName(conn: psycopg2.extensions.connection, medName: str, timeLimit: int = 0):
     """

@@ -1,8 +1,10 @@
 from __future__ import annotations
+from datetime import datetime
 import functools
 import tkinter as tk
 from typing import TYPE_CHECKING
 
+from database.mutations.mutation import createConfirm
 
 from constants.colors import *
 from constants.window import *
@@ -14,6 +16,15 @@ from utils.itemHelpers import clearLocalUI
 if TYPE_CHECKING:
     from UIController import UIController
 
+def confirmMedTake(UIController: UIController, medName: str, taken: bool):
+	createConfirm(UIController.conn, medName, taken)
+	print("Completed Confirm!")
+	UIController.clearUI("Confirm")
+	hour_min = datetime.now().strftime("%H:%M").split(":")
+	
+	UIController.goToConfirm(hour=hour_min[0], minute=hour_min[1])
+	return
+
 def individualConfirm(UIController: UIController, medName: str, folderPath: str):
 
 	# Creating a photoimage object to use image
@@ -24,8 +35,8 @@ def individualConfirm(UIController: UIController, medName: str, folderPath: str)
 
 	confirm_label = tk.Label(text=f'Have you taken your {medName}?', font=(TEXT_FONT, 55, 'normal'), background=PRIMARY_COLOR)
 
-	no_btn = UI.NewExitBtn(master=UIController.canvas, text='No', color='#FF4040', command=UIController.goToHome)
-	yes_btn = UI.NewExitBtn(master=UIController.canvas, text='Yes', color='#76EE00', command=UIController.goToHome)
+	no_btn = UI.NewExitBtn(master=UIController.canvas, text='No', color='#FF4040', command=functools.partial(confirmMedTake, UIController, medName, False))
+	yes_btn = UI.NewExitBtn(master=UIController.canvas, text='Yes', color='#76EE00', command=functools.partial(confirmMedTake, UIController, medName, True))
 	idk_btn = UI.NewExitBtn(master=UIController.canvas, text='IDK', color='#FFB90F',command=UIController.goToHome)
 
 	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT / 2, window=photo_label, anchor=tk.W))
