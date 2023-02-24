@@ -1,15 +1,15 @@
+from __future__ import annotations
 import tkinter as tk
-from typing import TypedDict
+from typing import TYPE_CHECKING
 
-from UIController import UIController
-
-# from utils.appLocation import AppLocation
+if TYPE_CHECKING:
+    from UIController import UIController
 
 APP_LOCATIONS = ['Home', 'Drug Info', 'Report', 'Confirm']
 
 # Function to delete all the UI from the canvas given a specific location
 # Returns False if the given app location is not in the list above
-def resetWindow(canvas: tk.Canvas, canvasIds: TypedDict,appLocation: str) -> bool:
+def resetWindow(canvas: tk.Canvas, canvasIds: dict,appLocation: str) -> bool:
     """
     Method to cleanup objects on the current canvas
     Inputs:
@@ -31,23 +31,21 @@ def clearLocalUI(canvas: tk.Canvas, ids: list[int]) -> None:
         print(id)
         canvas.delete(id)
 
-# def findNearestConfirmTime(UIController: UIController, hour: str) -> bool:
+def findNearestConfirmTime(UIController: UIController, hour: str, min: str) -> bool:
 
-#     for time in UIController.confirmDict.keys():
-#         print(f'HOUR MIN: {hour_min}, to {UIController.confirmDict[time]}')
+    for time in UIController.confirmDict.keys():
+        print(f'HOUR MIN: {hour}:{min}, to {UIController.confirmDict[time]}')
 
-#         hour_min
+        hour = int(hour)
+        minute = int(minute)
+
+        closest_hour = min(UIController.confirmDict[time], key=lambda x:abs(x-int(hour)))
+        closest_minute = min(UIController.confirmDict[time], key=lambda x:abs(x-int(minute)))
 
 
+        # TODO: Remove closest confirm time for med when 
+        # if hour_min in UIController.confirmDict[time]:
+        #     UIController.confirmDict.pop(hour_min)
+        #     return True
 
-#         hour = time.split(':')[0]
-#         minute = time.split(':')[1]
-
-#         closest_hour = min(UIController.confirmDict[time], key=lambda x:abs(x-int(hour)))
-#         closest_minute = min(UIController.confirmDict[time], key=lambda x:abs(x-int(minute)))
-
-#         if hour_min in UIController.confirmDict[time]:
-#             UIController.confirmDict.pop(hour_min)
-#             return True
-
-#     return False
+    return False

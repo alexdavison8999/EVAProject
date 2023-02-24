@@ -127,7 +127,7 @@ def timesList(conn: psycopg2.extensions.connection) -> dict[list[str]]:
 
 def confirmationsQuery(conn: psycopg2.extensions.connection):
     """
-    Queries the `confirmations` table for all medications.
+    Queries the `confirmations` table for all confirmations.
 
     Inputs:
         `conn`:       Postgres connection object
@@ -176,7 +176,8 @@ def getConfirmationsByMedName(conn: psycopg2.extensions.connection, medName: str
                     WHERE \
                         medname = '{medName}' \
                     AND \
-                        created_at >= (NOW() - INTERVAL '{interval}');"
+                        created_at >= (NOW() - INTERVAL '{interval}')\
+                    ORDER BY created_at ASC;"
     try: 
         data = executeQuery(conn, sql_string, 'all')
 

@@ -41,9 +41,6 @@ def executeQuery(conn: psycopg2.extensions.connection, sql_string: str, oneOrAll
         try:
             cursor.execute(sql_string)
 
-            booln = 'SELECT' in sql_string 
-            print(f'QUERY? {booln}, ONEORALL: {oneOrAll}')
-
             # Commit transaction (I think we need to do this after every statement)
             if 'SELECT' in sql_string:
                 records = []
