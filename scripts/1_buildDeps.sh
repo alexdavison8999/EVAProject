@@ -30,6 +30,8 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 
 sudo apt-get -y install postgresql
 
+sudo apt-get install python3-matplotlib
+
 exec $SHELL
 
 
