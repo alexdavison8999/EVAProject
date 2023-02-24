@@ -2,6 +2,7 @@ from __future__ import annotations
 import tkinter as tk
 from typing import TYPE_CHECKING
 
+from reports.generateReport import generateReport
 from report2 import *
 import utils.interfaceHelpers as UI
 from constants.window import *
@@ -12,18 +13,15 @@ if TYPE_CHECKING:
     
 def individualReport(UIController: UIController, medName: str) -> None:
 
-    def goBack():
-        UIController.clearUI("Report")
-        print(UIController.canvasIds)
-        UIController.goToReport()
-
     UIController.clearUI("Report")
 
     stats = getPercentConfirmsPerTimePeriod(UIController.conn, medName)
 
+    report_image_path = generateReport(UIController.conn, medName)
+
     reports_label = tk.Label(UIController.canvas, text=f'Report for {medName}', bg='#F0F8FF', font=('arial', 40, 'normal'))
     stats_label = tk.Label(UIController.canvas, text=f'{stats:.4g}% of confirmations\nreported as taken\nin the past week', bg='#F0F8FF', font=('arial', 24, 'normal'))
-    report_image = tk.PhotoImage(file="EXPOFILES/assets/report1.png")
+    report_image = tk.PhotoImage(file=report_image_path)
     report_label = tk.Label(image=report_image)
     report_label.image = report_image
     cog_report_btn = UI.NewExitBtn(master=UIController.canvas, text='Cognitive Report', command=UIController.goToHome)
