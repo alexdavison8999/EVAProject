@@ -3,9 +3,11 @@ from typing import Union
 import psycopg2
 import psycopg2.extensions
 import psycopg2.errors
+
+
+from database.classes.confirmations import Confirmation
 from database.dbUtils import executeQuery
 from constants.confirmations import *
-
 from database.classes.medications import Medication
 
 # TODO: Move to another file 
@@ -21,6 +23,22 @@ def tuplesToMedicationList(data: list[tuple]) -> list[Medication]:
     if len(data) > 0:
         for tuple in data:
             return_list.append(Medication(tuple))
+
+    return return_list
+
+
+def tuplesToConfirmationsList(data: list[tuple]) -> list[Confirmation]:
+    """
+    Converts tuple list to a list of `Confirmation`.
+
+    Inputs:
+        `data`:       The list of tuples from a query
+    """
+    return_list = []
+
+    if len(data) > 0:
+        for tuple in data:
+            return_list.append(Confirmation(tuple))
 
     return return_list
 
@@ -109,7 +127,7 @@ def timesList(conn: psycopg2.extensions.connection) -> dict[list[str]]:
 
 def confirmationsQuery(conn: psycopg2.extensions.connection):
     """
-    Queries the `confirmations` table for all medications.
+    Queries the `confirmations` table for all confirmations.
 
     Inputs:
         `conn`:       Postgres connection object
@@ -143,7 +161,7 @@ def getMedByName(conn: psycopg2.extensions.connection, medName: str) -> Union[Me
 
     return med
 
-def getConfirmationsByMedName(conn: psycopg2.extensions.connection, medName: str, timeLimit: int = 0):
+def getConfirmationsByMedName(conn: psycopg2.extensions.connection, medName: str, interval: str = '100 days') -> list[Confirmation]:
     """
     Queries the `confirmations` table for confirmations by a med name.
 
@@ -151,7 +169,25 @@ def getConfirmationsByMedName(conn: psycopg2.extensions.connection, medName: str
         `conn`:       Postgres connection object
         `medName`:    Name of medication to check
     """
-    pass
+    sql_string = f"SELECT\
+                    *\
+                    FROM \
+                        confirmations \
+                    WHERE \
+                        medname = '{medName}' \
+                    AND \
+                        created_at >= (NOW() - INTERVAL '{interval}')\
+                    ORDER BY created_at ASC;"
+    try: 
+        data = executeQuery(conn, sql_string, 'all')
+
+        confirmations: list[Confirmation] = tuplesToConfirmationsList(data)
+        
+    except:
+        print(f'Error: Umable to get confirmations for {medName} within the past {interval}')
+        confirmations = []
+
+    return confirmations
 
 def getPercentConfirmsPerTimePeriod(conn: psycopg2.extensions.connection, medName: str, interval: str = '100 days') -> float:
     """
@@ -186,10 +222,6 @@ def getPercentConfirmsPerTimePeriod(conn: psycopg2.extensions.connection, medNam
                             taken = true \
                         AND \
                             created_at >= (NOW() - INTERVAL '{interval}');"
-
-    # TODO: Move code below to its own function so we can set up the queries 
-    # here and execute them elsewhere. Something like the function returns 
-    # our value, we store it in percent_val, and then return percent_val
 
     try: 
         data = executeQuery(conn, sql_string, 'one')

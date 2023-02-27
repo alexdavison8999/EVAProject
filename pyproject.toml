@@ -7,8 +7,8 @@ license = "Proprietary"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
-numpy = "1.19.5"
+python = ">=3.9,<3.11"
+numpy = "1.21.6"
 asgiref = "3.5.0"
 astroid = "2.5.1"
 asttokens = "2.0.4"
@@ -115,6 +115,9 @@ opencv-python = "4.4.0.46"
 pysmbc = "^1.0.25.1"
 python-levenshtein = "^0.20.9"
 firebase-admin = "^6.1.0"
+plotly = "5.13.0"
+kaleido = "0.2.1"
+pandas = "^1.5.3"
 
 
 [build-system]

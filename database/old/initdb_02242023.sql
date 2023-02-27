@@ -29,7 +29,7 @@ CREATE TABLE public.confirmations (
     medname character varying DEFAULT 'unknown'::character varying NOT NULL,
     taken boolean DEFAULT false,
     medicationid integer NOT NULL,
-    created_at timestamp without time zone DEFAULT now()
+    created_at date DEFAULT now()
 );
 
 
@@ -179,41 +179,34 @@ ALTER TABLE ONLY public.medications ALTER COLUMN id SET DEFAULT nextval('public.
 --
 
 COPY public.confirmations (id, medname, taken, medicationid, created_at) FROM stdin;
-2	med	t	1	2023-02-10 00:00:00
-3	med	f	1	2023-02-10 00:00:00
-5	med	t	1	2023-02-10 00:00:00
-6	med	t	1	2023-02-10 00:00:00
-7	med	t	1	2023-02-02 00:00:00
-8	med	f	1	2023-02-02 00:00:00
-9	med	t	1	2023-02-02 00:00:00
-10	med	f	1	2023-02-02 00:00:00
-11	med	f	1	2023-02-02 00:00:00
-14	med	t	1	2023-02-02 00:00:00
-4	med	t	1	2023-02-10 00:00:00
-1	med	t	1	2023-02-10 00:00:00
-12	med	f	1	2023-02-02 00:00:00
-13	med	f	1	2023-02-02 00:00:00
-29	med	f	1	2023-02-22 00:00:00
-30	med	t	1	2023-02-22 00:00:00
-21	Ibuprofen	t	3	2023-02-17 12:00:00
-22	Ibuprofen	f	3	2023-02-18 12:00:00
-25	Ibuprofen	f	3	2023-02-19 12:00:00
-31	Ibuprofen	f	3	2023-02-21 12:00:00
-17	Ibuprofen	t	3	2023-02-15 13:00:00
-16	Ibuprofen	t	3	2023-02-14 12:50:00
-18	Ibuprofen	f	3	2023-02-15 18:00:00
-20	Ibuprofen	f	3	2023-02-16 14:00:00
-23	Ibuprofen	t	3	2023-02-18 16:00:00
-24	Ibuprofen	t	3	2023-02-18 12:45:00
-26	Ibuprofen	f	3	2023-02-19 09:00:00
-27	Ibuprofen	f	3	2023-02-20 18:30:00
-28	Ibuprofen	f	3	2023-02-20 10:30:00
-32	Ibuprofen	f	3	2023-02-23 12:30:00
-33	Ibuprofen	t	3	2023-02-24 14:11:57.752095
-34	med	t	1	2023-02-24 14:12:42.584619
-35	med	f	1	2023-02-24 14:12:44.822107
-19	Ibuprofen	t	3	2023-02-17 12:15:00
-15	Ibuprofen	t	3	2023-02-13 08:00:00
+2	med	t	1	2023-02-10
+3	med	f	1	2023-02-10
+5	med	t	1	2023-02-10
+6	med	t	1	2023-02-10
+7	med	t	1	2023-02-02
+8	med	f	1	2023-02-02
+9	med	t	1	2023-02-02
+10	med	f	1	2023-02-02
+11	med	f	1	2023-02-02
+14	med	t	1	2023-02-02
+4	med	t	1	2023-02-10
+1	med	t	1	2023-02-10
+12	med	f	1	2023-02-02
+13	med	f	1	2023-02-02
+15	Ibuprofen	t	3	2023-02-13
+16	Ibuprofen	t	3	2023-02-13
+17	Ibuprofen	t	3	2023-02-13
+18	Ibuprofen	f	3	2023-02-13
+19	Ibuprofen	t	3	2023-02-13
+20	Ibuprofen	f	3	2023-02-13
+21	Ibuprofen	t	3	2023-02-13
+22	Ibuprofen	f	3	2023-02-13
+23	Ibuprofen	t	3	2023-02-21
+24	Ibuprofen	t	3	2023-02-22
+25	Ibuprofen	f	3	2023-02-22
+26	Ibuprofen	f	3	2023-02-22
+27	Ibuprofen	f	3	2023-02-22
+28	Ibuprofen	f	3	2023-02-22
 \.
 
 
@@ -343,7 +336,7 @@ COPY public.reportmetrics (id, medid, reminderid, timetaken, askedaftertakencoun
 -- Name: confirmations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: evadb
 --
 
-SELECT pg_catalog.setval('public.confirmations_id_seq', 35, true);
+SELECT pg_catalog.setval('public.confirmations_id_seq', 28, true);
 
 
 --

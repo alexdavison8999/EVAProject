@@ -44,6 +44,7 @@ class Medication:
         self.timesPerWeek = dpw_options[sql_tuple[6]]
         self.folderPath = sql_tuple[7]
         self.createdAt = sql_tuple[8]
+        self.archived = sql_tuple[9]
 
     id: int
     medName: Union[str, None]
@@ -53,3 +54,4 @@ class Medication:
     timesPerWeek: Union[list[str], None]
     folderPath: Union[str, None]
     createdAt: Union[datetime, None]
+    archived: Union[bool, None]
