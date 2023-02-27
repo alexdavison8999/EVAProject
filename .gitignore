@@ -5,6 +5,3 @@ venv/
 EXPOFILES/assets/evaFaceRedLarge.png:Zone.Identifier
 EXPOFILES/assets/output-onlinepngtools.png:Zone.Identifier
 certs/*
-
-# Generated Images from app
-EXPOFILES/assets/generatedImages/*
