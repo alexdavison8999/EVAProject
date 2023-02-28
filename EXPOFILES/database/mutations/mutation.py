@@ -32,3 +32,24 @@ def createMedicene(conn: psycopg2.extensions.connection, medName: str, dateFille
     print(f'RESULTING DATA: {data}')
 
     return
+
+def alterMedicene(conn: psycopg2.extensions.connection, id: int, medName: str, dateFilled: datetime, refills: int, refillDate: datetime, timesPerDay: int, timesPerWeek: int, folderPath: str):
+    dateFilledStr: str = dateFilled.strftime("%\d/%m/%Y")
+    refillDateStr: str = refillDate.strftime("%\d/%m/%Y")
+
+
+    sql = f"UPDATE medications \
+            SET medname = '{medName}', \
+            datefilled = TO_DATE('{dateFilledStr}', YYYYMMDD), \
+            refillsleft = {refills}, \
+            refilldate = TO_DATE('{refillDateStr}', YYYYMMDD), \
+            timesperday = {timesPerDay}, \
+            timesperweek = {timesPerWeek}, \
+            folderpath = '{folderPath}' \
+            WHERE id = {id}"
+
+    data = executeQuery(conn, sql)
+
+    print(f'RESULTING DATA: {data}')
+
+    return
