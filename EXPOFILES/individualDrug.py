@@ -33,16 +33,12 @@ def readSite(url, drugname):
                     print(dat.text)
                     return dat.text
                     infoCount = infoCount + 1
-        return soup
+                return "Could not find the medicine on Drugs.com"
     else:
-        print('couldnt open')
+        return "Could not open Drugs.com to get medicine information"
 
 def individualDrug(UIController: UIController, medName: str) -> None:
 
-    def goBack():
-        UIController.clearUI("DrugInfo")
-        print(UIController.canvasIds)
-        UIController.goToDrugInfo()
 
     UIController.clearUI("DrugInfo")
 

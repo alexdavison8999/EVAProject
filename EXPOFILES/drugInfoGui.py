@@ -13,10 +13,6 @@ import utils.interfaceHelpers as UI
 if TYPE_CHECKING:
     from UIController import UIController
 
-# TODO: Make the buttons dynamic to the data in the database. This should be 
-# done by using a query to the database for all names in the database that aren't
-# The unknown value and create a button for each one. Then, when a particular button
-# is pressed, perform a web scrape for that medication
 
 def goToCommand(UIController, medName):
 	print("Click")
