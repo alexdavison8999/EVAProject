@@ -16,6 +16,7 @@ from scanBottle.editBottleGui import editBottleGui
 from database.queries.query import timesList
 from postScanDisplay import displayFunct
 import utils.interfaceHelpers as UI
+from utils.firebase.firebase import FirebaseApp
 
 from constants.colors import *
 from constants.window import *
@@ -43,6 +44,7 @@ class UIController:
     def __init__(self, conn: psycopg2.extensions.connection) -> None:
         self.root = tk.Tk()
         self.conn = conn
+        self.firebase = FirebaseApp()
         self.confirmDict = timesList(self.conn)
         # If these Id keys are changed, they must be updated on respective files
         self.canvasIds = {

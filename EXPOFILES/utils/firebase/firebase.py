@@ -1,3 +1,4 @@
+import os
 import firebase_admin
 import firebase_admin.messaging
 from firebase_admin import credentials
@@ -16,7 +17,7 @@ class FirebaseApp:
         # TOKEN IS A PER DEVICE REGISTRATION
         # When you load the mobile app, the home screen will display your appllication ID,
         # this will soon be changed so that you input this into the EVA, and then your device is registered to the EVA device 
-        self.token = 'dPsQDsY6Qvqsyi76XvlT3C:APA91bGjZfUq7VpRoi7ZeUvt03Nq9gUmTYIJKYsN3zPfQYIh7m0DnbF8gt8fu-TFQY7tuCp7jBGJJllv87QGPEHHTgYBf7KQZ2GC5OmgBacVAG8E8nmTBnDLgoBWqTr2NXW4Esb0iwgq'
+        self.token = os.getenv('DEVICE_REG_TOKEN')
         self.headers = {
             'Authorization': 'Bearer ' + self._get_access_token(),
             'Content-Type': 'application/json; UTF-8',
@@ -38,38 +39,35 @@ class FirebaseApp:
         print(credentials.token)
         return credentials.token
 
-    def send_notification(self, title: str, body: str, data):
+    def send_notification(self, title: str, body: str, data: dict):
         """
         Accepts title and body strings, and will push it to a device, 
         with an optional data field to send a payload 
         """
 
+        android_config = self.messaging.AndroidConfig(
+            priority='high'
+        )
+
+        
+
         if data:
-            new_notif = self.messaging.Message(
-                headers=self.headers,
+            notif = self.messaging.Notification(title=title, body=body)
+            msg = self.messaging.Message(
                 token=self.token,
-                notification={
-                    'title': title,
-                    'body': body,
-                },
+                notification=notif,
                 data=data,
-                android={ # TODO: This must be an androidConfig Instance!
-                    "direct_boot_ok": True,
-                },
+                android=android_config
             )
         else:
-            new_notif = self.messaging.Message(
+            notif = self.messaging.Notification(title=title, body=body)
+            msg = self.messaging.Message(
                 token=self.token,
-                notification={
-                    'title': title,
-                    'body': body,
-                },
-                android={
-                    "direct_boot_ok": True,
-                },
+                notification=notif,
+                android=android_config
             )
 
-        response = self.messaging.send(new_notif)
+        response = self.messaging.send(msg)
 
         # Response should be a message ID string
         print('Notificaation: ', response)
