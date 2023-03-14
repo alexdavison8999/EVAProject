@@ -35,6 +35,7 @@ class UIController:
 
 
     """
+
     root: tk.Tk
     canvas: tk.Canvas
     conn: psycopg2.extensions.connection
@@ -53,16 +54,21 @@ class UIController:
             "Confirm": [],
             "Report": [],
             "DrugInfo": [],
-            "ScanBottle": []
+            "ScanBottle": [],
         }
-        
+
         # Root properties - these will remain consistent
-        self.root.geometry(f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}')
+        self.root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
         self.root.title("Elderly Virtual Assistant")
         # self.root.attributes('-fullscreen', True) # -- Look into using this instead
 
         # Canvas where all UI elements will be added to / removed from
-        self.canvas = tk.Canvas(self.root, width=WINDOW_WIDTH, height=WINDOW_HEIGHT, background=PRIMARY_COLOR)
+        self.canvas = tk.Canvas(
+            self.root,
+            width=WINDOW_WIDTH,
+            height=WINDOW_HEIGHT,
+            background=PRIMARY_COLOR,
+        )
         self.canvas.pack(fill="both", expand=True)
 
         self.clock_text = UI.clockText(root=self.root)
@@ -144,7 +150,9 @@ class UIController:
         try:
             [self.canvas.delete(itemId) for itemId in self.canvasIds[canvasKey]]
         except KeyError:
-            print(f"ERROR: Cannot find canvas key {canvasKey} in dict keys {self.canvasIds.keys()}")
+            print(
+                f"ERROR: Cannot find canvas key {canvasKey} in dict keys {self.canvasIds.keys()}"
+            )
         return
 
     def loadUI(self, nextDestination) -> None:
@@ -167,9 +175,8 @@ class UIController:
     def closeEVA(self):
         # root.withdraw()
         if messagebox.askyesno(
-            title="Exit EVA?", 
-            message="Are you sure you want to exit?"
-            ):
+            title="Exit EVA?", message="Are you sure you want to exit?"
+        ):
             self.root.destroy()
         else:
             print("Canceled exit request")
@@ -177,26 +184,27 @@ class UIController:
 
     # Maybe split up code, need to see if it will affect the event loop
     def clock(self):
-        time_string = strftime('%I:%M %p \n %A, %B %d, %Y')
+        time_string = strftime("%I:%M %p \n %A, %B %d, %Y")
         date = datetime.now()
 
         # TODO: Create field for checking if the confirm has already been performed
         for key in self.confirmDict:
             confirm = key
-            hour_minute = confirm.split(':')
-            print(f'HOUR: {date.strftime("%H")} MINUTE: {date.strftime("%M")} DATE: {hour_minute}')
+            hour_minute = confirm.split(":")
+            print(f'TIME: {date.strftime("%H:%M")}')
 
             try:
                 hour = hour_minute[0]
-                minute = hour_minute[1]                
+                minute = hour_minute[1]
             except IndexError:
-                print(f'Error getting hour minute split from entry {hour_minute} in list {UIController.confirmDict}, time must be in a HH:MM format!')
+                print(
+                    f"Error getting hour minute split from entry {hour_minute} in list {UIController.confirmDict}, time must be in a HH:MM format!"
+                )
                 hour = -1
-                minute = -1   
+                minute = -1
 
             if date.strftime("%H") == hour and date.strftime("%M") == minute:
                 self.goToConfirm(hour, minute)
 
-
-        self.clock_text.config(text= time_string)
-        self.clock_text.after(10000,self.clock)
+        self.clock_text.config(text=time_string)
+        self.clock_text.after(10000, self.clock)
