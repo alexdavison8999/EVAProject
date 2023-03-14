@@ -21,8 +21,9 @@ def confirmEdit(
     med: Medication,
     fieldToEdit: str,
     newVal: str,
-    date_ids: list[Counter],
+    date_ids: list[Counter] = None,
 ):
+    print(fieldToEdit, newVal)
     if fieldToEdit in ["refillDate", "dateFilled", "createdAt"]:
         date_list = []
         date_list.append(date_ids[4].get_value())
@@ -41,8 +42,8 @@ def confirmEdit(
                 date_string = date_string + str(date_list[index])
 
         newVal = date_string
+        print(date_string)
 
-    print(fieldToEdit, newVal, date_string)
     result = alterMedicine(
         UIController.conn, med, fieldToEdit, newVal.replace("\n", "")
     )

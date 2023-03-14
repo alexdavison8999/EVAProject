@@ -87,6 +87,14 @@ def individualEdit(
                 else os.getenv("LIGHT_RED"),
             )
             # UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_WIDTH_PADDING, window=edited_text, anchor=tk.SW))
+            UIController.canvasIds["ScanBottle"].append(
+                UIController.canvas.create_window(
+                    WINDOW_PADDING + 200,
+                    WINDOW_HEIGHT / 2,
+                    window=edited_text,
+                    anchor=tk.E,
+                )
+            )
 
     label_frame = tk.Frame(UIController.canvas, background=os.getenv("PRIMARY_COLOR"))
     label_frame.grid(row=0, column=0, sticky="w")
@@ -98,50 +106,12 @@ def individualEdit(
         master=UIController.canvas, text="Go Back", command=lambda: goBack(UIController)
     )
 
-    name_label = tk.Label(
-        button_frame,
-        text="Med Name",
-        fg="Black",
-        font=(TEXT_FONT, 16, "bold"),
-        background=os.getenv("PRIMARY_COLOR"),
-    )
-    refills_label = tk.Label(
-        button_frame,
-        text="Refills Remaining",
-        fg="Black",
-        font=(TEXT_FONT, 16, "bold"),
-        background=os.getenv("PRIMARY_COLOR"),
-    )
-    per_week_label = tk.Label(
-        button_frame,
-        text="Days Notified",
-        fg="Black",
-        font=(TEXT_FONT, 16, "bold"),
-        background=os.getenv("PRIMARY_COLOR"),
-    )
-    per_day_label = tk.Label(
-        button_frame,
-        text="Times Notified",
-        fg="Black",
-        font=(TEXT_FONT, 16, "bold"),
-        background=os.getenv("PRIMARY_COLOR"),
-    )
-    refill_date_label = tk.Label(
-        button_frame,
-        text="Refill Date",
-        fg="Black",
-        font=(TEXT_FONT, 16, "bold"),
-        background=os.getenv("PRIMARY_COLOR"),
-    )
-    date_filled_label = tk.Label(
-        button_frame,
-        text="Date Filled",
-        fg="Black",
-        font=(TEXT_FONT, 16, "bold"),
-        background=os.getenv("PRIMARY_COLOR"),
-    )
-    # date_added_label = tk.Label(button_frame, text="Date Added", fg='Black', font=(TEXT_FONT, 16, 'bold'), background=os.getenv('PRIMARY_COLOR'))
-    # testing_label = tk.Label(button_frame, text="Testing", fg='Black', font=(TEXT_FONT, 16, 'bold'))
+    name_label = UI.newFrameLabel(button_frame, "Med Name")
+    refills_label = UI.newFrameLabel(button_frame, "Refills Remaining")
+    per_week_label = UI.newFrameLabel(button_frame, "Days Notified")
+    per_day_label = UI.newFrameLabel(button_frame, "Times Notified")
+    refill_date_label = UI.newFrameLabel(button_frame, "Refill Date")
+    date_filled_label = UI.newFrameLabel(button_frame, "Date Filled")
 
     name_label.grid(row=0, column=0, pady=GRID_PADDING)
     refills_label.grid(row=1, column=0, pady=GRID_PADDING)
@@ -151,95 +121,51 @@ def individualEdit(
     date_filled_label.grid(row=5, column=0, pady=GRID_PADDING)
     # date_added_label.grid(row=6, column=0, pady=GRID_PADDING)
 
-    button1: tk.Button = tk.Button(
-        button_frame,
-        text=med.medName,
-        width=30,
-        height=2,
-        fg="Black",
-        font=(TEXT_FONT, 16, "bold"),
-        command=lambda: goToCorrectionPage(UIController, med, "medName", med.medName),
-    )
-    button1.grid(row=0, column=1, pady=GRID_PADDING)
+    days_string = list_to_string(med.timesPerWeek)
 
-    button2 = tk.Button(
+    UI.newFrameButton(
         button_frame,
-        text=str(med.refillsLeft),
-        width=30,
-        height=2,
-        font=(TEXT_FONT, 16, "bold"),
+        med.medName,
+        command=lambda: goToCorrectionPage(UIController, med, "medName", med.medName),
+    ).grid(row=0, column=1, pady=GRID_PADDING)
+    UI.newFrameButton(
+        button_frame,
+        str(med.refillsLeft),
         command=lambda: goToCorrectionPage(
             UIController, med, "refillsLeft", str(med.refillsLeft)
         ),
-    )
-    button2.grid(row=1, column=1, pady=GRID_PADDING)
-
-    days_string = list_to_string(med.timesPerWeek)
-
-    button3 = tk.Button(
+    ).grid(row=1, column=1, pady=GRID_PADDING)
+    UI.newFrameButton(
         button_frame,
-        text=days_string,
-        width=30,
-        height=2,
-        font=(TEXT_FONT, 16, "bold"),
+        days_string,
         command=lambda: goToCorrectionPage(
             UIController, med, "timesPerWeek", days_string
         ),
-    )
-    button3.grid(row=2, column=1, pady=GRID_PADDING)
-
-    button4 = tk.Button(
+    ).grid(row=2, column=1, pady=GRID_PADDING)
+    UI.newFrameButton(
         button_frame,
-        text=str(med.timesPerDay),
-        width=30,
-        height=2,
-        font=(TEXT_FONT, 16, "bold"),
+        str(med.timesPerDay),
         command=lambda: goToCorrectionPage(
             UIController, med, "timesPerDay", str(med.timesPerDay)
         ),
-    )
-    button4.grid(row=3, column=1, pady=GRID_PADDING)
-
-    button5 = tk.Button(
+    ).grid(row=3, column=1, pady=GRID_PADDING)
+    UI.newFrameButton(
         button_frame,
-        text=med.refillDate.strftime("%A, %B %d, %Y"),
-        width=30,
-        height=2,
-        font=(TEXT_FONT, 16, "bold"),
+        med.refillDate.strftime("%A, %B %d, %Y"),
         command=lambda: goToCorrectionPage(
             UIController, med, "refillDate", med.refillDate.strftime("%m/%d/%Y")
         ),
-    )
-    button5.grid(row=4, column=1, pady=GRID_PADDING)
-
-    button6 = tk.Button(
+    ).grid(row=4, column=1, pady=GRID_PADDING)
+    UI.newFrameButton(
         button_frame,
-        text=med.dateFilled.strftime("%A, %B %d, %Y"),
-        width=30,
-        height=2,
-        font=(TEXT_FONT, 16, "bold"),
+        med.dateFilled.strftime("%A, %B %d, %Y"),
         command=lambda: goToCorrectionPage(
             UIController, med, "dateFilled", med.dateFilled.strftime("%m/%d/%Y")
         ),
-    )
-    button6.grid(row=5, column=1, pady=GRID_PADDING)
+    ).grid(row=5, column=1, pady=GRID_PADDING)
 
-    # button7 = tk.Button(
-    #     button_frame,
-    #     text=med.createdAt.strftime('%A, %B %d, %Y'),
-    #     width=30,
-    #     height=2,
-    #     font=(TEXT_FONT, 16, 'bold'),
-    #     command=lambda: goToCorrectionPage(UIController, med, "createdAt", med.createdAt.strftime("%m/%d/%Y"))
-    # )
-    # button7.grid(row=6, column=1, pady=GRID_PADDING)
+    # if update_val:
 
-    if update_val:
-        UIController.canvasIds["ScanBottle"].append(
-            UIController.canvas.create_window(
-                WINDOW_PADDING + 200, WINDOW_HEIGHT / 2, window=edited_text, anchor=tk.E
-            )
-        )
     UIController.canvasIds["ScanBottle"].append(
         UIController.canvas.create_window(
             WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW
@@ -255,5 +181,4 @@ def individualEdit(
             WINDOW_WIDTH / 2, WINDOW_PADDING, window=title_text, anchor=tk.N
         )
     )
-    # UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2.5, window=label_frame, anchor=tk.CENTER))
     return
