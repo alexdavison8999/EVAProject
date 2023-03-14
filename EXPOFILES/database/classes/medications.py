@@ -50,6 +50,7 @@ class Medication:
     medName: Union[str, None]
     dateFilled: Union[datetime, None]
     refillsLeft: Union[int, None]
+    refillDate: Union[datetime, None]
     timesPerDay: Union[int, None]
     timesPerWeek: Union[list[str], None]
     folderPath: Union[str, None]

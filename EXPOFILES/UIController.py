@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import messagebox
 import psycopg2.extensions
 
+from scanBottle.individualEdit import individualEdit
 from homeGui import homeGui
 from confirmationGUI import confirmGui
 from drugInfoGui import loadingDrugGui
@@ -91,9 +92,14 @@ class UIController:
         bottleScannerGui(self)
 
     def editBottleInfo(self):
-        print("Going to bottle info editor...")
+        print("Info editor list")
         self.clearUI("ScanBottle")
         editBottleGui(self)
+
+    def individualInfoEdit(self, medName, updateVal=None):
+        print("Going to individual info edit...")
+        self.clearUI("ScanBottle")
+        individualEdit(self, medName, update_val=updateVal)
 
     def confirmSelect(self):
         print("Going to Medicine Confirmation")
