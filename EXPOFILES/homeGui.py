@@ -55,7 +55,7 @@ def homeGui(UIController: UIController):
     confirm_btn = UI.NewHomeBtn(master=UIController.canvas, text='Daily Confirmation', command=functools.partial(UIController.goToConfirm, hour=date[0], minute=date[1]))
     report_btn = UI.NewHomeBtn(master=UIController.canvas, text='Reports', command=UIController.goToReport)
     exit_btn = UI.NewExitBtn(master=UIController.canvas, text='Exit', command=UIController.closeEVA)
-    VC_btn = UI.NewExitBtn(master=UIController.canvas, text='Voice Command', command=voiceCommand.record_speech)
+    VC_btn = UI.NewExitBtn(master=UIController.canvas, text='Voice Command', command=functools.partial(voiceCommand.record_speech, UIController))
 
     # Adding assets to the canvas and the canvasIds list
     # These can be used to control the visibility of items
