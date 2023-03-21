@@ -32,9 +32,12 @@ def NewExitBtn(
     )
 
 
-def NewMedBtn(master: tk.Canvas, command, text="Default", color="#F44336") -> tk.Button:
+def NewMedBtn(
+    master: tk.Canvas, command, text="Default", color="#F44336", name="!button"
+) -> tk.Button:
     return tk.Button(
         master=master,
+        name=name,
         text=text,
         bg=color,
         font=(TEXT_FONT, 48, "normal"),
