@@ -31,8 +31,13 @@ def record_speech(UIController: UIController):
 
 def navigateMenu(UIController, voiceStr):
 	if 'scan' in voiceStr:
-		print("navigating to scan")
 		UIController.goToScanBottle()
+	elif 'drug' in voiceStr:
+		UIController.goToDrugInfo()
+	elif 'confirmation' in voiceStr:
+		UIController.goToConfirm()
+	elif 'report' in voiceStr:
+		UIController.goToReport()
 	else:
 		print("try again")
 # Call the function 
