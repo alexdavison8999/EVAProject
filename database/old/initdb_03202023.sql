@@ -64,10 +64,10 @@ CREATE TABLE public.medications (
     id integer NOT NULL,
     medname character varying DEFAULT 'unknown'::character varying NOT NULL,
     datefilled date DEFAULT CURRENT_DATE,
-    refillsleft integer DEFAULT 0,
+    refillsleft integer DEFAULT '-1'::integer,
     refilldate date DEFAULT CURRENT_DATE,
-    timesperday integer DEFAULT 0,
-    timesperweek_id integer DEFAULT 0,
+    timesperday integer DEFAULT '-1'::integer,
+    timesperweek integer DEFAULT '-1'::integer,
     folderpath character varying,
     created_at date DEFAULT CURRENT_DATE,
     archived boolean DEFAULT false NOT NULL
@@ -161,83 +161,6 @@ CREATE TABLE public.reportmetrics (
 ALTER TABLE public.reportmetrics OWNER TO evadb;
 
 --
--- Name: weeklyreminders; Type: TABLE; Schema: public; Owner: evadb
---
-
-CREATE TABLE public.weeklyreminders (
-    id integer NOT NULL,
-    medications_id integer NOT NULL,
-    monday boolean DEFAULT true NOT NULL,
-    tuesday boolean DEFAULT true NOT NULL,
-    wednesday boolean DEFAULT true NOT NULL,
-    thursday boolean DEFAULT true NOT NULL,
-    friday boolean DEFAULT true NOT NULL,
-    saturday boolean DEFAULT true NOT NULL,
-    sunday boolean DEFAULT true NOT NULL
-);
-
-
-ALTER TABLE public.weeklyreminders OWNER TO evadb;
-
---
--- Name: weeklyreminders_id_seq; Type: SEQUENCE; Schema: public; Owner: evadb
---
-
-CREATE SEQUENCE public.weeklyreminders_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.weeklyreminders_id_seq OWNER TO evadb;
-
---
--- Name: weeklyreminders_id_seq1; Type: SEQUENCE; Schema: public; Owner: evadb
---
-
-CREATE SEQUENCE public.weeklyreminders_id_seq1
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.weeklyreminders_id_seq1 OWNER TO evadb;
-
---
--- Name: weeklyreminders_id_seq1; Type: SEQUENCE OWNED BY; Schema: public; Owner: evadb
---
-
-ALTER SEQUENCE public.weeklyreminders_id_seq1 OWNED BY public.weeklyreminders.id;
-
-
---
--- Name: weeklyreminders_medications_id_seq; Type: SEQUENCE; Schema: public; Owner: evadb
---
-
-CREATE SEQUENCE public.weeklyreminders_medications_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.weeklyreminders_medications_id_seq OWNER TO evadb;
-
---
--- Name: weeklyreminders_medications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: evadb
---
-
-ALTER SEQUENCE public.weeklyreminders_medications_id_seq OWNED BY public.weeklyreminders.medications_id;
-
-
---
 -- Name: confirmations id; Type: DEFAULT; Schema: public; Owner: evadb
 --
 
@@ -252,52 +175,45 @@ ALTER TABLE ONLY public.medications ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- Name: weeklyreminders id; Type: DEFAULT; Schema: public; Owner: evadb
---
-
-ALTER TABLE ONLY public.weeklyreminders ALTER COLUMN id SET DEFAULT nextval('public.weeklyreminders_id_seq1'::regclass);
-
-
---
 -- Data for Name: confirmations; Type: TABLE DATA; Schema: public; Owner: evadb
 --
 
 COPY public.confirmations (id, medname, taken, medicationid, created_at) FROM stdin;
+2	med	t	1	2023-02-10 00:00:00
+3	med	f	1	2023-02-10 00:00:00
+5	med	t	1	2023-02-10 00:00:00
+6	med	t	1	2023-02-10 00:00:00
+7	med	t	1	2023-02-02 00:00:00
+8	med	f	1	2023-02-02 00:00:00
+9	med	t	1	2023-02-02 00:00:00
+10	med	f	1	2023-02-02 00:00:00
+11	med	f	1	2023-02-02 00:00:00
+14	med	t	1	2023-02-02 00:00:00
+4	med	t	1	2023-02-10 00:00:00
+1	med	t	1	2023-02-10 00:00:00
+12	med	f	1	2023-02-02 00:00:00
+13	med	f	1	2023-02-02 00:00:00
+29	med	f	1	2023-02-22 00:00:00
+30	med	t	1	2023-02-22 00:00:00
+21	Ibuprofen	t	3	2023-02-17 12:00:00
+22	Ibuprofen	f	3	2023-02-18 12:00:00
+25	Ibuprofen	f	3	2023-02-19 12:00:00
+31	Ibuprofen	f	3	2023-02-21 12:00:00
+17	Ibuprofen	t	3	2023-02-15 13:00:00
+16	Ibuprofen	t	3	2023-02-14 12:50:00
+18	Ibuprofen	f	3	2023-02-15 18:00:00
+20	Ibuprofen	f	3	2023-02-16 14:00:00
+23	Ibuprofen	t	3	2023-02-18 16:00:00
+24	Ibuprofen	t	3	2023-02-18 12:45:00
+26	Ibuprofen	f	3	2023-02-19 09:00:00
+27	Ibuprofen	f	3	2023-02-20 18:30:00
+28	Ibuprofen	f	3	2023-02-20 10:30:00
+32	Ibuprofen	f	3	2023-02-23 12:30:00
 33	Ibuprofen	t	3	2023-02-24 14:11:57.752095
 34	med	t	1	2023-02-24 14:12:42.584619
 35	med	f	1	2023-02-24 14:12:44.822107
 19	Ibuprofen	t	3	2023-02-17 12:15:00
 15	Ibuprofen	t	3	2023-02-13 08:00:00
-36	Ibuprofen	t	3	2023-02-24 15:37:09.652336
-37	Ibuprofen	t	3	2023-02-24 15:38:52.849116
-38	Ibuprofen	t	3	2023-02-24 15:38:54.749993
-39	Ibuprofen	f	3	2023-02-25 14:03:43.545663
-40	Ibuprofen	t	3	2023-03-04 13:13:05.805439
-41	Ibuprofen	t	3	2023-03-06 17:59:56.084346
-42	Ibuprofen	t	3	2023-03-06 18:00:47.268853
-43	Ibuprofen	t	3	2023-03-06 18:01:01.034343
-44	Ibuprofen	f	3	2023-03-06 18:01:13.465825
-45	Ibuprofen	t	3	2023-03-06 18:19:34.276657
-46	Ibuprofen	t	3	2023-03-06 18:20:13.418637
-47	Ibuprofen	t	3	2023-03-06 18:20:57.860485
-48	Ibuprofen	t	3	2023-03-06 18:21:27.871102
-49	Ibuprofen	t	3	2023-03-06 18:22:19.700944
-50	Ibuprofen	t	3	2023-03-06 19:03:10.258371
-51	Ibuprofen	t	3	2023-03-06 19:07:32.533981
-52	Ibuprofen	t	3	2023-03-06 19:08:11.86493
-53	Ibuprofen	t	3	2023-03-06 19:10:40.765659
-54	Ibuprofen	t	3	2023-03-06 19:11:02.395689
-55	Ibuprofen	f	3	2023-03-06 19:11:06.201126
-56	Ibuprofen	t	3	2023-03-06 19:11:39.079593
-57	Ibuprofen	t	3	2023-03-09 15:48:31.275578
-58	Ibuprofen	f	3	2023-03-09 20:59:38.571895
-59	Ibuprofen	f	3	2023-03-10 12:37:31.357357
-60	Ibuprofen	f	3	2023-03-12 14:56:16.122032
-61	Ibuprofen	t	3	2023-03-14 00:03:30.264458
-62	Ibuprofen	t	3	2023-03-14 00:36:47.036669
-63	Ibuprofen	f	3	2023-03-20 15:50:22.311071
-64	Ibuprofen	f	3	2023-03-20 16:08:13.800972
-65	Ibuprofen	f	3	2023-03-20 16:12:50.848782
 \.
 
 
@@ -305,9 +221,9 @@ COPY public.confirmations (id, medname, taken, medicationid, created_at) FROM st
 -- Data for Name: medications; Type: TABLE DATA; Schema: public; Owner: evadb
 --
 
-COPY public.medications (id, medname, datefilled, refillsleft, refilldate, timesperday, timesperweek_id, folderpath, created_at, archived) FROM stdin;
-1	med	2023-02-11	2	2023-02-11	2	2	meds/med/1/	2023-02-11	f
-3	Ibuprofen	2023-02-11	1	2023-02-13	5	1	meds/med/3/	2023-02-11	f
+COPY public.medications (id, medname, datefilled, refillsleft, refilldate, timesperday, timesperweek, folderpath, created_at, archived) FROM stdin;
+1	med	2023-02-11	2	2023-02-11	2	7	meds/med/1/	2023-02-11	f
+3	Ibuprofen	2023-02-11	-1	2023-02-11	1	6	meds/med/3/	2023-02-11	f
 \.
 
 
@@ -424,20 +340,10 @@ COPY public.reportmetrics (id, medid, reminderid, timetaken, askedaftertakencoun
 
 
 --
--- Data for Name: weeklyreminders; Type: TABLE DATA; Schema: public; Owner: evadb
---
-
-COPY public.weeklyreminders (id, medications_id, monday, tuesday, wednesday, thursday, friday, saturday, sunday) FROM stdin;
-2	1	t	t	t	t	t	t	t
-1	3	t	f	t	f	t	f	f
-\.
-
-
---
 -- Name: confirmations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: evadb
 --
 
-SELECT pg_catalog.setval('public.confirmations_id_seq', 65, true);
+SELECT pg_catalog.setval('public.confirmations_id_seq', 35, true);
 
 
 --
@@ -445,27 +351,6 @@ SELECT pg_catalog.setval('public.confirmations_id_seq', 65, true);
 --
 
 SELECT pg_catalog.setval('public.medications_id_seq', 3, true);
-
-
---
--- Name: weeklyreminders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: evadb
---
-
-SELECT pg_catalog.setval('public.weeklyreminders_id_seq', 1, false);
-
-
---
--- Name: weeklyreminders_id_seq1; Type: SEQUENCE SET; Schema: public; Owner: evadb
---
-
-SELECT pg_catalog.setval('public.weeklyreminders_id_seq1', 2, true);
-
-
---
--- Name: weeklyreminders_medications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: evadb
---
-
-SELECT pg_catalog.setval('public.weeklyreminders_medications_id_seq', 1, false);
 
 
 --
@@ -481,7 +366,7 @@ ALTER TABLE ONLY public.confirmations
 --
 
 ALTER TABLE ONLY public.medications
-    ADD CONSTRAINT medications_pk PRIMARY KEY (id);
+    ADD CONSTRAINT medications_pk PRIMARY KEY (id, medname);
 
 
 --
@@ -509,27 +394,11 @@ ALTER TABLE ONLY public.reportmetrics
 
 
 --
--- Name: weeklyreminders weeklyreminders_pk; Type: CONSTRAINT; Schema: public; Owner: evadb
---
-
-ALTER TABLE ONLY public.weeklyreminders
-    ADD CONSTRAINT weeklyreminders_pk PRIMARY KEY (id);
-
-
---
 -- Name: confirmations confirmations_fk; Type: FK CONSTRAINT; Schema: public; Owner: evadb
 --
 
 ALTER TABLE ONLY public.confirmations
-    ADD CONSTRAINT confirmations_fk FOREIGN KEY (medicationid) REFERENCES public.medications(id);
-
-
---
--- Name: medications medications_fk; Type: FK CONSTRAINT; Schema: public; Owner: evadb
---
-
-ALTER TABLE ONLY public.medications
-    ADD CONSTRAINT medications_fk FOREIGN KEY (timesperweek_id) REFERENCES public.weeklyreminders(id);
+    ADD CONSTRAINT confirmations_fk FOREIGN KEY (medicationid, medname) REFERENCES public.medications(id, medname);
 
 
 --
@@ -554,14 +423,6 @@ ALTER TABLE ONLY public.reportmetrics
 
 ALTER TABLE ONLY public.reportmetrics
     ADD CONSTRAINT reportmetrics_reminderid_fkey FOREIGN KEY (reminderid) REFERENCES public.reminders(id);
-
-
---
--- Name: weeklyreminders weeklyreminders_fk; Type: FK CONSTRAINT; Schema: public; Owner: evadb
---
-
-ALTER TABLE ONLY public.weeklyreminders
-    ADD CONSTRAINT weeklyreminders_fk FOREIGN KEY (medications_id) REFERENCES public.medications(id);
 
 
 --
