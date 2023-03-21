@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 import speech_recognition as sr 
 from typing import TYPE_CHECKING
 
@@ -11,8 +12,10 @@ r = sr.Recognizer()
 
 # Create a function that will be called when the command is given  
 def record_speech(UIController: UIController): 
+	date = datetime.now().strftime("%H %M")
+    date = date.split(" ")
 	# Record the command from the microphone 
-	with sr.Microphone(device_index=1) as source: 
+	with sr.Microphone() as source: 
 		print("Listening...") 
 		r.pause_threshold = 1
 		audio = r.listen(source) 
@@ -35,7 +38,7 @@ def navigateMenu(UIController, voiceStr):
 	elif 'drug' in voiceStr:
 		UIController.goToDrugInfo()
 	elif 'confirmation' in voiceStr:
-		UIController.goToConfirm()
+		UIController.goToConfirm(hour=date[0],minute=date[1])
 	elif 'report' in voiceStr:
 		UIController.goToReport()
 	else:
