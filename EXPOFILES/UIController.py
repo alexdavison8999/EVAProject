@@ -1,8 +1,11 @@
 from datetime import datetime
+import os
+import signal
 from time import strftime
 import tkinter as tk
 from tkinter import messagebox
 import psycopg2.extensions
+from scanBottle.camera.cameraControls import Camera
 
 from scanBottle.individualEdit import individualEdit
 from homeGui import homeGui
@@ -208,3 +211,18 @@ class UIController:
 
         self.clock_text.config(text=time_string)
         self.clock_text.after(10000, self.clock)
+
+    def start_camera(self) -> Camera:
+        my_camera = Camera(self.canvas)
+        return my_camera
+
+    def run_camera(self, camera: Camera) -> None:
+        camera.update_feed(camera.stream)
+        self.canvas.after(10, self.run_camera, camera)
+
+    def stop_camera(self, camera: Camera) -> None:
+        try:
+            pgid = os.getpgid(camera.p.pid)
+            os.killpg(pgid, signal.SIGINT)
+        except:
+            print("ERROR KILLING CAMERA")
