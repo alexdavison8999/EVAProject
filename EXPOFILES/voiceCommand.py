@@ -13,7 +13,7 @@ r = sr.Recognizer()
 # Create a function that will be called when the command is given  
 def record_speech(UIController: UIController): 
 	date = datetime.now().strftime("%H %M")
-    date = date.split(" ")
+	date = date.split(" ")
 	# Record the command from the microphone 
 	with sr.Microphone() as source: 
 		print("Listening...") 
