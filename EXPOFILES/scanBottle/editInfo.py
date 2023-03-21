@@ -1,8 +1,9 @@
 from __future__ import annotations
 import os
 import tkinter as tk
-from typing import TYPE_CHECKING
-from database.mutations.mutation import alterMedicine
+from typing import TYPE_CHECKING, Union
+from utils.data_manip import string_to_list
+from database.mutations.mutation import alterMedicine, updateDaysPerWeek
 from database.classes.medications import Medication
 from scanBottle.counter import Counter
 from scanBottle.keyboard import Keyboard
@@ -20,9 +21,10 @@ def confirmEdit(
     UIController: UIController,
     med: Medication,
     fieldToEdit: str,
-    newVal: str,
+    newVal: Union[list, str],
     date_ids: list[Counter] = None,
 ):
+    print("CONFIRMING EDIT")
     print(fieldToEdit, newVal)
     if fieldToEdit in ["refillDate", "dateFilled", "createdAt"]:
         date_list = []
@@ -44,9 +46,29 @@ def confirmEdit(
         newVal = date_string
         print(date_string)
 
-    result = alterMedicine(
-        UIController.conn, med, fieldToEdit, newVal.replace("\n", "")
-    )
+    if fieldToEdit == "timesPerWeek":
+        days = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+        ]
+        day_dict = {
+            day: str(1 if day in newVal else 0) for index, day in enumerate(days)
+        }
+
+        day_numbers = "".join([day_dict[day] for day in day_dict])
+
+        print(day_numbers)
+        newVal = day_numbers
+        result = updateDaysPerWeek(UIController.conn, med.timesPerWeekId, newVal)
+    else:
+        result = alterMedicine(
+            UIController.conn, med, fieldToEdit, newVal.replace("\n", "")
+        )
     UIController.individualInfoEdit(med.medName, updateVal=result)
 
 
@@ -55,12 +77,28 @@ def goBack(UIController: UIController, medName):
     UIController.individualInfoEdit(medName)
 
 
+def toggleDay(UIController: UIController, days_list: list, day: str):
+    button_to_edit = UIController.canvas.nametowidget(f"!button{day}")
+    if day not in days_list:
+        days_list.append(day)
+        button_to_edit.configure(background=os.getenv("LIGHT_GREEN"))
+    else:
+        days_list.remove(day)
+        button_to_edit.configure(background=os.getenv("LIGHT_RED"))
+
+    print(days_list)
+
+    return
+
+
 def editInfo(
     UIController: UIController, med: Medication, fieldToEdit: str, curVal: str
 ):
     edit_text = fieldToEdit in ["medName"]
     date_field = fieldToEdit in ["refillDate", "dateFilled", "createdAt"]
-    timesPerField = fieldToEdit in ["timesPerWeek", "timesPerDay"]
+    timesPerWeek = fieldToEdit == "timesPerWeek"
+    timesPerDay = fieldToEdit == "timesPerDay"
+    days_list = string_to_list(curVal)
     date_ids = []
 
     if edit_text:
@@ -134,7 +172,7 @@ def editInfo(
                         )
                     )
             title_text = f"Edit the date for {fieldToEdit}"
-        elif timesPerField:
+        elif timesPerDay:
             counter_frame = Counter(UIController.canvas, curVal)
 
             UIController.canvasIds["ScanBottle"].append(
@@ -150,6 +188,126 @@ def editInfo(
             title_text = (
                 f"Choose how many times per {day_or_week} you want to be notified."
             )
+
+        elif timesPerWeek:
+            title_text = (
+                f"Click on the days you want to get a reminder for {med.medName}"
+            )
+
+            monday_btn = UI.NewMedBtn(
+                UIController.canvas,
+                name=f"!buttonMonday",
+                text="Monday",
+                color=os.getenv("LIGHT_GREEN")
+                if "Monday" in days_list
+                else os.getenv("LIGHT_RED"),
+                command=lambda: toggleDay(UIController, days_list, "Monday"),
+            )
+            tuesday_btn = UI.NewMedBtn(
+                UIController.canvas,
+                name=f"!buttonTuesday",
+                text="Tuesday",
+                color=os.getenv("LIGHT_GREEN")
+                if "Tuesday" in days_list
+                else os.getenv("LIGHT_RED"),
+                command=lambda: toggleDay(UIController, days_list, "Tuesday"),
+            )
+            wednesday_btn = UI.NewMedBtn(
+                UIController.canvas,
+                name=f"!buttonWednesday",
+                text="Wednesday",
+                color=os.getenv("LIGHT_GREEN")
+                if "Wednesday" in days_list
+                else os.getenv("LIGHT_RED"),
+                command=lambda: toggleDay(UIController, days_list, "Wednesday"),
+            )
+            thursday_btn = UI.NewMedBtn(
+                UIController.canvas,
+                name=f"!buttonThursday",
+                text="Thursday",
+                color=os.getenv("LIGHT_GREEN")
+                if "Thursday" in days_list
+                else os.getenv("LIGHT_RED"),
+                command=lambda: toggleDay(UIController, days_list, "Thursday"),
+            )
+            friday_btn = UI.NewMedBtn(
+                UIController.canvas,
+                name=f"!buttonFriday",
+                text="Friday",
+                color=os.getenv("LIGHT_GREEN")
+                if "Friday" in days_list
+                else os.getenv("LIGHT_RED"),
+                command=lambda: toggleDay(UIController, days_list, "Friday"),
+            )
+            saturday_btn = UI.NewMedBtn(
+                UIController.canvas,
+                name=f"!buttonSaturday",
+                text="Saturday",
+                color=os.getenv("LIGHT_GREEN")
+                if "Saturday" in days_list
+                else os.getenv("LIGHT_RED"),
+                command=lambda: toggleDay(UIController, days_list, "Saturday"),
+            )
+            sunday_btn = UI.NewMedBtn(
+                UIController.canvas,
+                name=f"!buttonSunday",
+                text="Sunday",
+                color=os.getenv("LIGHT_GREEN")
+                if "Sunday" in days_list
+                else os.getenv("LIGHT_RED"),
+                command=lambda: toggleDay(UIController, days_list, "Sunday"),
+            )
+            UIController.canvasIds["ScanBottle"].append(
+                UIController.canvas.create_window(
+                    WINDOW_PADDING, WINDOW_HEIGHT / 2.75, window=monday_btn, anchor=tk.W
+                )
+            )
+            UIController.canvasIds["ScanBottle"].append(
+                UIController.canvas.create_window(
+                    WINDOW_PADDING, WINDOW_HEIGHT / 1.9, window=tuesday_btn, anchor=tk.W
+                )
+            )
+            UIController.canvasIds["ScanBottle"].append(
+                UIController.canvas.create_window(
+                    WINDOW_PADDING,
+                    WINDOW_HEIGHT / 1.25,
+                    window=wednesday_btn,
+                    anchor=tk.W,
+                )
+            )
+            UIController.canvasIds["ScanBottle"].append(
+                UIController.canvas.create_window(
+                    WINDOW_WIDTH_PADDING,
+                    WINDOW_HEIGHT / 2.75,
+                    window=thursday_btn,
+                    anchor=tk.E,
+                )
+            )
+            UIController.canvasIds["ScanBottle"].append(
+                UIController.canvas.create_window(
+                    WINDOW_WIDTH_PADDING,
+                    WINDOW_HEIGHT_PADDING / 1.9,
+                    window=friday_btn,
+                    anchor=tk.E,
+                )
+            )
+            UIController.canvasIds["ScanBottle"].append(
+                UIController.canvas.create_window(
+                    WINDOW_WIDTH_PADDING,
+                    WINDOW_HEIGHT / 1.25,
+                    window=saturday_btn,
+                    anchor=tk.E,
+                )
+            )
+            UIController.canvasIds["ScanBottle"].append(
+                UIController.canvas.create_window(
+                    WINDOW_WIDTH / 2,
+                    WINDOW_HEIGHT / 1.15,
+                    window=sunday_btn,
+                    anchor=tk.S,
+                )
+            )
+
         else:
             for index in range(0, len(curVal)):
                 counter_frame = Counter(UIController.canvas, curVal[index])
@@ -169,18 +327,32 @@ def editInfo(
             font=(TEXT_FONT, 28, "normal"),
             background=PRIMARY_COLOR,
         )
-        confirm_button = UI.NewExitBtn(
-            master=UIController.canvas,
-            text="Save Changes",
-            color=os.getenv("GREEN_COLOR"),
-            command=lambda: confirmEdit(
-                UIController,
-                med,
-                fieldToEdit,
-                counter_frame.counter_text.get(),
-                date_ids,
-            ),
-        )
+        if timesPerWeek:
+            confirm_button = UI.NewExitBtn(
+                master=UIController.canvas,
+                text="Save Changes",
+                color=os.getenv("GREEN_COLOR"),
+                command=lambda: confirmEdit(
+                    UIController,
+                    med,
+                    fieldToEdit,
+                    days_list,
+                    date_ids,
+                ),
+            )
+        else:
+            confirm_button = UI.NewExitBtn(
+                master=UIController.canvas,
+                text="Save Changes",
+                color=os.getenv("GREEN_COLOR"),
+                command=lambda: confirmEdit(
+                    UIController,
+                    med,
+                    fieldToEdit,
+                    counter_frame.counter_text.get(),
+                    date_ids,
+                ),
+            )
 
         UIController.canvasIds["ScanBottle"].append(
             UIController.canvas.create_window(
