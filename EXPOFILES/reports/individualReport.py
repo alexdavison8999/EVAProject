@@ -34,6 +34,7 @@ def individualReport(UIController: UIController, medName: str) -> None:
     stats_label = tk.Label(UIController.canvas, text=stats_text, bg=PRIMARY_COLOR, font=(TEXT_FONT, 24, 'normal'))
     cog_report_btn = UI.NewExitBtn(master=UIController.canvas, text='Cognitive Report', command=UIController.goToHome)
     go_back_btn = UI.NewExitBtn(master=UIController.canvas, text='Go Back', command=UIController.goToReport)
+    
     UIController.canvasIds["Report"].append(UIController.canvas.create_window(WINDOW_PADDING - 20, WINDOW_PADDING - 20, window=reports_label, anchor=tk.NW))
     UIController.canvasIds["Report"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT_PADDING, window=cog_report_btn, anchor=tk.SE))
     UIController.canvasIds["Report"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
