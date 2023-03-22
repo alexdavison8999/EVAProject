@@ -34,8 +34,10 @@ def navigateMenu(UIController, voiceStr):
 	date = datetime.now().strftime("%H %M")
 	date = date.split(" ")
 	if 'add' in voiceStr:
+		UIController.goToScanBottle()
 		UIController.openBottleScanner()
 	elif 'edit' in voiceStr:
+		UIController.goToScanBottle()
 		UIController.editBottleInfo()
 	elif 'scan' in voiceStr:
 		UIController.goToScanBottle()
