@@ -33,7 +33,13 @@ def record_speech(UIController: UIController):
 def navigateMenu(UIController, voiceStr):
 	date = datetime.now().strftime("%H %M")
 	date = date.split(" ")
-	if 'scan' in voiceStr:
+	if 'add' in voiceStr:
+		UIController.goToScanBottle()
+		UIController.openBottleScanner()
+	elif 'edit' in voiceStr:
+		UIController.goToScanBottle()
+		UIController.editBottleInfo()
+	elif 'scan' in voiceStr:
 		UIController.goToScanBottle()
 	elif 'drug' in voiceStr:
 		UIController.goToDrugInfo()
