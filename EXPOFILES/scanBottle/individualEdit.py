@@ -78,7 +78,7 @@ def individualEdit(
             # UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_WIDTH_PADDING, window=edited_text, anchor=tk.SW))
             UIController.canvasIds["ScanBottle"].append(
                 UIController.canvas.create_window(
-                    WINDOW_PADDING + 200,
+                    WINDOW_PADDING + 250,
                     WINDOW_HEIGHT / 2,
                     window=edited_text,
                     anchor=tk.E,

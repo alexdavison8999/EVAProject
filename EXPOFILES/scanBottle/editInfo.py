@@ -194,7 +194,7 @@ def editInfo(
                 f"Click on the days you want to get a reminder for {med.medName}"
             )
 
-            monday_btn = UI.NewMedBtn(
+            monday_btn = UI.NewDayBtn(
                 UIController.canvas,
                 name=f"!buttonMonday",
                 text="Monday",
@@ -203,7 +203,7 @@ def editInfo(
                 else os.getenv("LIGHT_RED"),
                 command=lambda: toggleDay(UIController, days_list, "Monday"),
             )
-            tuesday_btn = UI.NewMedBtn(
+            tuesday_btn = UI.NewDayBtn(
                 UIController.canvas,
                 name=f"!buttonTuesday",
                 text="Tuesday",
@@ -212,7 +212,7 @@ def editInfo(
                 else os.getenv("LIGHT_RED"),
                 command=lambda: toggleDay(UIController, days_list, "Tuesday"),
             )
-            wednesday_btn = UI.NewMedBtn(
+            wednesday_btn = UI.NewDayBtn(
                 UIController.canvas,
                 name=f"!buttonWednesday",
                 text="Wednesday",
@@ -221,7 +221,7 @@ def editInfo(
                 else os.getenv("LIGHT_RED"),
                 command=lambda: toggleDay(UIController, days_list, "Wednesday"),
             )
-            thursday_btn = UI.NewMedBtn(
+            thursday_btn = UI.NewDayBtn(
                 UIController.canvas,
                 name=f"!buttonThursday",
                 text="Thursday",
@@ -230,7 +230,7 @@ def editInfo(
                 else os.getenv("LIGHT_RED"),
                 command=lambda: toggleDay(UIController, days_list, "Thursday"),
             )
-            friday_btn = UI.NewMedBtn(
+            friday_btn = UI.NewDayBtn(
                 UIController.canvas,
                 name=f"!buttonFriday",
                 text="Friday",
@@ -239,7 +239,7 @@ def editInfo(
                 else os.getenv("LIGHT_RED"),
                 command=lambda: toggleDay(UIController, days_list, "Friday"),
             )
-            saturday_btn = UI.NewMedBtn(
+            saturday_btn = UI.NewDayBtn(
                 UIController.canvas,
                 name=f"!buttonSaturday",
                 text="Saturday",
@@ -248,7 +248,7 @@ def editInfo(
                 else os.getenv("LIGHT_RED"),
                 command=lambda: toggleDay(UIController, days_list, "Saturday"),
             )
-            sunday_btn = UI.NewMedBtn(
+            sunday_btn = UI.NewDayBtn(
                 UIController.canvas,
                 name=f"!buttonSunday",
                 text="Sunday",
@@ -259,18 +259,18 @@ def editInfo(
             )
             UIController.canvasIds["ScanBottle"].append(
                 UIController.canvas.create_window(
-                    WINDOW_PADDING, WINDOW_HEIGHT / 2.75, window=monday_btn, anchor=tk.W
+                    WINDOW_PADDING, WINDOW_HEIGHT / 3.5, window=monday_btn, anchor=tk.W
                 )
             )
             UIController.canvasIds["ScanBottle"].append(
                 UIController.canvas.create_window(
-                    WINDOW_PADDING, WINDOW_HEIGHT / 1.9, window=tuesday_btn, anchor=tk.W
+                    WINDOW_PADDING, WINDOW_HEIGHT / 2.2, window=tuesday_btn, anchor=tk.W
                 )
             )
             UIController.canvasIds["ScanBottle"].append(
                 UIController.canvas.create_window(
                     WINDOW_PADDING,
-                    WINDOW_HEIGHT / 1.25,
+                    WINDOW_HEIGHT / 1.6,
                     window=wednesday_btn,
                     anchor=tk.W,
                 )
@@ -278,7 +278,7 @@ def editInfo(
             UIController.canvasIds["ScanBottle"].append(
                 UIController.canvas.create_window(
                     WINDOW_WIDTH_PADDING,
-                    WINDOW_HEIGHT / 2.75,
+                    WINDOW_HEIGHT / 3.5,
                     window=thursday_btn,
                     anchor=tk.E,
                 )
@@ -286,7 +286,7 @@ def editInfo(
             UIController.canvasIds["ScanBottle"].append(
                 UIController.canvas.create_window(
                     WINDOW_WIDTH_PADDING,
-                    WINDOW_HEIGHT_PADDING / 1.9,
+                    WINDOW_HEIGHT / 2.2,
                     window=friday_btn,
                     anchor=tk.E,
                 )
@@ -294,7 +294,7 @@ def editInfo(
             UIController.canvasIds["ScanBottle"].append(
                 UIController.canvas.create_window(
                     WINDOW_WIDTH_PADDING,
-                    WINDOW_HEIGHT / 1.25,
+                    WINDOW_HEIGHT / 1.6,
                     window=saturday_btn,
                     anchor=tk.E,
                 )

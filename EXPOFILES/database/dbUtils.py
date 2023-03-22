@@ -8,7 +8,6 @@ from constants.database import *
 
 dotenv.load_dotenv()
 
-
 def connectToEvaDB(
     host: str = os.getenv("PG_HOST"),
     database: str = os.getenv("PG_DB"),
