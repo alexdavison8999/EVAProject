@@ -2,7 +2,7 @@ import psycopg2
 import psycopg2.extensions
 import psycopg2.errors
 from database.classes.medications import Medication
-from database.queries.query import getMedByName
+from database.queries.query import getMedByName, getReminderById
 from datetime import datetime
 
 from database.dbUtils import executeQuery
@@ -22,6 +22,7 @@ def createConfirm(
     return
 
 
+# TODO: Update so that the ID for a weeklyreminders row is created and added
 def createMedicine(
     conn: psycopg2.extensions.connection,
     medName: str,
@@ -48,6 +49,32 @@ def createMedicine(
     return
 
 
+def updateDaysPerWeek(
+    conn: psycopg2.extensions.connection, reminder_id: str, newVal: str
+):
+    try:
+        sql = f"UPDATE weeklyreminders \
+                SET monday = '{newVal[0]}', \
+                tuesday = '{newVal[1]}', \
+                wednesday = '{newVal[2]}', \
+                thursday = '{newVal[3]}', \
+                friday = '{newVal[4]}', \
+                saturday = '{newVal[5]}', \
+                sunday = '{newVal[6]}' \
+                WHERE id = '{reminder_id}'"
+
+    except IndexError:
+        print(f"ERROR: newVal length is incorrect for date setting: {newVal}")
+        return {"errors": "Unable to update medication"}
+
+    data = executeQuery(conn, sql)
+
+    if data is None:
+        return {"errors": "Unable to update medication"}
+
+    return {"Days Per Week": "new days"}
+
+
 def alterMedicine(
     conn: psycopg2.extensions.connection,
     med: Medication,
@@ -65,14 +92,29 @@ def alterMedicine(
     dateFilledStr: str = med.dateFilled.strftime("%Y-%m-%d")
     refillDateStr: str = med.refillDate.strftime("%Y-%m-%d")
 
-    sql = f"UPDATE medications \
-            SET medname = '{med.medName}', \
-            datefilled = '{newVal if fieldToEdit == 'dateFilled' else dateFilledStr}', \
-            refillsleft = '{med.refillsLeft}', \
-            refilldate = '{newVal if fieldToEdit == 'refillDate' else refillDateStr}', \
-            timesperday = '{med.timesPerDay}', \
-            timesperweek = '{len(med.timesPerWeek)}' \
-            WHERE id = '{med.id}'"
+    # If its timesPerWeek, we update a different table
+    if fieldToEdit == "timesPerWeek":
+        weekly_reminder = getReminderById(conn, med.timesPerWeekId)
+        if weekly_reminder:
+            sql = f"UPDATE weeklyreminders \
+                    SET monday = '{newVal[0]}', \
+                    tuesday = '{newVal[1]}', \
+                    wednesday = '{newVal[2]}', \
+                    thursday = '{newVal[3]}', \
+                    friday = '{newVal[4]}', \
+                    saturday = '{newVal[5]}', \
+                    sunday = '{newVal[6]}', \
+                    WHERE id = '{med.timesPerWeekId}'"
+        else:
+            print("ERROR GETTING REMINDERS DATA TO SET")
+    else:
+        sql = f"UPDATE medications \
+                SET medname = '{med.medName}', \
+                datefilled = '{newVal if fieldToEdit == 'dateFilled' else dateFilledStr}', \
+                refillsleft = '{med.refillsLeft}', \
+                refilldate = '{newVal if fieldToEdit == 'refillDate' else refillDateStr}', \
+                timesperday = '{med.timesPerDay}' \
+                WHERE id = '{med.id}'"
 
     data = executeQuery(conn, sql)
 

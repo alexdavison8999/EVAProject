@@ -32,9 +32,12 @@ def NewExitBtn(
     )
 
 
-def NewMedBtn(master: tk.Canvas, command, text="Default", color="#F44336") -> tk.Button:
+def NewMedBtn(
+    master: tk.Canvas, command, text="Default", color="#F44336", name="!button"
+) -> tk.Button:
     return tk.Button(
         master=master,
+        name=name,
         text=text,
         bg=color,
         font=(TEXT_FONT, 48, "normal"),
@@ -114,3 +117,30 @@ def newFrameButton(master: tk.Frame, name: str, command) -> tk.Button:
         font=(TEXT_FONT, 16, "bold"),
         command=command,
     )
+
+def NewDayBtn(
+    master: tk.Canvas, command, text="Default", color="#F44336", name="!button"
+) -> tk.Button:
+    return tk.Button(
+        master=master,
+        name=name,
+        text=text,
+        bg=color,
+        font=(TEXT_FONT, 48, "normal"),
+        fg="#ffffff",
+        command=command,
+        height=1,
+        width=10,
+    )
+    
+def resizeImage(img, newWidth, newHeight):
+    oldWidth = img.width()
+    oldHeight = img.height()
+    newPhotoImage = tk.PhotoImage(width=newWidth, height=newHeight)
+    for x in range(newWidth):
+        for y in range(newHeight):
+            xOld = int(x*oldWidth/newWidth)
+            yOld = int(y*oldHeight/newHeight)
+            rgb = '#%02x%02x%02x' % img.get(xOld, yOld)
+            newPhotoImage.put(rgb, (x, y))
+    return newPhotoImage

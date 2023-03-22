@@ -32,7 +32,7 @@ def confirmMedTake(UIController: UIController, medName: str, taken: bool):
 	UIController.goToConfirm(hour=hour_min[0], minute=hour_min[1])
 	return
 
-def individualConfirm(UIController: UIController, medName: str, folderPath: str):
+def individualConfirm(UIController: UIController, medName: str, medId: str):
 
 	# Creating a photoimage object to use image
 	photo = tk.PhotoImage(file=r'%s' % "EXPOFILES/assets/image1.png")

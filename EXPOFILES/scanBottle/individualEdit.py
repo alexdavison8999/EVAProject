@@ -2,7 +2,8 @@ from __future__ import annotations
 import os
 import tkinter as tk
 from typing import TYPE_CHECKING, Union
-from database.queries.query import getMedByName
+from utils.data_manip import list_to_string
+from database.queries.query import getMedByName, getReminderById
 from scanBottle.editInfo import editInfo
 from database.classes.medications import Medication
 
@@ -48,23 +49,11 @@ def goBack(UIController: UIController):
     return
 
 
-def list_to_string(day_list: list[str]):
-    str_list = ""
-
-    for index, day in enumerate(day_list):
-        if index == 0:
-            str_list += day
-        elif index == 3:
-            str_list += f"\n{day}"
-        else:
-            str_list += f", {day}"
-    return str_list
-
-
 def individualEdit(
     UIController: UIController, medName: str, update_val: Union[dict, None]
 ):
     med = getMedByName(UIController.conn, medName)
+    weekly_reminder = getReminderById(UIController.conn, med.timesPerWeekId)
 
     title_text = tk.Label(
         UIController.canvas,
@@ -89,7 +78,7 @@ def individualEdit(
             # UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_WIDTH_PADDING, window=edited_text, anchor=tk.SW))
             UIController.canvasIds["ScanBottle"].append(
                 UIController.canvas.create_window(
-                    WINDOW_PADDING + 200,
+                    WINDOW_PADDING + 250,
                     WINDOW_HEIGHT / 2,
                     window=edited_text,
                     anchor=tk.E,
@@ -121,7 +110,7 @@ def individualEdit(
     date_filled_label.grid(row=5, column=0, pady=GRID_PADDING)
     # date_added_label.grid(row=6, column=0, pady=GRID_PADDING)
 
-    days_string = list_to_string(med.timesPerWeek)
+    days_string = list_to_string(weekly_reminder.days_list())
 
     UI.newFrameButton(
         button_frame,
