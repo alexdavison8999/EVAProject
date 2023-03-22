@@ -66,21 +66,13 @@ def generateReport(conn: psycopg2.extensions.connection, medName: str,) -> str:
         fig.update_yaxes(range=[0,2400])
 
         fig.update_layout(
-            xaxis={
-                'type': 'date',
-            },
-            # yaxis={
-            #     'type': 'date',
-            #     # 'tickformat': '%H:%M',
-            #     # 'nticks': 24,
-            #     # 'tick0': hours[0],
-            #     # 'dtick': 3600000,
-            #     # 'range': [hours[0], hours[len(hours) - 1]],
-            #     # 'autorange': False
-            # }
-            # xaxis_tickformat = '%B %d\n%Y'
-            # yaxis_tickformat=f'%X'
+            yaxis=dict(
+                tickmode = 'array',
+                tickvals = [0, 500, 1000, 1500, 2000],
+                ticktext = ["12:00 AM", "5:00 AM", "10:00 AM", "3:00 PM", "8:00 PM"]
+            )
         )
+
 
         fig.update_traces(marker=dict(size=18,
                                     line=dict(width=2,
