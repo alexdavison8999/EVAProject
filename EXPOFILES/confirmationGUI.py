@@ -18,10 +18,10 @@ if TYPE_CHECKING:
 
 # img = None
 
-def goToCommand(UIController, medName):
+def goToCommand(UIController, medName, medId):
 	UIController.clearUI("Confirm")
 	print("Click")
-	individualConfirm(UIController, medName=medName, folderPath=medName)
+	individualConfirm(UIController, medName=medName, medId=medId)
 	pass
 
 def goBack(UIController: UIController):
@@ -63,7 +63,7 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
 			med_button = UI.NewMedBtn(
 				master=UIController.canvas, 
 				text=f'{med.medName}', 
-				command= functools.partial(goToCommand, UIController, med.medName)
+				command= functools.partial(goToCommand, UIController, med.medName, med.id)
 			)
 			yPos = ((WINDOW_HEIGHT) - (((index + 1) * 150) + (WINDOW_HEIGHT / 2)))
 			xPos = WINDOW_WIDTH / 1.35

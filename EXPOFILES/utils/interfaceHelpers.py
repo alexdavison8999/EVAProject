@@ -132,3 +132,15 @@ def NewDayBtn(
         height=1,
         width=10,
     )
+    
+def resizeImage(img, newWidth, newHeight):
+    oldWidth = img.width()
+    oldHeight = img.height()
+    newPhotoImage = tk.PhotoImage(width=newWidth, height=newHeight)
+    for x in range(newWidth):
+        for y in range(newHeight):
+            xOld = int(x*oldWidth/newWidth)
+            yOld = int(y*oldHeight/newHeight)
+            rgb = '#%02x%02x%02x' % img.get(xOld, yOld)
+            newPhotoImage.put(rgb, (x, y))
+    return newPhotoImage
