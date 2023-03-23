@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 
 from utils.wrappers import on_rpi
-from scanBottle.camera.cameraControls import Camera
+from scanBottle.camera.cameraControls import CV2Camera, Camera
 from constants.colors import *
 from constants.window import *
 import utils.interfaceHelpers as UI
@@ -48,9 +48,10 @@ def scanningFunction(UIController: UIController):
 
     # Check if we're on the raspberry pi or not
     if on_rpi():
-        camera: Camera = UIController.start_camera()
+        # camera: Camera = UIController.start_camera()
 
-        UIController.run_camera(camera)
+        # UIController.run_camera(camera)
+        camera = CV2Camera()
         UIController.canvasIds["ScanBottle"].append(
             UIController.canvas.create_window(
                 WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, window=camera.label, anchor=tk.NW
