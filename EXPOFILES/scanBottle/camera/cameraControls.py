@@ -83,3 +83,6 @@ class CV2Camera:  # Originally a tk object, some stuff may reflect that
 
     def stop_camera(self):
         return self.cap.release()
+
+    def get_image(self):
+        return self.label["image"]

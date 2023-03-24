@@ -30,9 +30,9 @@ def increment_image_count(UIController: UIController):
 def captureImage(UIController: UIController, camera: CV2Camera):
     num_photos = increment_image_count(UIController)
 
-    cur_img = camera.label["image"]
+    cur_img = camera.get_image()
     file_directory = f"EXPOFILES/database/new/{num_photos}.jpg"
-
+    print(type(cur_img))
     if cur_img:
         if os.path.exists(file_directory):
             os.remove(file_directory)
