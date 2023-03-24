@@ -1,6 +1,8 @@
 from __future__ import annotations
 import functools
+import os
 import tkinter as tk
+from PIL import Image
 from typing import TYPE_CHECKING
 
 
@@ -16,24 +18,42 @@ if TYPE_CHECKING:
     from UIController import UIController
 
 
-def captureImage(UIController: UIController):
+def increment_image_count(UIController: UIController):
     label: tk.Label = UIController.canvas.nametowidget("!labelNumPhotos")
-    print(label["text"])
     num_photos = int(label["text"][-1])
     num_photos += 1
     print(num_photos)
     label.config(text=f"Photos taken: {num_photos}")
+    return num_photos
+
+
+def captureImage(UIController: UIController, camera: CV2Camera):
+    num_photos = increment_image_count(UIController)
+
+    cur_img = camera.label.cget("image")
+    file_directory = f"EXPOFILES/database/new/{num_photos}.jpg"
+
+    if cur_img:
+        if os.path.exists(file_directory):
+            os.remove(file_directory)
+        my_image = Image.fromarray(cur_img)
+        my_image.save(file_directory, "JPEG")
+
     print("Click!")
     return
 
 
-def goToEdit(UIController: UIController):
+def goToEdit(UIController: UIController, camera: CV2Camera):
     print("Going to med info edit")
+    if on_rpi():
+        camera.stop_camera()
     return
 
 
-def goBack(UIController: UIController):
+def goBack(UIController: UIController, camera: CV2Camera):
     print("Canceled")
+    if on_rpi():
+        camera.stop_camera()
     UIController.clearUI("ScanBottle")
     return
 
@@ -51,7 +71,7 @@ def scanningFunction(UIController: UIController):
         # camera: Camera = UIController.start_camera()
 
         # UIController.run_camera(camera)
-        camera = CV2Camera()
+        camera = CV2Camera(UIController.canvas)
         UIController.canvasIds["ScanBottle"].append(
             UIController.canvas.create_window(
                 WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, window=camera.label, anchor=tk.NW
@@ -61,7 +81,7 @@ def scanningFunction(UIController: UIController):
     capture_img_btn = UI.NewExitBtn(
         master=UIController.canvas,
         text="Capture Image",
-        command=functools.partial(captureImage, UIController),
+        command=functools.partial(captureImage, UIController, camera),
     )
     done_btn = UI.NewExitBtn(
         master=UIController.canvas,
