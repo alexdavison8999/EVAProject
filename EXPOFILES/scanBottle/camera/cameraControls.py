@@ -76,8 +76,8 @@ class CV2Camera:  # Originally a tk object, some stuff may reflect that
             # convert the OpenCV frame to a PIL image
             img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             # update the Tkinter label with the PIL image
-            self.label.imgtk = ImageTk.PhotoImage(img)
-            self.label.config(image=self.label.imgtk)
+            self.label.image = ImageTk.PhotoImage(img)
+            self.label.config(image=self.label.image)
         # schedule the update_label function to be called again in 10 milliseconds
         root.after(10, self.update_label, root)
 
