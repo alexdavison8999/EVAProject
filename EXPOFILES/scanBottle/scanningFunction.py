@@ -37,9 +37,11 @@ def captureImage(UIController: UIController, camera: CV2Camera):
         if os.path.exists(file_directory):
             os.remove(file_directory)
         # my_image = Image.fromarray(cur_img)
-        my_image = cur_img._PhotoImage__photo
-        my_image = my_image.convert("RGB")
-        my_image.save(file_directory, "JPEG")
+        # my_image = cur_img._PhotoImage__photo
+        # imgpil = ImageTk.getimage( imagetk )
+        # my_image = my_image.convert("RGB")
+        cur_img.save(file_directory, "JPEG")
+        cur_img.close()
 
     print("Click!")
     return

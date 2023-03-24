@@ -86,4 +86,4 @@ class CV2Camera:  # Originally a tk object, some stuff may reflect that
         return self.cap.release()
 
     def get_image(self):
-        return self.image_ref
+        return ImageTk.getimage(self.image_ref)
