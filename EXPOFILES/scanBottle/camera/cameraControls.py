@@ -60,8 +60,8 @@ class CV2Camera:  # Originally a tk object, some stuff may reflect that
         self.cap = cv2.VideoCapture(0)
 
         # set camera resolution to 320x240
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 600)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 400)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 
         # Create a label to display the camera feed
         self.label = tk.Label(root, name="!labelCamera")
