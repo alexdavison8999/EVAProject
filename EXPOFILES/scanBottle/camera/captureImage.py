@@ -1,3 +1,4 @@
+import os
 import cv2
 import pytesseract
 
@@ -7,6 +8,10 @@ def parse_image(imagePath: str) -> dict:
     Returns a dictionary of strings parsed from the image
     """
     return_dict = {}
+
+    if not os.path.isfile(imagePath):
+        print("ERROR: Path does not exist")
+        return
 
     # Load the image
     image = cv2.imread(imagePath)
