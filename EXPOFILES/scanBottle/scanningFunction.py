@@ -40,6 +40,7 @@ def captureImage(UIController: UIController, camera: CV2Camera):
         # my_image = cur_img._PhotoImage__photo
         # imgpil = ImageTk.getimage( imagetk )
         # my_image = my_image.convert("RGB")
+        cur_img.convert("RGB")
         cur_img.save(file_directory, "JPEG")
         cur_img.close()
 
