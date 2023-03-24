@@ -31,17 +31,20 @@ def captureImage(UIController: UIController, camera: CV2Camera):
     num_photos = increment_image_count(UIController)
 
     cur_img = camera.get_image()
-    file_directory = f"EXPOFILES/database/new/{num_photos}.jpg"
+    file_name = f"{num_photos}.jpg"
+    file_directory = f"EXPOFILES/database/new/"
     print(type(cur_img))
     if cur_img:
-        if os.path.exists(file_directory):
-            os.remove(file_directory)
-        # my_image = Image.fromarray(cur_img)
-        # my_image = cur_img._PhotoImage__photo
-        # imgpil = ImageTk.getimage( imagetk )
-        # my_image = my_image.convert("RGB")
+        if not os.path.exists(file_directory):
+            os.mkdir(file_directory)
+
+        full_path = os.path.join(file_directory, file_name)
+
+        if os.path.exists(full_path):
+            os.remove(full_path)
+
         rgb_img = cur_img.convert("RGB")
-        rgb_img.save(file_directory, "JPEG")
+        rgb_img.save(full_path, "JPEG")
         cur_img.close()
 
     print("Click!")
