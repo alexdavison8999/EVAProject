@@ -5,7 +5,7 @@ import tkinter as tk
 from PIL import Image
 from typing import TYPE_CHECKING
 
-
+from scanBottle.camera.captureImage import parse_image
 from utils.wrappers import on_rpi
 from scanBottle.camera.cameraControls import CV2Camera, Camera
 from constants.colors import *
@@ -27,14 +27,10 @@ def increment_image_count(UIController: UIController):
     return num_photos
 
 
-def captureImage(UIController: UIController, camera: CV2Camera):
-    num_photos = increment_image_count(UIController)
-
-    cur_img = camera.get_image()
-    file_name = f"{num_photos}.jpg"
+def save_image(temp_name: str, cur_img: Image) -> str:
+    file_name = f"{temp_name}.jpg"
     file_directory = f"EXPOFILES/database/new/"
-    print(type(cur_img))
-    if cur_img:
+    if cur_img is not None:
         if not os.path.exists(file_directory):
             os.mkdir(file_directory)
 
@@ -46,6 +42,23 @@ def captureImage(UIController: UIController, camera: CV2Camera):
         rgb_img = cur_img.convert("RGB")
         rgb_img.save(full_path, "JPEG")
         cur_img.close()
+        rgb_img.close()
+        return full_path
+    else:
+        print("ERROR: Unable to retrieve image from camera!")
+        return None
+
+
+def captureImage(UIController: UIController, camera: CV2Camera):
+    num_photos = increment_image_count(UIController)
+
+    cur_img = camera.get_image()
+
+    file_path = save_image(num_photos, cur_img)
+
+    parsed_text = parse_image(file_path)
+
+    print(parsed_text)
 
     print("Click!")
     return
