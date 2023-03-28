@@ -31,7 +31,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/KroegerP/EVAProject">
-    <img src="EXPOFILES/evaFaceRedLarge.png" alt="Logo" width="80" height="80">
+    <img src="EXPOFILES/assets/evaFaceRedLarge.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">EVA 2.0</h3>
@@ -239,4 +239,4 @@ Project Link: [https://github.com/KroegerP/EVAProject](https://github.com/Kroege
 [license-url]: https://github.com/KroegerP/EVAProject/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/peter-kroeger
-[product-screenshot]: EXPOFILES/evaFaceRedLarge.png
+[product-screenshot]: EXPOFILES/assets/evaFaceRedLarge.png
