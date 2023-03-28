@@ -199,6 +199,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 ## Contact
 
 Peter Kroeger - [@HeyDotPeter](https://twitter.com/HeyDotPeter) - peter14mail@gmail.com
+Ryan Kunkel - ryanjkunkel@gmail.com - 513-515-8966
+Konstantinos Papadopoulos-Frietchen - kostisdabess@gmail.com 440-832-9004
+Cole Bower - 
 
 Project Link: [https://github.com/KroegerP/EVAProject](https://github.com/KroegerP/EVAProject)
 
