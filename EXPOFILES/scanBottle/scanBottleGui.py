@@ -3,7 +3,7 @@ import functools
 import tkinter as tk
 from typing import TYPE_CHECKING
 
-
+import voiceCommand
 from constants.colors import *
 from constants.window import *
 import utils.interfaceHelpers as UI
@@ -32,7 +32,9 @@ def scanBottleGui(UIController: UIController):
 	add_btn = UI.NewHomeBtn(master=UIController.canvas, text='Add New Bottle', command=UIController.openBottleScanner)
 	edit_btn = UI.NewHomeBtn(master=UIController.canvas, text='Edit Bottle Info', command=UIController.editBottleInfo)
 	go_back_btn = UI.NewExitBtn(master=UIController.canvas, text='Go Back', command=UIController.goToHome)
+	VC_btn = UI.NewExitBtn(master=UIController.canvas, text='Voice Command', command=functools.partial(voiceCommand.record_speech, UIController, medications))
 	
 	UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 1.5, window=edit_btn, anchor=tk.E))
 	UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 3, window=add_btn, anchor=tk.E))
 	UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
+	UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(110,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))

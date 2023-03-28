@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 import speech_recognition as sr 
 from typing import TYPE_CHECKING
+import functools
 
 if TYPE_CHECKING:
     from UIController import UIController
@@ -11,7 +12,7 @@ if TYPE_CHECKING:
 r = sr.Recognizer() 
 
 # Create a function that will be called when the command is given  
-def record_speech(UIController: UIController): 
+def record_speech(UIController: UIController, medications): 
 	# Record the command from the microphone 
 	with sr.Microphone() as source: 
 		print("Listening...") 
@@ -21,7 +22,7 @@ def record_speech(UIController: UIController):
 	try: 
 		# Use the Google Speech Recognition API 
 		command = r.recognize_google(audio).lower() 
-		navigateMenu(UIController, command)
+		navigateMenu(UIController, command, medications)
 		print("You said: " + command + "\n") 
 	
 	# Error handling 
@@ -30,9 +31,13 @@ def record_speech(UIController: UIController):
 	
 	return command 
 
-def navigateMenu(UIController, voiceStr):
+def navigateMenu(UIController, voiceStr, medications = None):
 	date = datetime.now().strftime("%H %M")
 	date = date.split(" ")
+	if medications != None:
+		for index, med in enumerate(medications)
+			if f'{med.medName}' in voiceStr:
+				functools.partial(goToCommand, UIController, med.medName)
 	if 'add' in voiceStr:
 		UIController.goToScanBottle()
 		UIController.openBottleScanner()

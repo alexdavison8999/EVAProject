@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 import individualDrug
 import functools
+import voiceCommand
 
 from database.queries.query import medicationsQuery
 
@@ -56,7 +57,9 @@ def loadingDrugGui(UIController: UIController):
 	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(
         275, WINDOW_HEIGHT / 2, window=eva_face
     ))
+	VC_btn = UI.NewExitBtn(master=UIController.canvas, text='Voice Command', command=functools.partial(voiceCommand.record_speech, UIController, medications))
+
 	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 20, window=d_info_label, anchor=tk.N))
 	
 	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
-	
+	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(110,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))
