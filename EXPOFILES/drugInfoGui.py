@@ -1,4 +1,5 @@
 from __future__ import annotations
+import os
 import tkinter as tk
 from typing import TYPE_CHECKING
 
@@ -27,23 +28,17 @@ def loadingDrugGui(UIController: UIController):
 	go_back_btn = UI.NewExitBtn(master=UIController.canvas, text='Go Back', command=UIController.goToHome)
 
 	UIController.canvasIds["DrugInfo"] = []
+ 
 	medications = medicationsQuery(UIController.conn)
+	button_frame = tk.Frame(UIController.canvas, background=os.getenv("PRIMARY_COLOR"), border=1)
+	button_frame.grid(row=0, column=0, sticky="e", rowspan=len(medications))
+ 
 	for index, med in enumerate(medications):
-		med_button = UI.NewMedBtn(
-			master=UIController.canvas, 
+		UI.NewMedBtn(
+			master=button_frame, 
 			text=f'{med.medName}', 
 			command= functools.partial(goToCommand, UIController, med.medName)
-		)
-		yPos = (((index + 1) * 150) + (WINDOW_HEIGHT / 2))
-		xPos = WINDOW_WIDTH / 1.35
-		print(f'{index} {xPos}, {yPos}')
-		med_button.grid(row=index, column=0)
-		UIController.canvasIds["DrugInfo"].append(
-			UIController.canvas.create_window(
-				int(xPos),int(yPos), 
-				window=med_button
-			)
-		)
+		).grid(row=index, column=0, pady=GRID_PADDING)
 	
 	eva_face = UI.evaFace(file="EXPOFILES/assets/evaFaceRedLarge.png")
 	eva_text = UI.evaText(
@@ -56,6 +51,10 @@ def loadingDrugGui(UIController: UIController):
 	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(
         275, WINDOW_HEIGHT / 2, window=eva_face
     ))
+	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(
+        WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 4, window=button_frame, anchor=tk.E
+    ))
+ 
 	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 20, window=d_info_label, anchor=tk.N))
 	
 	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))

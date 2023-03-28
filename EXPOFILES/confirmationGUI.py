@@ -1,5 +1,6 @@
 from __future__ import annotations
 import functools
+import os
 import tkinter as tk
 from typing import TYPE_CHECKING
 
@@ -37,44 +38,57 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
 
 		num_meds = len(UIController.confirmDict[confirm_key])
 		confirm_label = tk.Label(text=f'You have {num_meds} medications', font=('arial', 55, 'normal'))
+  
+		button_frame = tk.Frame(UIController.canvas, background=os.getenv("PRIMARY_COLOR"), border=1)
+		button_frame.grid(row=0, column=0, sticky="e", rowspan=len(medications))
+  
+		# for index, med in enumerate(medications):
+		# 	UI.NewMedBtn(
+		# 		master=button_frame, 
+		# 		text=f'{med.medName}', 
+		# 		command= functools.partial(goToCommand, UIController, med.medName)
+		# 	).grid(row=index, column=0)
 
 		for index, med in enumerate(UIController.confirmDict[confirm_key]):
-			med_button = UI.NewMedBtn(
-				master=UIController.canvas, 
+			UI.NewMedBtn(
+				master=button_frame, 
 				text=f'{med}', 
-				command= functools.partial(goToCommand, UIController, med)
-			)
-			yPos = ((WINDOW_HEIGHT) - (((index + 1) * 150) + (WINDOW_HEIGHT / 2)))
-			xPos = WINDOW_WIDTH / 1.35
-			print(f'{index} {xPos}, {yPos}')
-			med_button.grid(row=index, column=0)
-			UIController.canvasIds["Confirm"].append(
-				UIController.canvas.create_window(
-					int(xPos),int(yPos), 
-					window=med_button
-				)
-			)
+				command= functools.partial(goToCommand, UIController, med.medName, med.id)
+			).grid(row=index, column=0, pady=GRID_PADDING)
+			# yPos = ((WINDOW_HEIGHT) - (((index + 1) * 150) + (WINDOW_HEIGHT / 2)))
+			# xPos = WINDOW_WIDTH / 1.35
+			# print(f'{index} {xPos}, {yPos}')
+			
 	else:
 		print("Invalid key, returning all medications!")
 
 		medications = medicationsQuery(UIController.conn)
-		
+		button_frame = tk.Frame(UIController.canvas, background=os.getenv("PRIMARY_COLOR"), border=1)
+		button_frame.grid(row=0, column=0, sticky="e", rowspan=len(medications))
+  
 		for index, med in enumerate(medications):
-			med_button = UI.NewMedBtn(
-				master=UIController.canvas, 
+			UI.NewMedBtn(
+				master=button_frame, 
 				text=f'{med.medName}', 
 				command= functools.partial(goToCommand, UIController, med.medName, med.id)
-			)
-			yPos = ((WINDOW_HEIGHT) - (((index + 1) * 150) + (WINDOW_HEIGHT / 2)))
-			xPos = WINDOW_WIDTH / 1.35
-			print(f'{index} {xPos}, {yPos}')
-			med_button.grid(row=index, column=0)
-			UIController.canvasIds["Confirm"].append(
-				UIController.canvas.create_window(
-					int(xPos),int(yPos), 
-					window=med_button
-				)
-			)
+			).grid(row=index, column=0, pady=GRID_PADDING)
+		
+		# for index, med in enumerate(medications):
+		# 	med_button = UI.NewMedBtn(
+		# 		master=UIController.canvas, 
+		# 		text=f'{med.medName}', 
+		# 		command= functools.partial(goToCommand, UIController, med.medName, med.id)
+		# 	)
+		# 	yPos = ((WINDOW_HEIGHT) - (((index + 1) * 150) + (WINDOW_HEIGHT / 2)))
+		# 	xPos = WINDOW_WIDTH / 1.35
+		# 	print(f'{index} {xPos}, {yPos}')
+		# 	med_button.grid(row=index, column=0)
+		# 	UIController.canvasIds["Confirm"].append(
+		# 		UIController.canvas.create_window(
+		# 			int(xPos),int(yPos), 
+		# 			window=med_button
+		# 		)
+		# 	)
 
 	eva_face = UI.evaFace(file="EXPOFILES/assets/evaFaceRedLarge.png")
 
@@ -88,18 +102,9 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
 	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(
         275, WINDOW_HEIGHT / 2, window=eva_face
     ))
-
+	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(
+        WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 4, window=button_frame, anchor=tk.E
+    ))
 
 	go_back_btn = UI.NewExitBtn(master=UIController.canvas, text='Go Back', command=functools.partial(goBack, UIController))
 	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
-
-	# no_btn = UI.NewHomeBtn(master=UIController.canvas, text='No', color='#FF4040', command=UIController.goToHome)
-	# yes_btn = UI.NewHomeBtn(master=UIController.canvas, text='Yes', color='#76EE00', command=UIController.goToHome)
-	# idk_btn = UI.NewHomeBtn(master=UIController.canvas, text='IDK', color='#FFB90F',command=UIController.goToHome)
-
-	# UIController.canvasIds["Confirm"] = []
-	# UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_WIDTH / 4, WINDOW_HEIGHT / 2, window=photo_label, anchor=tk.W))
-	# UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 20, window=confirm_label, anchor=tk.N))
-	# UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 1.5, window=idk_btn, anchor=tk.E))
-	# UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 2, window=no_btn, anchor=tk.E))
-	# UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 3, window=yes_btn, anchor=tk.E))

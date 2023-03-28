@@ -33,18 +33,17 @@ def NewExitBtn(
 
 
 def NewMedBtn(
-    master: tk.Canvas, command, text="Default", color="#F44336", name="!button"
+    master: tk.Canvas, command, text="Default", color="#F44336", width=15,
 ) -> tk.Button:
     return tk.Button(
         master=master,
-        name=name,
         text=text,
         bg=color,
         font=(TEXT_FONT, 48, "normal"),
         fg="#ffffff",
         command=command,
         height=1,
-        width=15,
+        width=width,
     )
 
 
