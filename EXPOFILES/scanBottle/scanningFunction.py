@@ -99,11 +99,20 @@ def scanningFunction(UIController: UIController):
             )
         )
 
-    capture_img_btn = UI.NewExitBtn(
-        master=UIController.canvas,
-        text="Capture Image",
-        command=functools.partial(captureImage, UIController, camera),
-    )
+        capture_img_btn = UI.NewExitBtn(
+            master=UIController.canvas,
+            text="Capture Image",
+            command=functools.partial(captureImage, UIController, camera),
+        )
+        
+        UIController.canvasIds["ScanBottle"].append(
+        UIController.canvas.create_window(
+            WINDOW_WIDTH_PADDING,
+            WINDOW_HEIGHT_PADDING,
+            window=capture_img_btn,
+            anchor=tk.SE,
+            )
+        )
     done_btn = UI.NewExitBtn(
         master=UIController.canvas,
         text="Done",
@@ -121,14 +130,6 @@ def scanningFunction(UIController: UIController):
     UIController.canvasIds["ScanBottle"].append(
         UIController.canvas.create_window(
             WINDOW_WIDTH / 2, WINDOW_HEIGHT_PADDING, window=done_btn, anchor=tk.S
-        )
-    )
-    UIController.canvasIds["ScanBottle"].append(
-        UIController.canvas.create_window(
-            WINDOW_WIDTH_PADDING,
-            WINDOW_HEIGHT_PADDING,
-            window=capture_img_btn,
-            anchor=tk.SE,
         )
     )
     UIController.canvasIds["ScanBottle"].append(
