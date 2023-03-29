@@ -2,7 +2,7 @@ from __future__ import annotations
 import tkinter as tk
 from typing import TYPE_CHECKING
 
-import individualDrug
+from drugInfo.individualDrug import individualDrug
 import functools
 import voiceCommand
 
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 def goToCommand(UIController, medName):
 	print("Click")
-	individualDrug.individualDrug(UIController, medName=medName)
+	individualDrug(UIController, medName=medName)
 	pass
 
 def loadingDrugGui(UIController: UIController):

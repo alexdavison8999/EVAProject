@@ -31,13 +31,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/KroegerP/EVAProject">
-    <img src="EXPOFILES/evaFace4Home.png" alt="Logo" width="80" height="80">
+    <img src="EXPOFILES/assets/evaFaceRedLarge.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">EVA 2.0</h3>
 
   <p align="center">
-    Software for the Elderly Virtual Asisstant, a device for managing medication intake.
+    Software for the Everyone's Virtual Asisstant, a device for managing medication intake.
     <br />
     <a href="https://github.com/KroegerP/EVAProject"><strong>Explore the docs »</strong></a>
     <br />
@@ -70,9 +70,6 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -91,7 +88,7 @@
 
 ### Built With
 
-* [![Python][Python]](https://www.python.org/)
+* [Python](https://www.python.org/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -108,6 +105,12 @@ performed via the 4 scripts in the
 This is an example of how to list things you need to use the software and how to install them.
 
 You must be in a linux environment for the install scripts to work.
+
+Currently, camera and microphone functionality is limited to raspberry pi devices.
+
+You will need to download a certificate from the Google Firebase Project Page to complete the setup. These can be downloaded from [Firebase](https://console.firebase.google.com/u/0/project/elderly-virtual-assistant-2/settings/serviceaccounts/adminsdk)
+
+You will also need a .env file with the proper fields filled in. An example can be found in the code.
 
 ### Installation
 
@@ -131,9 +134,13 @@ You must be in a linux environment for the install scripts to work.
    ```sh
    ./scripts/4_initializeVirtualEnv.sh
    ```
-7. Initialize the database
+6. Initialize the database
    ```sh
    ./scripts/5_initdb.sh
+   ```
+7. Install google auth and device font. This step requires you to download a service account certificate from the google firebase project page.
+   ```
+   ./scripts/6_fontAndAuth.sh
    ```
 8. Activate your virtual environment (If not started)
    ```sh
@@ -199,6 +206,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 ## Contact
 
 Peter Kroeger - [@HeyDotPeter](https://twitter.com/HeyDotPeter) - peter14mail@gmail.com
+Ryan Kunkel - ryanjkunkel@gmail.com - 513-515-8966
+Konstantinos Papadopoulos-Frietchen - kostisdabess@gmail.com 440-832-9004
+Cole Bower - cole327@frontier.com 812-614-9751
 
 Project Link: [https://github.com/KroegerP/EVAProject](https://github.com/KroegerP/EVAProject)
 
@@ -229,4 +239,4 @@ Project Link: [https://github.com/KroegerP/EVAProject](https://github.com/Kroege
 [license-url]: https://github.com/KroegerP/EVAProject/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/peter-kroeger
-[product-screenshot]: EXPOFILES/evaFace4Home.png
+[product-screenshot]: EXPOFILES/assets/evaFaceRedLarge.png

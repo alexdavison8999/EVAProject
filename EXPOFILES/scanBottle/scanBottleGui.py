@@ -7,7 +7,6 @@ import voiceCommand
 from constants.colors import *
 from constants.window import *
 import utils.interfaceHelpers as UI
-from utils.itemHelpers import clearLocalUI
 
 # this is the function called when the button is clicked
 

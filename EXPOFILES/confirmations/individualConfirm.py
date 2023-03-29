@@ -18,6 +18,13 @@ if TYPE_CHECKING:
 
 def confirmMedTake(UIController: UIController, medName: str, taken: bool):
 	createConfirm(UIController.conn, medName, taken)
+
+	if taken:
+		ttl = f'Patient has taken their {medName}.'
+	else:
+		ttl = f'Patient has not taken their {medName}!'
+
+	UIController.firebase.send_notification(title=ttl,body='Open the app to see more info.', data={'drug': medName, 'taken': f'{taken}'})
 	print("Completed Confirm!")
 	UIController.clearUI("Confirm")
 	hour_min = datetime.now().strftime("%H:%M").split(":")
@@ -25,7 +32,7 @@ def confirmMedTake(UIController: UIController, medName: str, taken: bool):
 	UIController.goToConfirm(hour=hour_min[0], minute=hour_min[1])
 	return
 
-def individualConfirm(UIController: UIController, medName: str, folderPath: str):
+def individualConfirm(UIController: UIController, medName: str, medId: str):
 	UIController.clearUI("Confirm")
 	# Creating a photoimage object to use image
 	photo = tk.PhotoImage(file=r'%s' % "EXPOFILES/assets/image1.png")
