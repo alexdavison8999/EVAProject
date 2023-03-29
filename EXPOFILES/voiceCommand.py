@@ -4,6 +4,10 @@ from datetime import datetime
 import speech_recognition as sr 
 from typing import TYPE_CHECKING
 import functools
+from individualDrug import individualDrug
+from confirmations import individualConfirm
+from reports import individualReport
+from scanBottle import individualEdit
 
 if TYPE_CHECKING:
     from UIController import UIController
@@ -34,10 +38,26 @@ def record_speech(UIController: UIController, medications):
 def navigateMenu(UIController, voiceStr, medications = None):
 	date = datetime.now().strftime("%H %M")
 	date = date.split(" ")
-	if medications != None:
-		for index, med in enumerate(medications)
-			if f'{med.medName}' in voiceStr:
-				functools.partial(goToCommand, UIController, med.medName)
+	if UIController.currentLocation == "Report":
+		if medications != None:
+			for index, med in enumerate(medications):
+				if f'{med.medName}' in voiceStr:
+					individualReport.individualReport(UIController, med.medName)
+	elif UIController.currentLocation == "Confirm":
+		if medications != None:
+			for index, med in enumerate(medications):
+				if f'{med.medName}' in voiceStr:
+					individualConfirm.individualConfirm(UIController, med.medName, med)
+	elif UIController.currentLocation == "DrugInfo":
+		if medications != None:
+			for index, med in enumerate(medications):
+				if f'{med.medName}' in voiceStr:
+					individualDrug(UIController, med.medName)
+	elif UIController.currentLocation == "ScanBottle":
+		if medications != None:
+			for index, med in enumerate(medications):
+				if f'{med.medName}' in voiceStr:
+					individualEdit.individualEdit(UIController, med.medName)
 	if 'add' in voiceStr:
 		UIController.goToScanBottle()
 		UIController.openBottleScanner()
