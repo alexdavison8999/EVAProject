@@ -4,7 +4,7 @@ from datetime import datetime
 import speech_recognition as sr 
 from typing import TYPE_CHECKING
 import functools
-from individualDrug import individualDrug
+from drugInfo import individualDrug
 from confirmations import individualConfirm
 from reports import individualReport
 from scanBottle import individualEdit
@@ -52,12 +52,12 @@ def navigateMenu(UIController, voiceStr, medications = None):
 		if medications != None:
 			for index, med in enumerate(medications):
 				if f'{med.medName}' in voiceStr:
-					individualDrug(UIController, med.medName)
+					individualDrug.individualDrug(UIController, med.medName)
 	elif UIController.currentLocation == "ScanBottle":
 		if medications != None:
 			for index, med in enumerate(medications):
 				if f'{med.medName}' in voiceStr:
-					individualEdit.individualEdit(UIController, med.medName)
+					individualEdit.individualEdit(UIController, med.medName, None)
 	if 'add' in voiceStr:
 		UIController.goToScanBottle()
 		UIController.openBottleScanner()

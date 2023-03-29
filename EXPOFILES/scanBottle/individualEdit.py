@@ -52,6 +52,7 @@ def goBack(UIController: UIController):
 def individualEdit(
     UIController: UIController, medName: str, update_val: Union[dict, None]
 ):
+    UIController.clearUI("ScanBottle")
     med = getMedByName(UIController.conn, medName)
     weekly_reminder = getReminderById(UIController.conn, med.timesPerWeekId)
 
