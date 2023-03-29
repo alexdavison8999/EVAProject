@@ -37,10 +37,10 @@ def get_dosage(soup: BeautifulSoup) -> str:
 
 
 def readSite(drugName: str) -> dict:
+    image_url = ""
     url = f"https://www.drugs.com/{drugName}.html"
     site_info = {"siteText": "", "image_url": image_url, "dosage_text": ""}
     infoCount = 0
-    image_url = ""
 
     try:
         resp = requests.get(url)
