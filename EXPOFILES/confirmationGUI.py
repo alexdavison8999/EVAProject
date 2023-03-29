@@ -63,7 +63,7 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
 			med_button = UI.NewMedBtn(
 				master=UIController.canvas, 
 				text=f'{med.medName}', 
-				command= functools.partial(goToCommand, UIController, med.medName, med.id, med.folderPath)
+				command= functools.partial(goToCommand, UIController, med.medName, med.id, (med.folderPath + "/" + str(med.id) + "/" + med.medName + '.png' ))
 			)
 			yPos = ((WINDOW_HEIGHT) - (((index + 1) * 150) + (WINDOW_HEIGHT / 2)))
 			xPos = WINDOW_WIDTH / 1.35

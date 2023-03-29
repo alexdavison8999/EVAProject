@@ -42,9 +42,9 @@ def individualConfirm(UIController: UIController, medName: str, medId: str, file
 
 	confirm_label = tk.Label(text=f'Have you taken your {medName}?', font=(TEXT_FONT, 55, 'normal'), background=PRIMARY_COLOR)
 
-	no_btn = UI.NewExitBtn(master=UIController.canvas, text='No', color='#FF4040', command=functools.partial(confirmMedTake, UIController, medName, False))
-	yes_btn = UI.NewExitBtn(master=UIController.canvas, text='Yes', color='#76EE00', command=functools.partial(confirmMedTake, UIController, medName, True))
-	idk_btn = UI.NewExitBtn(master=UIController.canvas, text='IDK', color='#FFB90F',command=UIController.goToHome)
+	no_btn = UI.ConfirmationButtons(master=UIController.canvas, text='No', color='#FF4040', command=functools.partial(confirmMedTake, UIController, medName, False))
+	yes_btn = UI.ConfirmationButtons(master=UIController.canvas, text='Yes', color='#76EE00', command=functools.partial(confirmMedTake, UIController, medName, True))
+	idk_btn = UI.ConfirmationButtons(master=UIController.canvas, text='IDK', color='#FFB90F',command=UIController.goToHome)
 
 	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT / 2, window=photo_label, anchor=tk.W))
 	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 20, window=confirm_label, anchor=tk.N))
