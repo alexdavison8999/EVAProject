@@ -43,7 +43,7 @@ def confirmMedTake(UIController: UIController, medName: str, taken: bool):
 
 def individualConfirm(UIController: UIController, medName: str, medId: str):
     # Creating a photoimage object to use image
-	UIController.clearUI("Confirm")
+    UIController.clearUI("Confirm")
     photo = tk.PhotoImage(file=r"%s" % "EXPOFILES/assets/image1.png")
     photo_label = tk.Label(
         image=photo, width=WINDOW_WIDTH / 2, height=WINDOW_HEIGHT / 2
