@@ -25,7 +25,8 @@ def record_speech(UIController: UIController, medications):
 	
 	try: 
 		# Use the Google Speech Recognition API 
-		command = r.recognize_google(audio).lower() 
+		command = r.recognize_google(audio).lower()
+		command = command.capitalize()
 		navigateMenu(UIController, command, medications)
 		print("You said: " + command + "\n") 
 	
