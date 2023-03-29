@@ -4,6 +4,7 @@ import functools
 import os
 import tkinter as tk
 from typing import TYPE_CHECKING
+from utils.wrappers import on_rpi
 
 from database.mutations.mutation import createConfirm
 
@@ -26,11 +27,12 @@ def confirmMedTake(UIController: UIController, medName: str, taken: bool):
     else:
         ttl = f"Patient has not taken their {medName}!"
 
-    UIController.firebase.send_notification(
-        title=ttl,
-        body="Open the app to see more info.",
-        data={"drug": medName, "taken": f"{taken}"},
-    )
+    if on_rpi():
+        UIController.firebase.send_notification(
+            title=ttl,
+            body="Open the app to see more info.",
+            data={"drug": medName, "taken": f"{taken}"},
+        )
     print("Completed Confirm!")
     UIController.clearUI("Confirm")
     hour_min = datetime.now().strftime("%H:%M").split(":")
