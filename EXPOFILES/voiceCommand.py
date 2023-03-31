@@ -26,7 +26,7 @@ def record_speech(UIController: UIController, medications):
 	try: 
 		# Use the Google Speech Recognition API 
 		command = r.recognize_google(audio).lower()
-		command = command.capitalize()
+		command = command.title()
 		navigateMenu(UIController, command, medications)
 		print("You said: " + command + "\n") 
 	
@@ -59,19 +59,19 @@ def navigateMenu(UIController, voiceStr, medications = None):
 			for index, med in enumerate(medications):
 				if f'{med.medName}' in voiceStr:
 					individualEdit.individualEdit(UIController, med.medName, None)
-	if 'add' in voiceStr:
+	if 'Add' in voiceStr:
 		UIController.goToScanBottle()
 		UIController.openBottleScanner()
-	elif 'edit' in voiceStr:
+	elif 'Edit' in voiceStr:
 		UIController.goToScanBottle()
 		UIController.editBottleInfo()
-	elif 'scan' in voiceStr:
+	elif 'Scan' in voiceStr:
 		UIController.goToScanBottle()
-	elif 'drug' in voiceStr:
+	elif 'Drug' in voiceStr:
 		UIController.goToDrugInfo()
-	elif 'confirmation' in voiceStr:
+	elif 'Confirmation' in voiceStr:
 		UIController.goToConfirm(hour=date[0],minute=date[1])
-	elif 'report' in voiceStr:
+	elif 'Report' in voiceStr:
 		UIController.goToReport()
 	else:
 		print("try again")
