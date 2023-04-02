@@ -26,13 +26,15 @@ def parse_image(imagePath: str) -> dict:
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
     dilated = cv2.dilate(thresholded, kernel, iterations=3)
 
-    file_directory = f"EXPOFILES/database/new/dilated-img.png"
-    cv2.imwrite(file_directory, dilated)
+    file_directory = f"EXPOFILES/database/new"
 
-    # cv2.imshow(dilated)
+    cv2.imwrite(f"{file_directory}/thresh-img.png", thresholded)
+    # cv2.imwrite(f"{file_directory}/dilated-img.png", dilated)
+    # cv2.imwrite(f"{file_directory}/gra-img.png", gray)
+    # cv2.imwrite(f"{file_directory}/kernel-img.png", kernel)
 
     # Apply OCR to recognize the text
-    text: str = pytesseract.image_to_string(dilated)
+    text: str = pytesseract.image_to_string(thresholded)
 
     text_lines = text.split("\n")
 
