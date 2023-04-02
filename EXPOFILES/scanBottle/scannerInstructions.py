@@ -31,19 +31,36 @@ def bottleScannerGui(UIController: UIController):
     #     [sg.Button('Next', key='goToCameraPage')]
     # ]
 
+    instruction_header = tk.Label(
+        UIController.canvas,
+        text=f"Instructions",
+        font=(TEXT_FONT, 45, "normal"),
+        background=PRIMARY_COLOR,
+        justify="left"
+    )
+
+    photo = tk.PhotoImage(file=r"%s" % "EXPOFILES/assets/InstructionsImage.png")
+    photo_label = tk.Label(
+        image=photo
+    )
+    photo_label.image = photo
+    photo_label.pack()
+
     instructions_label = tk.Label(
         UIController.canvas, 
         text="Capture images covering entire label of pill bottle.\
              \nHold the bottle closer to camera.\nMake sure there is proper lighting.",
-        font=(TEXT_FONT, 32, 'normal'),
+        font=(TEXT_FONT, 20, 'normal'),
         background=PRIMARY_COLOR,
-        width=42,
+        width=45,
         justify="left"
     )
     
     start_btn = UI.NewMedBtn(master=UIController.canvas, text='Add Bottle', command=functools.partial(goToCommand, UIController))
     go_back_btn = UI.NewExitBtn(master=UIController.canvas, text='Go Back', command=UIController.goToScanBottle)
 
-    UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_WIDTH / 2, WINDOW_PADDING, window=instructions_label, anchor=tk.N))
+    UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_PADDING, window=instruction_header, anchor=tk.NW))
+    UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_WIDTH / 3.05, WINDOW_PADDING * 2.5, window=instructions_label, anchor=tk.N))
+    UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_WIDTH / 1.25, WINDOW_PADDING * 0.75, window=photo_label, anchor=tk.N))
     UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT_PADDING, window=start_btn, anchor=tk.SE))
-    UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
+    UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(0, WINDOW_HEIGHT, window=go_back_btn, anchor=tk.SW))

@@ -32,6 +32,21 @@ def NewExitBtn(
     )
 
 
+def ConfirmationButtons(
+    master: tk.Canvas, command, text="Default", color="#F44336", height=1, width=15
+) -> tk.Button:
+    return tk.Button(
+        master=master,
+        text=text,
+        bg=color,
+        font=(TEXT_FONT, 32, "normal"),
+        fg="#ffffff",
+        command=command,
+        height=height,
+        width=width
+    )
+
+
 def NewMedBtn(
     master: tk.Canvas,
     command,
@@ -52,6 +67,7 @@ def NewMedBtn(
 
 
 def evaText(
+    name: str,
     canvas: tk.Canvas,
     text="Default",
     background=PRIMARY_COLOR,
@@ -59,6 +75,7 @@ def evaText(
     font=TEXT_FONT,
 ) -> tk.Label:
     return tk.Label(
+        name=name,
         master=canvas,
         text=text,
         background=background,

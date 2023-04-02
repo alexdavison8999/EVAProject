@@ -37,9 +37,11 @@ def homeGui(UIController: UIController):
     # Initializing assets
     # background = tk.PhotoImage(file='EXPOFILES/assets/view.png')
     eva_face = tk.PhotoImage(file="EXPOFILES/assets/evaFaceRedLarge.png")
+    microphone = tk.PhotoImage(file="EXPOFILES/assets/microphone.png")
 
     # TODO: Maybe just rewrite this string depending on where we are rather than making new text to manage?
     eva_text = UI.evaText(
+        name="evaText",
         canvas=UIController.canvas, 
         text="Hi, I'm EVA!\nHow can I help you?"
     )
@@ -55,7 +57,8 @@ def homeGui(UIController: UIController):
     confirm_btn = UI.NewHomeBtn(master=UIController.canvas, text='Daily Confirmation', command=functools.partial(UIController.goToConfirm, hour=date[0], minute=date[1]))
     report_btn = UI.NewHomeBtn(master=UIController.canvas, text='Reports', command=UIController.goToReport)
     exit_btn = UI.NewExitBtn(master=UIController.canvas, text='Exit', command=UIController.closeEVA)
-    VC_btn = UI.NewExitBtn(master=UIController.canvas, text='Voice Command', command=functools.partial(voiceCommand.record_speech, UIController))
+    VC_btn = tk.Button(master=UIController.canvas, image=microphone, command=functools.partial(voiceCommand.record_speech, UIController, None), bg="#F44336")
+    VC_btn.image=microphone
 
     # Adding assets to the canvas and the canvasIds list
     # These can be used to control the visibility of items
@@ -76,4 +79,4 @@ def homeGui(UIController: UIController):
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,475,window=confirm_btn, anchor=tk.E))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,650,window=report_btn, anchor=tk.E))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(0 ,WINDOW_HEIGHT,window=exit_btn, anchor=tk.SW))
-    UIController.canvasIds["Home"].append(UIController.canvas.create_window(110,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))
+    UIController.canvasIds["Home"].append(UIController.canvas.create_window(300,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))

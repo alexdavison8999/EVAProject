@@ -62,7 +62,7 @@ class UIController:
 
         # Root properties - these will remain consistent
         self.root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
-        self.root.title("Elderly Virtual Assistant")
+        self.root.title("Everyone's Virtual Assistant")
         # self.root.attributes('-fullscreen', True) # -- Look into using this instead
 
         # Canvas where all UI elements will be added to / removed from

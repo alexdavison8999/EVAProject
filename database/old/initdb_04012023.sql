@@ -298,8 +298,6 @@ COPY public.confirmations (id, medname, taken, medicationid, created_at) FROM st
 63	Ibuprofen	f	3	2023-03-20 15:50:22.311071
 64	Ibuprofen	f	3	2023-03-20 16:08:13.800972
 65	Ibuprofen	f	3	2023-03-20 16:12:50.848782
-66	Ibuprofen	f	3	2023-03-23 17:47:22.745615
-67	Ibuprofen	f	3	2023-03-28 16:41:09.64107
 \.
 
 
@@ -308,8 +306,8 @@ COPY public.confirmations (id, medname, taken, medicationid, created_at) FROM st
 --
 
 COPY public.medications (id, medname, datefilled, refillsleft, refilldate, timesperday, timesperweek_id, folderpath, created_at, archived) FROM stdin;
-1	med	2023-02-11	2	2023-02-11	2	2	EXPOFILES/database/meds/med/1/	2023-02-11	f
-3	Ibuprofen	2023-02-11	1	2023-02-13	5	1	EXPOFILES/database/meds/Ibuprofen/3/	2023-02-11	f
+1	med	2023-02-11	2	2023-02-11	2	2	meds/med/1/	2023-02-11	f
+3	Ibuprofen	2023-02-11	1	2023-02-13	5	1	meds/med/3/	2023-02-11	f
 \.
 
 
@@ -439,7 +437,7 @@ COPY public.weeklyreminders (id, medications_id, monday, tuesday, wednesday, thu
 -- Name: confirmations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: evadb
 --
 
-SELECT pg_catalog.setval('public.confirmations_id_seq', 67, true);
+SELECT pg_catalog.setval('public.confirmations_id_seq', 65, true);
 
 
 --

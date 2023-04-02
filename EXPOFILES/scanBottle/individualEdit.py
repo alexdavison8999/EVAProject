@@ -52,6 +52,7 @@ def goBack(UIController: UIController):
 def individualEdit(
     UIController: UIController, medName: str, update_val: Union[dict, None]
 ):
+    UIController.clearUI("ScanBottle")
     med = getMedByName(UIController.conn, medName)
     weekly_reminder = getReminderById(UIController.conn, med.timesPerWeekId)
 
@@ -157,7 +158,7 @@ def individualEdit(
 
     UIController.canvasIds["ScanBottle"].append(
         UIController.canvas.create_window(
-            WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW
+            0, WINDOW_HEIGHT, window=go_back_btn, anchor=tk.SW
         )
     )
     UIController.canvasIds["ScanBottle"].append(
