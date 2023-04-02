@@ -50,6 +50,7 @@ def reportGui(UIController: UIController) -> None:
 		)
 
 	eva_face = UI.evaFace(file="EXPOFILES/assets/evaFaceRedLarge.png")
+	microphone = tk.PhotoImage(file="EXPOFILES/assets/microphone.png")
 
 	eva_text = UI.evaText(
 		name="evaText",
@@ -62,7 +63,8 @@ def reportGui(UIController: UIController) -> None:
 	UIController.canvasIds["Report"].append(UIController.canvas.create_window(
         275, WINDOW_HEIGHT / 2, window=eva_face
     ))
-	VC_btn = UI.NewExitBtn(master=UIController.canvas, text='Voice Command', command=functools.partial(voiceCommand.record_speech, UIController, medications))
+	VC_btn = tk.Button(master=UIController.canvas, image=microphone, command=functools.partial(voiceCommand.record_speech, UIController, medications), bg="#F44336")
+	VC_btn.image=microphone
 	go_back_btn = UI.NewExitBtn(master=UIController.canvas, text='Go Back', command=UIController.goToHome)
-	UIController.canvasIds["Report"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
-	UIController.canvasIds["Report"].append(UIController.canvas.create_window(110,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))
+	UIController.canvasIds["Report"].append(UIController.canvas.create_window(0, WINDOW_HEIGHT, window=go_back_btn, anchor=tk.SW))
+	UIController.canvasIds["Report"].append(UIController.canvas.create_window(200,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))

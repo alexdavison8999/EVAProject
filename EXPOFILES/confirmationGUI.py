@@ -77,6 +77,7 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
 			)
 
 	eva_face = UI.evaFace(file="EXPOFILES/assets/evaFaceRedLarge.png")
+	microphone = tk.PhotoImage(file="EXPOFILES/assets/microphone.png")
 
 	eva_text = UI.evaText(
 		name="evaText",
@@ -90,10 +91,11 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
         275, WINDOW_HEIGHT / 2, window=eva_face
     ))
 
-	VC_btn = UI.NewExitBtn(master=UIController.canvas, text='Voice Command', command=functools.partial(voiceCommand.record_speech, UIController, medications))
+	VC_btn = tk.Button(master=UIController.canvas, image=microphone, command=functools.partial(voiceCommand.record_speech, UIController, medications), bg="#F44336")
+	VC_btn.image=microphone
 	go_back_btn = UI.NewExitBtn(master=UIController.canvas, text='Go Back', command=functools.partial(goBack, UIController))
-	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
-	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(110,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))
+	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(0, WINDOW_HEIGHT, window=go_back_btn, anchor=tk.SW))
+	UIController.canvasIds["Confirm"].append(UIController.canvas.create_window(200,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))
 	# no_btn = UI.NewHomeBtn(master=UIController.canvas, text='No', color='#FF4040', command=UIController.goToHome)
 	# yes_btn = UI.NewHomeBtn(master=UIController.canvas, text='Yes', color='#76EE00', command=UIController.goToHome)
 	# idk_btn = UI.NewHomeBtn(master=UIController.canvas, text='IDK', color='#FFB90F',command=UIController.goToHome)
