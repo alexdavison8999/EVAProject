@@ -18,6 +18,9 @@ r = sr.Recognizer()
 # Create a function that will be called when the command is given  
 def record_speech(UIController: UIController, medications): 
 	# Record the command from the microphone 
+	myText = UIController.canvas.nametowidget(name = "evaText")
+	myText.configure(text = "I'm listening, please say\n the page you wish\n to navigate to.")
+	UIController.root.update()
 	with sr.Microphone() as source: 
 		print("Listening...") 
 		r.pause_threshold = 1
@@ -25,9 +28,6 @@ def record_speech(UIController: UIController, medications):
 	
 	try: 
 		# Use the Google Speech Recognition API
-		myText = UIController.canvas.nametowidget(name = "evaText")
-		myText.configure(text = "I'm listening, please say\n the page you wish\n to navigate to.")
-		UIController.root.update()
 		command = r.recognize_google(audio).title()
 		navigateMenu(UIController, command, medications)
 		print("You said: " + command + "\n") 

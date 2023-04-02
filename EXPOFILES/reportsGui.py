@@ -67,4 +67,4 @@ def reportGui(UIController: UIController) -> None:
 	VC_btn.image=microphone
 	go_back_btn = UI.NewExitBtn(master=UIController.canvas, text='Go Back', command=UIController.goToHome)
 	UIController.canvasIds["Report"].append(UIController.canvas.create_window(0, WINDOW_HEIGHT, window=go_back_btn, anchor=tk.SW))
-	UIController.canvasIds["Report"].append(UIController.canvas.create_window(200,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))
+	UIController.canvasIds["Report"].append(UIController.canvas.create_window(375,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))

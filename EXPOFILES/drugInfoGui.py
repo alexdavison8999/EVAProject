@@ -66,4 +66,4 @@ def loadingDrugGui(UIController: UIController):
 	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 20, window=d_info_label, anchor=tk.N))
 	
 	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(0, WINDOW_HEIGHT, window=go_back_btn, anchor=tk.SW))
-	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(200,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))
+	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(375,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))

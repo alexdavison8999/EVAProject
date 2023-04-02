@@ -57,7 +57,7 @@ def editBottleGui(UIController: UIController) -> None:
 
     VC_btn = tk.Button(master=UIController.canvas, image=microphone, command=functools.partial(voiceCommand.record_speech, UIController, medications), bg="#F44336")
     VC_btn.image=microphone
-    UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(200,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))
+    UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(375,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))
     go_back_btn = UI.NewExitBtn(
         master=UIController.canvas, text="Go Back", command=UIController.goToHome
     )

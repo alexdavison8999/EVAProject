@@ -79,4 +79,4 @@ def homeGui(UIController: UIController):
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,475,window=confirm_btn, anchor=tk.E))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING,650,window=report_btn, anchor=tk.E))
     UIController.canvasIds["Home"].append(UIController.canvas.create_window(0 ,WINDOW_HEIGHT,window=exit_btn, anchor=tk.SW))
-    UIController.canvasIds["Home"].append(UIController.canvas.create_window(110,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))
+    UIController.canvasIds["Home"].append(UIController.canvas.create_window(300,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))
