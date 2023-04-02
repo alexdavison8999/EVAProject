@@ -27,9 +27,9 @@ def parse_image(imagePath: str) -> dict:
     dilated = cv2.dilate(thresholded, kernel, iterations=3)
 
     file_directory = f"EXPOFILES/database/new/dilated-img.png"
-    # dilated.save(file_directory, "PNG")
+    cv2.imwrite(file_directory, dilated)
 
-    cv2.imshow(dilated)
+    # cv2.imshow(dilated)
 
     # Apply OCR to recognize the text
     text: str = pytesseract.image_to_string(dilated)
