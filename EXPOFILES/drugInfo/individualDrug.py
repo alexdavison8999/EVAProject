@@ -41,6 +41,6 @@ def individualDrug(UIController: UIController, medName: str) -> None:
     UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 20, window=med_label, anchor=tk.N))
     UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT / 2.5, window=desc_text, anchor=tk.W))
     UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT / 1.5, window=dosage_text, anchor=tk.W))
-    UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
+    UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(0, WINDOW_HEIGHT, window=go_back_btn, anchor=tk.SW))
     UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(WINDOW_WIDTH, WINDOW_HEIGHT, window=meta_label, anchor=tk.SE))
     

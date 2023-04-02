@@ -2,6 +2,7 @@ from __future__ import annotations
 import tkinter as tk
 from typing import TYPE_CHECKING
 import functools
+import voiceCommand
 from database.classes.medications import Medication
 
 # from report2 import *
@@ -41,8 +42,10 @@ def editBottleGui(UIController: UIController) -> None:
         )
 
     eva_face = UI.evaFace(file="EXPOFILES/assets/evaFaceRedLarge.png")
+    microphone = tk.PhotoImage(file="EXPOFILES/assets/microphone.png")
 
     eva_text = UI.evaText(
+        name="evaText",
         canvas=UIController.canvas, text="Select a medication\nto edit"
     )
     UIController.canvasIds["ScanBottle"].append(
@@ -52,11 +55,14 @@ def editBottleGui(UIController: UIController) -> None:
         UIController.canvas.create_window(275, WINDOW_HEIGHT / 2, window=eva_face)
     )
 
+    VC_btn = tk.Button(master=UIController.canvas, image=microphone, command=functools.partial(voiceCommand.record_speech, UIController, medications), bg="#F44336")
+    VC_btn.image=microphone
+    UIController.canvasIds["ScanBottle"].append(UIController.canvas.create_window(375,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))
     go_back_btn = UI.NewExitBtn(
         master=UIController.canvas, text="Go Back", command=UIController.goToHome
     )
     UIController.canvasIds["ScanBottle"].append(
         UIController.canvas.create_window(
-            WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW
+            0, WINDOW_HEIGHT, window=go_back_btn, anchor=tk.SW
         )
     )

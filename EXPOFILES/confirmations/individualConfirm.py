@@ -27,7 +27,7 @@ def confirmMedTake(UIController: UIController, medName: str, taken: bool):
     else:
         ttl = f"Patient has not taken their {medName}!"
 
-    if on_rpi():
+    if on_rpi() and os.getenv("APP_ENV") == "production":
         UIController.firebase.send_notification(
             title=ttl,
             body="Open the app to see more info.",
@@ -45,6 +45,7 @@ def individualConfirm(
     UIController: UIController, medName: str, medId: str, filePath: str
 ):
     # Creating a photoimage object to use image
+    UIController.clearUI("Confirm")
     photo = tk.PhotoImage(file=r"%s" % filePath)
     photo_label = tk.Label(
         image=photo, width=WINDOW_WIDTH / 2, height=WINDOW_HEIGHT / 2

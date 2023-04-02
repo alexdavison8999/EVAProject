@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from drugInfo.individualDrug import individualDrug
 import functools
+import voiceCommand
 
 from database.queries.query import medicationsQuery
 
@@ -46,7 +47,10 @@ def loadingDrugGui(UIController: UIController):
 		)
 	
 	eva_face = UI.evaFace(file="EXPOFILES/assets/evaFaceRedLarge.png")
+	microphone = tk.PhotoImage(file="EXPOFILES/assets/microphone.png")
+
 	eva_text = UI.evaText(
+		name="evaText",
         canvas=UIController.canvas, 
         text="Select a \nmed for information"
 	)
@@ -56,7 +60,10 @@ def loadingDrugGui(UIController: UIController):
 	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(
         275, WINDOW_HEIGHT / 2, window=eva_face
     ))
+	VC_btn = tk.Button(master=UIController.canvas, image=microphone, command=functools.partial(voiceCommand.record_speech, UIController, medications), bg="#F44336")
+	VC_btn.image=microphone
+
 	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 20, window=d_info_label, anchor=tk.N))
 	
-	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
-	
+	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(0, WINDOW_HEIGHT, window=go_back_btn, anchor=tk.SW))
+	UIController.canvasIds["DrugInfo"].append(UIController.canvas.create_window(375,WINDOW_HEIGHT,window=VC_btn,anchor=tk.SW))

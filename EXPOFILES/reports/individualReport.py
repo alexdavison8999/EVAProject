@@ -37,6 +37,6 @@ def individualReport(UIController: UIController, medName: str) -> None:
     
     UIController.canvasIds["Report"].append(UIController.canvas.create_window(WINDOW_PADDING - 20, WINDOW_PADDING - 20, window=reports_label, anchor=tk.NW))
     UIController.canvasIds["Report"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING, WINDOW_HEIGHT_PADDING, window=cog_report_btn, anchor=tk.SE))
-    UIController.canvasIds["Report"].append(UIController.canvas.create_window(WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=go_back_btn, anchor=tk.SW))
+    UIController.canvasIds["Report"].append(UIController.canvas.create_window(0, WINDOW_HEIGHT, window=go_back_btn, anchor=tk.SW))
     UIController.canvasIds["Report"].append(UIController.canvas.create_window(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, window=report_label, anchor=tk.CENTER))
     UIController.canvasIds["Report"].append(UIController.canvas.create_window(WINDOW_WIDTH_PADDING + 20, WINDOW_PADDING - 20, window=stats_label, anchor=tk.NE))
