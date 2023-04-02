@@ -146,7 +146,7 @@ class CV2Camera:  # Originally a tk object, some stuff may reflect that
         # file_path = self.save_image("dilated-img", dilated)
 
         # Apply OCR to recognize the text
-        text: str = pytesseract.image_to_string(dilated)
+        text: str = pytesseract.image_to_string(thresholded)
 
         text_lines = text.split("\n")
 
