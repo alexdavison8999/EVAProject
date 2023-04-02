@@ -39,7 +39,7 @@ def parse_image(imagePath: str) -> dict:
 
 if __name__ == "__main__":
     file_directory = f"EXPOFILES/database/new/1.png"
-    if not os.path.isFile(file_directory):
+    if not os.path.isfile(file_directory):
         image_path = "EXPOFILES/assets/ibuprofen.jpg"
     else:
         image_path = file_directory
