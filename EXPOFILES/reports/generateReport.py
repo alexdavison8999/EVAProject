@@ -98,7 +98,7 @@ def generateReport(
                     "6:00 PM",
                     "8:00 PM",
                     "10:00 PM",
-                    "12:00 AM",
+                    "11:59 PM",
                 ],
             ),
             # paper_bgcolor=os.getenv("PRIMARY_COLOR"),
