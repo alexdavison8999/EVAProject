@@ -54,9 +54,13 @@ def captureImage(UIController: UIController, camera: CV2Camera):
 
     cur_img = camera.get_image()
 
-    file_path = save_image(num_photos, cur_img)
+    # file_path = save_image(num_photos, cur_img)
 
-    parsed_text = parse_image(file_path)
+    file_path = camera.save_image(num_photos, cur_img)
+
+    # parsed_text = parse_image(file_path)
+
+    parsed_text = camera.parse_image(file_path)
 
     print(parsed_text)
 
