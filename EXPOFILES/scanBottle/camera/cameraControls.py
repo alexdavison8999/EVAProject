@@ -137,7 +137,7 @@ class CV2Camera:  # Originally a tk object, some stuff may reflect that
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         dilated = cv2.dilate(thresholded, kernel, iterations=3)
 
-        file_path = self.save_image("dilated-img", dilated)
+        # file_path = self.save_image("dilated-img", dilated)
 
         # Apply OCR to recognize the text
         text: str = pytesseract.image_to_string(dilated)
