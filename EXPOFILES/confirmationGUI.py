@@ -79,6 +79,7 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
 	eva_face = UI.evaFace(file="EXPOFILES/assets/evaFaceRedLarge.png")
 
 	eva_text = UI.evaText(
+		name="evaText",
         canvas=UIController.canvas, 
         text=f"Select the \nmedicine to confirm \nfor {hour}:{minute}"
     )

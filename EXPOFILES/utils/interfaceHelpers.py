@@ -49,6 +49,7 @@ def NewMedBtn(
 
 
 def evaText(
+    name: str,
     canvas: tk.Canvas,
     text="Default",
     background=PRIMARY_COLOR,
@@ -56,6 +57,7 @@ def evaText(
     font=TEXT_FONT,
 ) -> tk.Label:
     return tk.Label(
+        name=name,
         master=canvas,
         text=text,
         background=background,

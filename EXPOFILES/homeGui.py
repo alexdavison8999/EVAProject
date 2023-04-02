@@ -40,6 +40,7 @@ def homeGui(UIController: UIController):
 
     # TODO: Maybe just rewrite this string depending on where we are rather than making new text to manage?
     eva_text = UI.evaText(
+        name="evaText",
         canvas=UIController.canvas, 
         text="Hi, I'm EVA!\nHow can I help you?"
     )

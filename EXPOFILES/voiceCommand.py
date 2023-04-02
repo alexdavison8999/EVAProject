@@ -24,13 +24,18 @@ def record_speech(UIController: UIController, medications):
 		audio = r.listen(source) 
 	
 	try: 
-		# Use the Google Speech Recognition API 
+		# Use the Google Speech Recognition API
+		myText = UIController.canvas.nametowidget(name = "evaText")
+		myText.configure(text = "I'm listening, please say\n the page you wish\n to navigate to.")
+		UIController.root.update()
 		command = r.recognize_google(audio).title()
 		navigateMenu(UIController, command, medications)
 		print("You said: " + command + "\n") 
 	
 	# Error handling 
 	except sr.UnknownValueError: 
+		myText.configure(text = "I'm sorry, I couldn't understand\n you. Please press the button\nto try again.")
+		UIController.root.update()
 		print("I couldn't understand you. Please try again.") 
 	
 	return command 

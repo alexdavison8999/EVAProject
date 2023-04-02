@@ -52,6 +52,7 @@ def reportGui(UIController: UIController) -> None:
 	eva_face = UI.evaFace(file="EXPOFILES/assets/evaFaceRedLarge.png")
 
 	eva_text = UI.evaText(
+		name="evaText",
         canvas=UIController.canvas, 
         text="Select a \nmedication report"
     )

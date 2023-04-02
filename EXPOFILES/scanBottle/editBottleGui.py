@@ -44,6 +44,7 @@ def editBottleGui(UIController: UIController) -> None:
     eva_face = UI.evaFace(file="EXPOFILES/assets/evaFaceRedLarge.png")
 
     eva_text = UI.evaText(
+        name="evaText",
         canvas=UIController.canvas, text="Select a medication\nto edit"
     )
     UIController.canvasIds["ScanBottle"].append(
