@@ -27,7 +27,7 @@ def confirmMedTake(UIController: UIController, medName: str, taken: bool):
     else:
         ttl = f"Patient has not taken their {medName}!"
 
-    if on_rpi() and os.getenv('APP_ENV') == 'production':
+    if on_rpi() and os.getenv("APP_ENV") == "production":
         UIController.firebase.send_notification(
             title=ttl,
             body="Open the app to see more info.",
@@ -41,35 +41,36 @@ def confirmMedTake(UIController: UIController, medName: str, taken: bool):
     return
 
 
-def individualConfirm(UIController: UIController, medName: str, medId: str):
+def individualConfirm(
+    UIController: UIController, medName: str, medId: str, filePath: str
+):
     # Creating a photoimage object to use image
     UIController.clearUI("Confirm")
-    photo = tk.PhotoImage(file=r"%s" % "EXPOFILES/assets/image1.png")
+    photo = tk.PhotoImage(file=r"%s" % filePath)
     photo_label = tk.Label(
         image=photo, width=WINDOW_WIDTH / 2, height=WINDOW_HEIGHT / 2
     )
     photo_label.image = photo
     photo_label.pack()
-
     confirm_label = tk.Label(
         text=f"Have you taken your {medName}?",
         font=(TEXT_FONT, 55, "normal"),
         background=PRIMARY_COLOR,
     )
 
-    no_btn = UI.NewExitBtn(
+    no_btn = UI.ConfirmationButtons(
         master=UIController.canvas,
         text="No",
         color="#FF4040",
         command=functools.partial(confirmMedTake, UIController, medName, False),
     )
-    yes_btn = UI.NewExitBtn(
+    yes_btn = UI.ConfirmationButtons(
         master=UIController.canvas,
         text="Yes",
         color="#76EE00",
         command=functools.partial(confirmMedTake, UIController, medName, True),
     )
-    idk_btn = UI.NewExitBtn(
+    idk_btn = UI.ConfirmationButtons(
         master=UIController.canvas,
         text="IDK",
         color="#FFB90F",
