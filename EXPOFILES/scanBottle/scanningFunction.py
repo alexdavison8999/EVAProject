@@ -5,7 +5,7 @@ import tkinter as tk
 from PIL import Image
 from typing import TYPE_CHECKING
 
-
+from scanBottle.camera.captureImage import parse_image
 from utils.wrappers import on_rpi
 from scanBottle.camera.cameraControls import CV2Camera, Camera
 from constants.colors import *
@@ -27,17 +27,42 @@ def increment_image_count(UIController: UIController):
     return num_photos
 
 
+def save_image(temp_name: str, cur_img: Image) -> str:
+    file_name = f"{temp_name}.jpg"
+    file_directory = f"EXPOFILES/database/new/"
+    if cur_img is not None:
+        if not os.path.exists(file_directory):
+            os.mkdir(file_directory)
+
+        full_path = os.path.join(file_directory, file_name)
+
+        if os.path.exists(full_path):
+            os.remove(full_path)
+
+        rgb_img = cur_img.convert("RGB")
+        rgb_img.save(full_path, "JPEG")
+        cur_img.close()
+        rgb_img.close()
+        return full_path
+    else:
+        print("ERROR: Unable to retrieve image from camera!")
+        return None
+
+
 def captureImage(UIController: UIController, camera: CV2Camera):
     num_photos = increment_image_count(UIController)
 
-    cur_img = camera.label.cget("image")
-    file_directory = f"EXPOFILES/database/new/{num_photos}.jpg"
+    cur_img = camera.get_image()
 
-    if cur_img:
-        if os.path.exists(file_directory):
-            os.remove(file_directory)
-        my_image = Image.fromarray(cur_img)
-        my_image.save(file_directory, "JPEG")
+    # file_path = save_image(num_photos, cur_img)
+
+    file_path = camera.save_image(num_photos, cur_img)
+
+    # parsed_text = parse_image(file_path)
+
+    parsed_text = camera.parse_image(file_path)
+
+    print(parsed_text)
 
     print("Click!")
     return
@@ -74,15 +99,24 @@ def scanningFunction(UIController: UIController):
         camera = CV2Camera(UIController.canvas)
         UIController.canvasIds["ScanBottle"].append(
             UIController.canvas.create_window(
-                WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, window=camera.label, anchor=tk.NW
+                WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, window=camera.label
             )
         )
 
-    capture_img_btn = UI.NewExitBtn(
-        master=UIController.canvas,
-        text="Capture Image",
-        command=functools.partial(captureImage, UIController, camera),
-    )
+        capture_img_btn = UI.NewExitBtn(
+            master=UIController.canvas,
+            text="Capture Image",
+            command=functools.partial(captureImage, UIController, camera),
+        )
+
+        UIController.canvasIds["ScanBottle"].append(
+            UIController.canvas.create_window(
+                WINDOW_WIDTH_PADDING,
+                WINDOW_HEIGHT_PADDING,
+                window=capture_img_btn,
+                anchor=tk.SE,
+            )
+        )
     done_btn = UI.NewExitBtn(
         master=UIController.canvas,
         text="Done",
@@ -100,14 +134,6 @@ def scanningFunction(UIController: UIController):
     UIController.canvasIds["ScanBottle"].append(
         UIController.canvas.create_window(
             WINDOW_WIDTH / 2, WINDOW_HEIGHT_PADDING, window=done_btn, anchor=tk.S
-        )
-    )
-    UIController.canvasIds["ScanBottle"].append(
-        UIController.canvas.create_window(
-            WINDOW_WIDTH_PADDING,
-            WINDOW_HEIGHT_PADDING,
-            window=capture_img_btn,
-            anchor=tk.SE,
         )
     )
     UIController.canvasIds["ScanBottle"].append(

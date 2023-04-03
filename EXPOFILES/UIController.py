@@ -49,7 +49,7 @@ class UIController:
     def __init__(self, conn: psycopg2.extensions.connection) -> None:
         self.root = tk.Tk()
         self.conn = conn
-        self.firebase = FirebaseApp()
+        # self.firebase = FirebaseApp()
         self.confirmDict = timesList(self.conn)
         # If these Id keys are changed, they must be updated on respective files
         self.canvasIds = {
