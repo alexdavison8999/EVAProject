@@ -54,6 +54,7 @@ def confirmGui(UIController: UIController, hour: str='00', minute: str='00'):
 					window=med_button
 				)
 			)
+		medications=UIController.confirmDict[confirm_key]
 	else:
 		print("Invalid key, returning all medications!")
 
