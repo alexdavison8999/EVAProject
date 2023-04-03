@@ -1,4 +1,5 @@
 from __future__ import annotations
+import json
 import tkinter as tk
 from typing import TYPE_CHECKING
 
@@ -16,7 +17,9 @@ def individualDrug(UIController: UIController, medName: str) -> None:
     UIController.clearUI("DrugInfo")
 
     image_path = None
-    site_info = readSite(medName)
+    # site_info = readSite(medName)
+    json_file = open('EXPOFILES/assets/IbuprofenInfo.json')
+    site_info = json.load(json_file)
     
     med_label = tk.Label(UIController.canvas, text=f'{medName}', bg=PRIMARY_COLOR, font=(TEXT_FONT, 40, 'normal'))
     desc_text = tk.Label(UIController.canvas, text=f'{site_info["siteText"]}', bg=PRIMARY_COLOR, font=(TEXT_FONT, 20, 'normal'), wraplength=750)
@@ -25,8 +28,9 @@ def individualDrug(UIController: UIController, medName: str) -> None:
 
     go_back_btn = UI.NewExitBtn(master=UIController.canvas, text='Go Back', command=UIController.goToDrugInfo)
 
-    if site_info['image_url']:
-        image_path = get_image(site_info['image_url'])
+    # if site_info['image_url']:
+    #     image_path = get_image(site_info['image_url'])
+    image_path = site_info['image_url']
 
     if image_path:
         report_image = tk.PhotoImage(file=image_path)

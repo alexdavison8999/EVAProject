@@ -17,7 +17,7 @@ class FirebaseApp:
         self.scopes = ["https://www.googleapis.com/auth/firebase.messaging"]
 
         # TOKEN IS A PER DEVICE REGISTRATION
-        # When you load the mobile app, the home screen will display your appllication ID,
+        # When you load the mobile app, the home screen will display your appllication ID (or if I get time it will be in the settings),
         # this will soon be changed so that you input this into the EVA, and then your device is registered to the EVA device
         self.token = os.getenv("DEVICE_REG_TOKEN")
         self.headers = {
