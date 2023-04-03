@@ -9,7 +9,6 @@ from database.classes.medications import Medication
 
 
 from constants.colors import *
-from report2 import *
 import utils.interfaceHelpers as UI
 from constants.window import *
 
