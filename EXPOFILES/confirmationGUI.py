@@ -35,38 +35,30 @@ def goBack(UIController: UIController):
 def confirmGui(UIController: UIController, hour: str = "00", minute: str = "00"):
     confirm_key = f"{hour}:{minute}"
 
-    if confirm_key in UIController.confirmDict.keys():
-        num_meds = len(UIController.confirmDict[confirm_key])
-        confirm_label = tk.Label(
-            text=f"You have {num_meds} medications", font=("arial", 55, "normal")
-        )
+	if confirm_key in UIController.confirmDict.keys():
 
-        button_frame = tk.Frame(
-            UIController.canvas, background=os.getenv("PRIMARY_COLOR"), border=1
-        )
-        button_frame.grid(row=0, column=0, sticky="e", rowspan=len(medications))
+		num_meds = len(UIController.confirmDict[confirm_key])
+		confirm_label = tk.Label(text=f'You have {num_meds} medications', font=('arial', 55, 'normal'))
 
-        # for index, med in enumerate(medications):
-        # 	UI.NewMedBtn(
-        # 		master=button_frame,
-        # 		text=f'{med.medName}',
-        # 		command= functools.partial(goToCommand, UIController, med.medName)
-        # 	).grid(row=index, column=0)
-
-        for index, med in enumerate(UIController.confirmDict[confirm_key]):
-            UI.NewMedBtn(
-                master=button_frame,
-                text=f"{med}",
-                command=functools.partial(
-                    goToCommand, UIController, med.medName, med.id
-                ),
-            ).grid(row=index, column=0, pady=GRID_PADDING)
-            # yPos = ((WINDOW_HEIGHT) - (((index + 1) * 150) + (WINDOW_HEIGHT / 2)))
-            # xPos = WINDOW_WIDTH / 1.35
-            # print(f'{index} {xPos}, {yPos}')
-
-    else:
-        print("Invalid key, returning all medications!")
+		for index, med in enumerate(UIController.confirmDict[confirm_key]):
+			med_button = UI.NewMedBtn(
+				master=UIController.canvas, 
+				text=f'{med}', 
+				command= functools.partial(goToCommand, UIController, med)
+			)
+			yPos = ((WINDOW_HEIGHT) - (((index + 1) * 150) + (WINDOW_HEIGHT / 2)))
+			xPos = WINDOW_WIDTH / 1.35
+			print(f'{index} {xPos}, {yPos}')
+			med_button.grid(row=index, column=0)
+			UIController.canvasIds["Confirm"].append(
+				UIController.canvas.create_window(
+					int(xPos),int(yPos), 
+					window=med_button
+				)
+			)
+		medications=UIController.confirmDict[confirm_key]
+	else:
+		print("Invalid key, returning all medications!")
 
         medications = medicationsQuery(UIController.conn)
         button_frame = tk.Frame(
