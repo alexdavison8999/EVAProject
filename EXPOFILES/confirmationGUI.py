@@ -55,6 +55,8 @@ def confirmGui(UIController: UIController, hour: str = "00", minute: str = "00")
                 command=functools.partial(goToCommand, UIController, med),
             ).grid(row=index, column=0, pady=GRID_PADDING)
 
+        medications = UIController.confirmDict[confirm_key]
+
     else:
         print("Returning all medications!")
 
