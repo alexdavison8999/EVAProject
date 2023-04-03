@@ -61,9 +61,8 @@ def confirmGui(UIController: UIController, hour: str = "00", minute: str = "00")
                     goToCommand, UIController, med.medName, med.id
                 ),
             ).grid(row=index, column=0, pady=GRID_PADDING)
-            # yPos = ((WINDOW_HEIGHT) - (((index + 1) * 150) + (WINDOW_HEIGHT / 2)))
-            # xPos = WINDOW_WIDTH / 1.35
-            # print(f'{index} {xPos}, {yPos}')
+
+        medications = UIController.confirmDict[confirm_key]
 
     else:
         print("Invalid key, returning all medications!")
