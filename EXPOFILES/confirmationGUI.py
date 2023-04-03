@@ -41,33 +41,27 @@ def confirmGui(UIController: UIController, hour: str = "00", minute: str = "00")
             text=f"You have {num_meds} medications", font=("arial", 55, "normal")
         )
 
+        medications = UIController.confirmDict[confirm_key]
+
         button_frame = tk.Frame(
             UIController.canvas, background=os.getenv("PRIMARY_COLOR"), border=1
         )
         button_frame.grid(row=0, column=0, sticky="e", rowspan=len(medications))
 
-        # for index, med in enumerate(medications):
-        # 	UI.NewMedBtn(
-        # 		master=button_frame,
-        # 		text=f'{med.medName}',
-        # 		command= functools.partial(goToCommand, UIController, med.medName)
-        # 	).grid(row=index, column=0)
-
         for index, med in enumerate(UIController.confirmDict[confirm_key]):
             UI.NewMedBtn(
-                master=button_frame,
+                master=UIController.canvas,
                 text=f"{med}",
-                command=functools.partial(
-                    goToCommand, UIController, med.medName, med.id
-                ),
+                command=functools.partial(goToCommand, UIController, med),
             ).grid(row=index, column=0, pady=GRID_PADDING)
 
         medications = UIController.confirmDict[confirm_key]
 
     else:
-        print("Invalid key, returning all medications!")
+        print("Returning all medications!")
 
         medications = medicationsQuery(UIController.conn)
+
         button_frame = tk.Frame(
             UIController.canvas, background=os.getenv("PRIMARY_COLOR"), border=1
         )
@@ -85,16 +79,6 @@ def confirmGui(UIController: UIController, hour: str = "00", minute: str = "00")
                     (med.folderPath + med.medName + ".png"),
                 ),
             ).grid(row=index, column=0, pady=GRID_PADDING)
-            # yPos = ((WINDOW_HEIGHT) - (((index + 1) * 150) + (WINDOW_HEIGHT / 2)))
-            # xPos = WINDOW_WIDTH / 1.35
-            # print(f'{index} {xPos}, {yPos}')
-            # med_button.grid(row=index, column=0)
-            # UIController.canvasIds["Confirm"].append(
-            # 	UIController.canvas.create_window(
-            # 		int(xPos),int(yPos),
-            # 		window=med_button
-            # 	)
-            # )
 
     eva_face = UI.evaFace(file="EXPOFILES/assets/evaFaceRedLarge.png")
     microphone = tk.PhotoImage(file="EXPOFILES/assets/microphone.png")
