@@ -49,6 +49,27 @@ def createMedicine(
     return
 
 
+def createMedFromDict(conn: psycopg2.extensions.connection, newMedDict: dict):
+    medName = newMedDict["medName"] if "medName" in newMedDict else None
+    dateFilled = (
+        newMedDict["dateFilled"]
+        if "dateFilled" in newMedDict
+        else datetime.now().strftime("%Y-%M-%D")
+    )
+    refillsLeft = newMedDict["refillsLeft"] if "refillsLeft" in newMedDict else None
+    refillDateStr = newMedDict["refillDate"] if "refillDate" in newMedDict else None
+    timesPerDay = newMedDict["medName"] if "medName" in newMedDict else None
+    folderPath = newMedDict["medName"] if "medName" in newMedDict else None
+
+    sql = f"INSERT INTO public.medications \
+            (medname, datefilled, refillsleft, refilldate, \
+            timesperday, folderpath, created_at) \
+            VALUES ('{medName}', TO_DATE('{dateFilled}', YYYYMMDD),\
+            {refillsLeft}, TO_DATE('{refillDateStr}', YYYYMMDD), {timesPerDay}, '{folderPath}', NOW());"
+
+    data = executeQuery(conn, sql)
+
+
 def updateDaysPerWeek(
     conn: psycopg2.extensions.connection, reminder_id: str, newVal: str
 ):
