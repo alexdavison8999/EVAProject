@@ -12,13 +12,11 @@ from homeGui import homeGui
 from confirmationGUI import confirmGui
 from drugInfoGui import loadingDrugGui
 from reportsGui import reportGui
-from evaGUI import loadingRamGui
 from scanBottle.scanBottleGui import scanBottleGui
 from scanBottle.scannerInstructions import bottleScannerGui
 from scanBottle.editBottleGui import editBottleGui
 
 from database.queries.query import timesList
-from postScanDisplay import displayFunct
 import utils.interfaceHelpers as UI
 from utils.firebase.firebase import FirebaseApp
 

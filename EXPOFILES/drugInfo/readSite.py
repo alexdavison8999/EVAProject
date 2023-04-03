@@ -1,3 +1,4 @@
+import json
 import os
 from PIL import Image
 from typing import Union
@@ -21,6 +22,8 @@ def find_image(soup) -> Union[str, None]:
         if "src" in child.attrs.keys():
             image_url = child.attrs["src"]
 
+    print(f"IMAGE URL {image_url}")
+
     return image_url
 
 
@@ -37,16 +40,19 @@ def get_dosage(soup: BeautifulSoup) -> str:
 
 
 def readSite(drugName: str) -> dict:
-    image_url = ""
     url = f"https://www.drugs.com/{drugName}.html"
-    site_info = {"siteText": "", "image_url": image_url, "dosage_text": ""}
+    site_info = {"siteText": "", "dosage_text": ""}
     infoCount = 0
 
     try:
         resp = requests.get(url)
     except requests.exceptions.ConnectionError:
         print("Unable to connect to the internet!")
+        json_file = open("EXPOFILES/assets/IbuprofenInfo.json")
+        site_info = json.load(json_file)
         return site_info
+
+    print(resp.status_code)
 
     if resp.status_code == 200:
         soup = BeautifulSoup(resp.text, "lxml")
@@ -85,6 +91,8 @@ def get_image(url: str) -> Union[str, None]:
     file_directory = f"EXPOFILES/assets/drugInfoImages/{file_name}"
     check_dir = file_directory
 
+    print(file_directory)
+
     if file_name.split(".")[-1] == "jpg":
         check_dir = file_directory.replace(".jpg", ".png")
 
@@ -105,5 +113,7 @@ def get_image(url: str) -> Union[str, None]:
 
     if file_name.split(".")[-1] == "jpg":
         file_directory = jpg_to_png(file_directory)
+
+    print(file_directory)
 
     return file_directory

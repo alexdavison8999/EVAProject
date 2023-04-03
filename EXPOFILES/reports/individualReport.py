@@ -3,7 +3,6 @@ import tkinter as tk
 from typing import TYPE_CHECKING
 
 from reports.generateReport import generateReport
-from report2 import *
 import utils.interfaceHelpers as UI
 from constants.window import *
 from constants.colors import *
