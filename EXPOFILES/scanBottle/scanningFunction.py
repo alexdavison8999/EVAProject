@@ -3,7 +3,7 @@ import functools
 import os
 import tkinter as tk
 from PIL import Image
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 from scanBottle.postScanDisplay.medName import selectMedName
 
 from utils.wrappers import on_rpi
@@ -74,13 +74,16 @@ def captureImage(UIController: UIController, camera: CV2Camera):
     return
 
 
-def goToEdit(UIController: UIController, camera: CV2Camera):
+def goToEdit(UIController: UIController, camera: Optional[CV2Camera] = None):
     global textLines
     print("Going to med info edit")
-    if on_rpi():
+    if on_rpi() and camera is not None:
         camera.stop_camera()
-        UIController.clearUI('ScanBottle')
-        selectMedName(UIController, textList=textLines)
+        
+    if len(textLines) == 0:
+        textLines = ['No Text Scanned']
+    UIController.clearUI('ScanBottle')
+    selectMedName(UIController, textList=textLines)
     return
 
 
@@ -127,11 +130,17 @@ def scanningFunction(UIController: UIController):
                 anchor=tk.SE,
             )
         )
-    done_btn = UI.NewExitBtn(
-        master=UIController.canvas,
-        text="Done",
-        command=functools.partial(goToEdit, UIController, camera),
-    )
+        done_btn = UI.NewExitBtn(
+            master=UIController.canvas,
+            text="Done",
+            command=functools.partial(goToEdit, UIController, camera),
+        )
+    else:
+        done_btn = UI.NewExitBtn(
+            master=UIController.canvas,
+            text="Done",
+            command=functools.partial(goToEdit, UIController),
+        )
     cancel_btn = UI.NewExitBtn(
         master=UIController.canvas, text="Cancel", command=UIController.goToScanBottle
     )

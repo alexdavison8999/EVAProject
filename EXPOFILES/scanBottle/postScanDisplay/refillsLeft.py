@@ -25,10 +25,10 @@ def nextStep(UIController: UIController, textList: list[str], newMed: dict):
 
 
 def selectOption(
-    UIController: UIController, textList: list[str], newMed: dict, index: int
+    UIController: UIController, textList: list[str], newMed: dict, value: int
 ):
-    print(f"Selected text for med name: {textList[index]}")
-    newMed["refillsLeft"] = textList[index].strip().title()
+    # print(f"Selected text for med name: {textList[index]}")
+    newMed["refillsLeft"] = value
 
     nextStep(UIController, textList, newMed)
     return

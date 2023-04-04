@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Union
+from typing import Optional, Union
 import psycopg2
 import psycopg2.extensions
 import psycopg2.errors
@@ -140,7 +140,7 @@ def confirmationsQuery(conn: psycopg2.extensions.connection):
 
 def getMedByName(
     conn: psycopg2.extensions.connection, medName: str
-) -> Union[Medication, None]:
+) -> Optional[Medication]:
     """
     Queries the `medications` a medication given an medicationId and a medName.
 
@@ -264,6 +264,33 @@ def getReminderById(
                         weeklyreminders \
                     WHERE \
                         id = '{id}';"
+    try:
+        data = executeQuery(conn, sql_string, "one")
+
+        reminder = WeeklyReminder(data)
+
+    except:
+        print(f"Error: Umable to get reminder for id {id}")
+        reminder = None
+
+    return reminder
+
+def getReminderByMedId(
+    conn: psycopg2.extensions.connection, id: str
+) -> Union[WeeklyReminder, None]:
+    """
+    Queries the `weeklyreminders` table for reminder by an id.
+
+    Inputs:
+        `conn`:       Postgres connection object
+        `medName`:    Name of medication to check
+    """
+    sql_string = f"SELECT\
+                    *\
+                    FROM \
+                        weeklyreminders \
+                    WHERE \
+                        medications_id = '{id}';"
     try:
         data = executeQuery(conn, sql_string, "one")
 
