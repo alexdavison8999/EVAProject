@@ -67,11 +67,11 @@ def selectMedName(
     )
 
     for index, textLine in enumerate(textList):
-        UI.newFrameLabel(button_frame, f"{index + 1}:").grid(
+        UI.newFrameLabel(label_frame, f"{index + 1}:").grid(
             row=index, column=0, pady=GRID_PADDING
         )
         UI.newFrameButton(
-            UIController.canvas,
+            button_frame,
             name=textLine,
             command=functools.partial(
                 selectOption, UIController, textList, newMed, index
@@ -91,6 +91,11 @@ def selectMedName(
     UIController.canvasIds["ScanBottle"].append(
         UIController.canvas.create_window(
             WINDOW_WIDTH / 1.8, WINDOW_HEIGHT / 2, window=button_frame, anchor=tk.CENTER
+        )
+    )
+    UIController.canvasIds["ScanBottle"].append(
+        UIController.canvas.create_window(
+            WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 2, window=label_frame, anchor=tk.E
         )
     )
     UIController.canvasIds["ScanBottle"].append(

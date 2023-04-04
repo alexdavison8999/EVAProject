@@ -79,6 +79,7 @@ def goToEdit(UIController: UIController, camera: CV2Camera):
     print("Going to med info edit")
     if on_rpi():
         camera.stop_camera()
+        UIController.clearUI('ScanBottle')
         selectMedName(UIController, textList=textLines)
     return
 
