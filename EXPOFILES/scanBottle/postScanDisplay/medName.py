@@ -57,13 +57,13 @@ def selectMedName(
     finish_btn = UI.NewExitBtn(
         master=UIController.canvas,
         text="Finish",
-        command=lambda: goToEdit(UIController),
+        command=lambda: goToEdit(UIController, newMed),
     )
 
     next_btn = UI.NewExitBtn(
         master=UIController.canvas,
         text="Next",
-        command=lambda: goToEdit(UIController),
+        command=lambda: goToEdit(UIController, newMed),
     )
 
     for index, textLine in enumerate(textList):
@@ -85,17 +85,17 @@ def selectMedName(
     )
     UIController.canvasIds["ScanBottle"].append(
         UIController.canvas.create_window(
-            WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=next_btn, anchor=tk.SE
+            WINDOW_WIDTH_PADDING, WINDOW_HEIGHT_PADDING, window=next_btn, anchor=tk.SE
         )
     )
     UIController.canvasIds["ScanBottle"].append(
         UIController.canvas.create_window(
-            WINDOW_WIDTH / 1.8, WINDOW_HEIGHT / 2, window=button_frame, anchor=tk.CENTER
+            WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, window=button_frame, anchor=tk.CENTER
         )
     )
     UIController.canvasIds["ScanBottle"].append(
         UIController.canvas.create_window(
-            WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 2, window=label_frame, anchor=tk.E
+            WINDOW_WIDTH / 2.5, WINDOW_HEIGHT / 2, window=label_frame, anchor=tk.CENTER
         )
     )
     UIController.canvasIds["ScanBottle"].append(

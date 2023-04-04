@@ -57,7 +57,7 @@ def selectTimesPerDay(
     finish_btn = UI.NewExitBtn(
         master=UIController.canvas,
         text="Finish",
-        command=lambda: goToEdit(UIController),
+        command=lambda: goToEdit(UIController, newMed),
     )
 
     next_btn = UI.NewExitBtn(
@@ -75,7 +75,7 @@ def selectTimesPerDay(
     )
     UIController.canvasIds["ScanBottle"].append(
         UIController.canvas.create_window(
-            WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=next_btn, anchor=tk.SE
+            WINDOW_WIDTH_PADDING, WINDOW_HEIGHT_PADDING, window=next_btn, anchor=tk.SE
         )
     )
     UIController.canvasIds["ScanBottle"].append(

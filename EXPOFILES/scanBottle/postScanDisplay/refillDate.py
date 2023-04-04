@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 def nextStep(UIController: UIController, textList: list[str], newMed: dict):
     UIController.clearUI("ScanBottle")
     # Next step here, probably dateFilled
-    goToEdit(UIController, textList, newMed)
+    goToEdit(UIController, newMed)
 
 
 def selectOption(
@@ -74,7 +74,7 @@ def selectRefillDate(
     finish_btn = UI.NewExitBtn(
         master=UIController.canvas,
         text="Finish",
-        command=lambda: goToEdit(UIController),
+        command=lambda: goToEdit(UIController, newMed),
     )
 
     next_btn = UI.NewExitBtn(
@@ -92,7 +92,7 @@ def selectRefillDate(
     )
     UIController.canvasIds["ScanBottle"].append(
         UIController.canvas.create_window(
-            WINDOW_PADDING, WINDOW_HEIGHT_PADDING, window=next_btn, anchor=tk.SE
+            WINDOW_WIDTH_PADDING, WINDOW_HEIGHT_PADDING, window=next_btn, anchor=tk.SE
         )
     )
     UIController.canvasIds["ScanBottle"].append(

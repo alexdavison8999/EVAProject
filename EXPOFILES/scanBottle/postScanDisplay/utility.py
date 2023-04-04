@@ -11,12 +11,14 @@ if TYPE_CHECKING:
     from UIController import UIController
 
 
-def goToEdit(UIController: UIController, medName: str, newMed: dict):
+def goToEdit(UIController: UIController, newMed: dict):
+    if not 'medName' in newMed:
+        newMed['medName'] = 'Unknown'
     print(f"Creating medication with data: {newMed.keys()}")
     createMedFromDict(UIController.conn, newMed)
 
     UIController.clearUI("ScanBottle")
-    UIController.individualInfoEdit(medName)
+    UIController.individualInfoEdit(newMed['medName']) 
 
 
 def buildDateField(curVal: str = "01/01/2023"):
