@@ -69,7 +69,7 @@ def selectRefillDate(
     label_frame = tk.Frame(UIController.canvas, background=os.getenv("PRIMARY_COLOR"))
     label_frame.grid(row=0, column=0, sticky="w")
 
-    date_ids = buildDateField()  # TODO: ADD VALUE FROM SCAN HERE
+    date_ids = buildDateField(UIController)  # TODO: ADD VALUE FROM SCAN HERE
 
     finish_btn = UI.NewExitBtn(
         master=UIController.canvas,

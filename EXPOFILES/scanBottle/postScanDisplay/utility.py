@@ -21,7 +21,7 @@ def goToEdit(UIController: UIController, newMed: dict):
     UIController.individualInfoEdit(newMed['medName']) 
 
 
-def buildDateField(curVal: str = "01/01/2023"):
+def buildDateField(UIController: UIController, curVal: str = "01/01/2023"):
     date_ids = []
     for index in range(0, len(curVal)):
         if curVal[index] == "/":

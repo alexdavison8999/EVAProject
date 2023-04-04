@@ -66,7 +66,7 @@ def selectMedName(
     next_btn = UI.NewExitBtn(
         master=UIController.canvas,
         text="Next",
-        command=functools.partial(selectOption(UIController, textList, newMed)),
+        command=functools.partial(selectOption, UIController, textList, newMed),
     )
 
     for index, textLine in enumerate(textList):
