@@ -24,10 +24,13 @@ def nextStep(UIController: UIController, textList: list[str], newMed: dict):
 
 
 def selectOption(
-    UIController: UIController, textList: list[str], newMed: dict, index: int
+    UIController: UIController, textList: list[str], newMed: dict, index: int=-1
 ):
-    print(f"Selected text for med name: {textList[index]}")
-    newMed["medName"] = textList[index].strip().title()
+    if index < 0:
+        print('No option selected, continuing workflow.')
+    else:
+        print(f"Selected text for med name: {textList[index]}")
+        newMed["medName"] = textList[index].strip().title()
 
     nextStep(UIController, textList, newMed)
     return
@@ -63,7 +66,7 @@ def selectMedName(
     next_btn = UI.NewExitBtn(
         master=UIController.canvas,
         text="Next",
-        command=lambda: goToEdit(UIController, newMed),
+        command=functools.partial(selectOption(UIController, textList, newMed)),
     )
 
     for index, textLine in enumerate(textList):
@@ -90,7 +93,7 @@ def selectMedName(
     )
     UIController.canvasIds["ScanBottle"].append(
         UIController.canvas.create_window(
-            WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, window=button_frame, anchor=tk.CENTER
+            WINDOW_WIDTH / 2, WINDOW_HEIGHT / 1.75, window=button_frame, anchor=tk.CENTER
         )
     )
     UIController.canvasIds["ScanBottle"].append(
