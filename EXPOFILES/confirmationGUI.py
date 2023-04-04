@@ -62,6 +62,11 @@ def confirmGui(UIController: UIController, hour: str = "00", minute: str = "00")
 
         medications = medicationsQuery(UIController.conn)
 
+        if(len(medications) < 4):
+            displayedMedications = medications
+        else:
+            displayedMedications = medications[0:4]
+
         button_frame = tk.Frame(
             UIController.canvas, background=os.getenv("PRIMARY_COLOR"), border=1
         )
