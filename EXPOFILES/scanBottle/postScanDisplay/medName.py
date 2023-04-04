@@ -36,7 +36,7 @@ def selectOption(
 def selectMedName(
     UIController: UIController,
     textList: list[str],
-    newMed: Union[dict, None],
+    newMed: Union[dict, None] = None,
 ):
     if newMed is None:
         newMed = {}
