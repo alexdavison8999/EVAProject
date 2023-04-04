@@ -31,6 +31,7 @@ def individualDrug(UIController: UIController, medName: str) -> None:
         bg=PRIMARY_COLOR,
         font=(TEXT_FONT, 20, "normal"),
         wraplength=750,
+        justify="left",
     )
     dosage_text = tk.Label(
         UIController.canvas,
@@ -38,6 +39,7 @@ def individualDrug(UIController: UIController, medName: str) -> None:
         bg=PRIMARY_COLOR,
         font=(TEXT_FONT, 20, "normal"),
         wraplength=750,
+        justify="left",
     )
     meta_label = tk.Label(
         UIController.canvas,
@@ -79,7 +81,7 @@ def individualDrug(UIController: UIController, medName: str) -> None:
         UIController.canvasIds["DrugInfo"].append(
             UIController.canvas.create_window(
                 WINDOW_WIDTH_PADDING,
-                WINDOW_HEIGHT / 2,
+                WINDOW_HEIGHT / 2.25,
                 window=report_label,
                 anchor=tk.E,
             )
@@ -92,7 +94,7 @@ def individualDrug(UIController: UIController, medName: str) -> None:
     )
     UIController.canvasIds["DrugInfo"].append(
         UIController.canvas.create_window(
-            WINDOW_PADDING, WINDOW_HEIGHT / 2.5, window=desc_text, anchor=tk.W
+            WINDOW_PADDING, WINDOW_HEIGHT / 2.75, window=desc_text, anchor=tk.W
         )
     )
     UIController.canvasIds["DrugInfo"].append(
