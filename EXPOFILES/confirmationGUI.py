@@ -101,7 +101,7 @@ def confirmGui(UIController: UIController, hour: str = "00", minute: str = "00")
     )
     UIController.canvasIds["Confirm"].append(
         UIController.canvas.create_window(
-            WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 4, window=button_frame, anchor=tk.E
+            WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 2, window=button_frame, anchor=tk.E
         )
     )
 
