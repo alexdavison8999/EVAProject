@@ -19,6 +19,7 @@ if TYPE_CHECKING:
 def nextStep(UIController: UIController, textList: list[str], newMed: dict):
     UIController.clearUI("ScanBottle")
     # Next step here, probably dateFilled
+    goToEdit(UIController, textList, newMed)
 
 
 def selectOption(
@@ -50,7 +51,7 @@ def selectOption(
     return
 
 
-def selectMedName(
+def selectRefillDate(
     UIController: UIController,
     textList: list[str],
     newMed: Union[dict, None],

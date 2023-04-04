@@ -3,6 +3,7 @@ import functools
 import os
 import tkinter as tk
 from typing import TYPE_CHECKING, Union
+from scanBottle.postScanDisplay.refillsLeft import selectRefillsLeft
 
 from database.mutations.mutation import createMedFromDict
 from database.classes.medications import Medication
@@ -19,6 +20,7 @@ if TYPE_CHECKING:
 def nextStep(UIController: UIController, textList: list[str], newMed: dict):
     UIController.clearUI("ScanBottle")
     # Next step here, probably dateFilled
+    selectRefillsLeft(UIController, textList, newMed)
 
 
 def selectOption(
@@ -50,7 +52,7 @@ def selectOption(
     return
 
 
-def selectMedName(
+def selectDateFilled(
     UIController: UIController,
     textList: list[str],
     newMed: Union[dict, None],

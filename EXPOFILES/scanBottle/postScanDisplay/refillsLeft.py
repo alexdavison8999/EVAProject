@@ -3,6 +3,7 @@ import functools
 import os
 import tkinter as tk
 from typing import TYPE_CHECKING, Union
+from scanBottle.postScanDisplay.timesPerDay import selectTimesPerDay
 from scanBottle.counter import Counter
 
 from database.mutations.mutation import createMedFromDict
@@ -20,6 +21,7 @@ if TYPE_CHECKING:
 def nextStep(UIController: UIController, textList: list[str], newMed: dict):
     UIController.clearUI("ScanBottle")
     # Next step here, probably dateFilled
+    selectTimesPerDay(UIController, textList, newMed)
 
 
 def selectOption(
