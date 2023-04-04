@@ -129,7 +129,7 @@ def scanningFunction(UIController: UIController):
     done_btn = UI.NewExitBtn(
         master=UIController.canvas,
         text="Done",
-        command=functools.partial(goToEdit, UIController),
+        command=functools.partial(goToEdit, UIController, camera),
     )
     cancel_btn = UI.NewExitBtn(
         master=UIController.canvas, text="Cancel", command=UIController.goToScanBottle
