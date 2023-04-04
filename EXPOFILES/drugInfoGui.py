@@ -65,7 +65,7 @@ def loadingDrugGui(UIController: UIController):
     )
     UIController.canvasIds["DrugInfo"].append(
         UIController.canvas.create_window(
-            WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 3, window=button_frame, anchor=tk.E
+            WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 2, window=button_frame, anchor=tk.E
         )
     )
     VC_btn = tk.Button(

@@ -67,7 +67,7 @@ def reportGui(UIController: UIController) -> None:
     )
     UIController.canvasIds["Report"].append(
         UIController.canvas.create_window(
-            WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 4, window=button_frame, anchor=tk.E
+            WINDOW_WIDTH_PADDING, WINDOW_HEIGHT / 2, window=button_frame, anchor=tk.E
         )
     )
     UIController.canvasIds["Report"].append(
