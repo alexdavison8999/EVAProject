@@ -1,5 +1,5 @@
 from __future__ import annotations
-from collections import Counter
+from scanBottle.counter import Counter
 import os
 from typing import TYPE_CHECKING
 
