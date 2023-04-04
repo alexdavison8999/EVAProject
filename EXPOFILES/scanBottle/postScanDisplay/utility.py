@@ -4,7 +4,6 @@ import os
 from typing import TYPE_CHECKING
 
 from constants.window import WINDOW_HEIGHT
-from UIController import UIController
 import tkinter as tk
 from database.mutations.mutation import createMedFromDict
 
