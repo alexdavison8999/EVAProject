@@ -3,11 +3,11 @@ import functools
 import os
 import tkinter as tk
 from PIL import Image
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
+from scanBottle.postScanDisplay.medName import selectMedName
 
-from scanBottle.camera.captureImage import parse_image
 from utils.wrappers import on_rpi
-from scanBottle.camera.cameraControls import CV2Camera, Camera
+from scanBottle.camera.cameraControls import CV2Camera
 from constants.colors import *
 from constants.window import *
 import utils.interfaceHelpers as UI
@@ -16,6 +16,8 @@ import utils.interfaceHelpers as UI
 
 if TYPE_CHECKING:
     from UIController import UIController
+    
+textLines = []
 
 
 def increment_image_count(UIController: UIController):
@@ -50,6 +52,8 @@ def save_image(temp_name: str, cur_img: Image) -> str:
 
 
 def captureImage(UIController: UIController, camera: CV2Camera):
+    global textLines
+    
     num_photos = increment_image_count(UIController)
 
     cur_img = camera.get_image()
@@ -63,15 +67,23 @@ def captureImage(UIController: UIController, camera: CV2Camera):
     parsed_text = camera.parse_image(file_path)
 
     print(parsed_text)
+    
+    textLines.extend(parsed_text)
 
     print("Click!")
     return
 
 
-def goToEdit(UIController: UIController, camera: CV2Camera):
+def goToEdit(UIController: UIController, camera: Optional[CV2Camera] = None):
+    global textLines
     print("Going to med info edit")
-    if on_rpi():
+    if on_rpi() and camera is not None:
         camera.stop_camera()
+        
+    if len(textLines) == 0:
+        textLines = ['No Text Scanned']
+    UIController.clearUI('ScanBottle')
+    selectMedName(UIController, textList=textLines)
     return
 
 
@@ -84,6 +96,7 @@ def goBack(UIController: UIController, camera: CV2Camera):
 
 
 def scanningFunction(UIController: UIController):
+    global text_lines
     images_taken = tk.Label(
         master=UIController.canvas,
         name="!labelNumPhotos",
@@ -117,11 +130,17 @@ def scanningFunction(UIController: UIController):
                 anchor=tk.SE,
             )
         )
-    done_btn = UI.NewExitBtn(
-        master=UIController.canvas,
-        text="Done",
-        command=functools.partial(goToEdit, UIController),
-    )
+        done_btn = UI.NewExitBtn(
+            master=UIController.canvas,
+            text="Done",
+            command=functools.partial(goToEdit, UIController, camera),
+        )
+    else:
+        done_btn = UI.NewExitBtn(
+            master=UIController.canvas,
+            text="Done",
+            command=functools.partial(goToEdit, UIController),
+        )
     cancel_btn = UI.NewExitBtn(
         master=UIController.canvas, text="Cancel", command=UIController.goToScanBottle
     )
