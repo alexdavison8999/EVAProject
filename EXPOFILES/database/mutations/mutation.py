@@ -71,9 +71,9 @@ def createMedFromDict(conn: psycopg2.extensions.connection, newMedDict: dict):
 
     sql = f"INSERT INTO public.medications \
             (medname, datefilled, refillsleft, refilldate, \
-            timesperday ,folderpath, created_at) \
+            timesperday , timesperweek_id , folderpath, created_at) \
             VALUES ('{medName}', '{dateFilled}',\
-            {refillsLeft}, '{refillDateStr}', '{timesPerDay}', '{folderPath}', NOW());"
+            {refillsLeft}, '{refillDateStr}', '{timesPerDay}', '1', '{folderPath}', NOW());"
 
     data = executeQuery(conn, sql)
     
