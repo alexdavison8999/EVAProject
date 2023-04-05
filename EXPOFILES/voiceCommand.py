@@ -21,7 +21,8 @@ def record_speech(UIController: UIController, medications):
     # Record the command from the microphone
     myText = UIController.canvas.nametowidget(name="evaText")
     myText.configure(
-        text="I'm listening, please say\n the page you wish\n to navigate to."
+        font=("Inter", 20, "normal"),
+        text="I'm listening, please say\n the page you wish\n to navigate to.",
     )
     UIController.root.update()
     with sr.Microphone() as source:
@@ -38,7 +39,8 @@ def record_speech(UIController: UIController, medications):
     # Error handling
     except sr.UnknownValueError:
         myText.configure(
-            text="I'm sorry, I couldn't understand\n you. Please press the button\nto try again."
+            font=("Inter", 20, "normal"),
+            text="I'm sorry, I couldn't\nunderstand you.\nPlease press the\nbutton to try again.",
         )
         UIController.root.update()
         print("I couldn't understand you. Please try again.")
