@@ -36,8 +36,6 @@ def updateGrid(UIController: UIController, displayedMedications: list[Medication
                 goToCommand,
                 UIController,
                 med.medName,
-                med.id,
-                (med.folderPath + med.medName + ".png"),
             ))
 
     UIController.root.update()

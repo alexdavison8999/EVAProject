@@ -9,6 +9,7 @@ import voiceCommand
 from reports.individualReport import individualReport
 import utils.interfaceHelpers as UI
 from database.queries.query import medicationsQuery
+from database.classes.medications import Medication
 
 from constants.colors import *
 from constants.window import *
@@ -36,8 +37,6 @@ def updateGrid(UIController: UIController, displayedMedications: list[Medication
                 goToCommand,
                 UIController,
                 med.medName,
-                med.id,
-                (med.folderPath + med.medName + ".png"),
             ))
 
     UIController.root.update()

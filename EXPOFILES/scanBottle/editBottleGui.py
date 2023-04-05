@@ -36,9 +36,7 @@ def updateGrid(UIController: UIController, displayedMedications: list[Medication
             command=functools.partial(
                 goToCommand,
                 UIController,
-                med.medName,
-                med.id,
-                (med.folderPath + med.medName + ".png"),
+                med,
             ))
 
     UIController.root.update()
@@ -79,7 +77,7 @@ def editBottleGui(UIController: UIController) -> None:
         UI.NewMedBtn(
             master=button_frame,
             text=f"{med.medName}",
-            command=functools.partial(goToCommand, UIController, med.medName),
+            command=functools.partial(goToCommand, UIController, med),
         ).grid(row=index, column=0, pady=GRID_PADDING)
         print(med.medName)
         print(index)
