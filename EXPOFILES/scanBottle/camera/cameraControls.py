@@ -112,7 +112,7 @@ class CV2Camera:  # Originally a tk object, some stuff may reflect that
             print("ERROR: Unable to retrieve image from camera!")
             return None
 
-    def parse_image(self, imagePath: str) -> str:
+    def parse_image(self, imagePath: str) -> list[str]:
         """
         Returns a dictionary of strings parsed from the image
         """
@@ -150,7 +150,7 @@ class CV2Camera:  # Originally a tk object, some stuff may reflect that
 
         text_lines = text.split("\n")
 
-        return text
+        return text_lines
 
 
 if __name__ == "__main__":
