@@ -60,7 +60,9 @@ def navigateMenu(UIController, voiceStr, medications=None):
         if medications != None:
             for index, med in enumerate(medications):
                 if f"{med.medName}" in voiceStr:
-                    individualConfirm.individualConfirm(UIController, med.medName, med)
+                    individualConfirm.individualConfirm(
+                        UIController, med.medName, med, med.filepath
+                    )
     elif UIController.currentLocation == "DrugInfo":
         if medications != None:
             for index, med in enumerate(medications):
