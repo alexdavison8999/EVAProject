@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.7 (Ubuntu 14.7-1.pgdg22.04+1)
+-- Dumped from database version 15.2 (Ubuntu 15.2-1.pgdg22.04+1)
 -- Dumped by pg_dump version 15.2 (Ubuntu 15.2-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
@@ -15,15 +15,6 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
---
-
--- *not* creating schema, since initdb creates it
-
-
-ALTER SCHEMA public OWNER TO postgres;
 
 SET default_tablespace = '';
 
@@ -76,7 +67,7 @@ CREATE TABLE public.medications (
     refillsleft integer DEFAULT 0,
     refilldate date DEFAULT CURRENT_DATE,
     timesperday integer DEFAULT 0,
-    timesperweek_id integer,
+    timesperweek_id integer DEFAULT 0,
     folderpath character varying,
     created_at date DEFAULT CURRENT_DATE,
     archived boolean DEFAULT false NOT NULL
@@ -307,21 +298,8 @@ COPY public.confirmations (id, medname, taken, medicationid, created_at) FROM st
 63	Ibuprofen	f	3	2023-03-20 15:50:22.311071
 64	Ibuprofen	f	3	2023-03-20 16:08:13.800972
 65	Ibuprofen	f	3	2023-03-20 16:12:50.848782
-66	Ibuprofen	t	3	2023-03-28 14:49:41.881318
-67	Ibuprofen	t	3	2023-03-28 14:51:17.627089
-68	Ibuprofen	t	3	2023-03-28 14:51:28.139858
-69	Ibuprofen	t	3	2023-03-29 15:45:55.83598
-70	Ibuprofen	t	3	2023-03-29 16:18:40.57316
-71	Ibuprofen	t	3	2023-03-29 16:18:46.58754
-72	Ibuprofen	t	3	2023-03-29 16:21:06.339397
-73	Ibuprofen	t	3	2023-04-02 12:02:17.754429
-74	Ibuprofen	t	3	2023-04-02 12:05:12.437573
-75	Ibuprofen	t	3	2023-04-02 12:52:02.483331
-76	Ibuprofen	t	3	2023-04-05 15:53:22.21718
-77	Ciprofloxacin	t	7	2023-04-05 15:54:14.927538
-78	Rosuvastatin	t	10	2023-04-05 15:54:21.625403
-79	Ibuprofen	t	3	2023-04-05 15:54:26.697306
-80	Ciprofloxacin	t	7	2023-04-05 15:54:42.212044
+66	Ibuprofen	f	3	2023-03-23 17:47:22.745615
+67	Ibuprofen	f	3	2023-03-28 16:41:09.64107
 \.
 
 
@@ -330,12 +308,8 @@ COPY public.confirmations (id, medname, taken, medicationid, created_at) FROM st
 --
 
 COPY public.medications (id, medname, datefilled, refillsleft, refilldate, timesperday, timesperweek_id, folderpath, created_at, archived) FROM stdin;
-1	med	2023-02-11	2	2023-02-11	2	2	meds/med/1/	2023-02-11	f
-3	Ibuprofen	2023-02-11	1	2023-02-13	5	1	./EXPOFILES/database/meds/Ibuprofen/3/	2023-02-11	f
-9	Tamsulosin	2022-03-11	0	2022-03-11	2	1	./EXPOFILES/database/meds/Tamsulosin/9/	2023-04-05	f
-8	metroNIDAZOLE	2022-03-11	0	2022-03-11	2	1	./EXPOFILES/database/meds/metroNIDAZOLE/8/	2023-04-05	f
-10	Rosuvastatin	2022-03-11	0	2022-03-11	2	1	./EXPOFILES/database/meds/Rosuvastatin/10/	2023-04-05	f
-7	Ciprofloxacin	2022-03-11	0	2022-03-11	2	1	./EXPOFILES/database/meds/Ciprofloxacin/7/	2023-04-05	f
+1	med	2023-02-11	2	2023-02-11	2	2	EXPOFILES/database/meds/med/1/	2023-02-11	f
+3	Ibuprofen	2023-02-11	1	2023-02-13	5	1	EXPOFILES/database/meds/Ibuprofen/3/	2023-02-11	f
 \.
 
 
@@ -465,14 +439,14 @@ COPY public.weeklyreminders (id, medications_id, monday, tuesday, wednesday, thu
 -- Name: confirmations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: evadb
 --
 
-SELECT pg_catalog.setval('public.confirmations_id_seq', 80, true);
+SELECT pg_catalog.setval('public.confirmations_id_seq', 67, true);
 
 
 --
 -- Name: medications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: evadb
 --
 
-SELECT pg_catalog.setval('public.medications_id_seq', 10, true);
+SELECT pg_catalog.setval('public.medications_id_seq', 3, true);
 
 
 --
@@ -590,14 +564,6 @@ ALTER TABLE ONLY public.reportmetrics
 
 ALTER TABLE ONLY public.weeklyreminders
     ADD CONSTRAINT weeklyreminders_fk FOREIGN KEY (medications_id) REFERENCES public.medications(id);
-
-
---
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE USAGE ON SCHEMA public FROM PUBLIC;
-GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
